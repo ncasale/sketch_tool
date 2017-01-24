@@ -124,6 +124,27 @@ void OpenGLWindow::mouseReleaseEvent(QMouseEvent *e)
 }
 
 
+void OpenGLWindow::keyPressEvent(QKeyEvent *e)
+{
+    switch(e->key())
+    {
+    case Qt::key_1:
+        //Call Cube creation
+        break;
+    case Qt::Key_2:
+        //Call Sphere creation
+        break;
+    case Qt::Key_3:
+        //Call Cylinder creation
+        break;
+    case Qt::Key_4:
+        //Call cone creation
+        break;
+    }
+}
+
+
+
 
 /*
  * This function helps us to automatically start animating
