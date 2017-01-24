@@ -7,6 +7,8 @@
 #include <vector>
 #include <map>
 #include <string>
+#include <iostream>
+#include <cstdio>
 using namespace std;
 
 View::View()
@@ -22,6 +24,27 @@ View::~View()
 {
   if (scenegraph!=NULL)
     delete scenegraph;
+}
+
+void View::clearScenegraph()
+{
+    //Revert sketch.xml back to default
+    //Now let's append to xml -- will be done by parsing for group tag and then appending
+    ifstream default_file;
+    default_file.open(sgraph_default);
+    ofstream sketch_file;
+    sketch_file.open(sgraph_file_location);
+
+    //Copy each line of default file into sketch.xml
+    string line;
+    while(getline(default_file, line))
+    {
+        sketch_file << line << endl;
+    }
+
+    //Close files
+    sketch_file.close();
+    default_file.close();
 }
 
 void View::initScenegraph(util::OpenGLFunctions &gl, const string& filename) throw(runtime_error)
@@ -42,6 +65,23 @@ void View::initScenegraph(util::OpenGLFunctions &gl, const string& filename) thr
   renderer.initShaderProgram(program,shaderVarsToVertexAttribs);
   scenegraph->setRenderer<VertexAttrib>(&renderer,sinfo.meshes);
   program.disable(gl);
+
+}
+
+void View::recreateScenegraph(util::OpenGLFunctions &gl, const string& filename) throw(runtime_error)
+{
+    if(scenegraph!=NULL)
+        delete scenegraph;
+
+    //Create scenegraph
+    program.enable(gl);
+    sgraph::ScenegraphInfo<VertexAttrib> sinfo;
+    sinfo = sgraph::SceneXMLReader::importScenegraph<VertexAttrib>(filename);
+    scenegraph = sinfo.scenegraph;
+
+    //Pass scenegraph to renderer
+    scenegraph->setRenderer(&renderer, sinfo.meshes);
+    program.disable(gl);
 
 }
 
@@ -123,8 +163,62 @@ void View::mouseDragged(int x,int y)
 
   trackballTransform =
       glm::rotate(glm::mat4(1.0),delta.x/trackballRadius,glm::vec3(0.0f,1.0f,0.0f)) *
-      glm::rotate(glm::mat4(1.0),delta.y/trackballRadius,glm::vec3(1.0f,0.0f,0.0f)) *
+      glm::rotate(glm::mat4(1.0),delta.y/trackballRadius,glm::vec3(-1.0f,0.0f,0.0f)) *
       trackballTransform;
+}
+
+//Keyboard Functions
+void View::createShape(string shape)
+{
+    //This function will add a cube at the origin to the scenegraph. Done by
+    //appending information to the scenegraph file
+    string xml_to_add;
+
+    //Add the transformations -- for now we will set this to a scale of 50
+    xml_to_add += "\n\t\t<transform>\n\t\t\t<set>\n\t\t\t\t<scale>50 50 50 </scale>\n\t\t\t</set>\n";
+
+    //Add the object
+    xml_to_add += "\n\t\t\t<object instanceof=\"";
+    xml_to_add += shape;
+    xml_to_add += "\">\n\t\t\t\t<material>\n\t\t\t\t\t<ambient>0.8 0.8 0.8</ambient>\n\t\t\t\t\t<diffuse>0.8 0.8 0.8</diffuse>\n";
+    xml_to_add += "\t\t\t\t\t<specular>0.8 0.8 0.8</specular>\n\t\t\t\t\t<shininess>100</shininess>\n\t\t\t\t</material>\n\t\t\t</object>\n\t\t</transform>\n";
+
+    //Now let's append to xml -- will be done by parsing for group tag and then appending
+    ifstream xml_read_file;
+    xml_read_file.open(sgraph_file_location);
+    ofstream copy_file;
+    copy_file.open("temp.txt");
+    string group_string = "<group>";
+
+    //Copy each line of xml into temp file -- when group tag has been parsed, add new xml
+    string line;
+    while(getline(xml_read_file, line))
+    {
+        if(line.find(group_string) != std::string::npos)
+        {
+            copy_file << line;
+            copy_file << xml_to_add;
+        }
+        else
+        {
+            copy_file << line << endl;
+        }
+    }
+
+    //Close files
+    copy_file.close();
+    xml_read_file.close();
+
+    cout << xml_to_add;
+
+    //Once file copied, rename sgraph file name
+    string delete_name = "scenegraphs/delete.xml";
+    std::rename(sgraph_file_location.c_str(), "scenegraphs/delete.xml");
+    int bad = std::rename("temp.txt", sgraph_file_location.c_str());
+    if(bad) {cout << "Couldn't rename\n"; }
+
+    //Delete old scene file
+    std::remove(delete_name.c_str());
 }
 
 void View::reshape(util::OpenGLFunctions& gl,int width,int height)

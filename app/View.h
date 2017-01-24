@@ -12,6 +12,7 @@ using namespace std;
 #include "VertexAttrib.h"
 #include "sgraph/GLScenegraphRenderer.h"
 #include <stack>
+#include <fstream>
 using namespace std;
 
 /*
@@ -33,8 +34,9 @@ public:
      */
     void init(util::OpenGLFunctions& e) throw(runtime_error);
 
+    //Scenegraph Functions
     void initScenegraph(util::OpenGLFunctions& e,const string& in) throw(runtime_error);
-
+    void recreateScenegraph(util::OpenGLFunctions&, const string&) throw(runtime_error);
     /*
      * This function is called whenever the window is to be redrawn
      */
@@ -50,9 +52,20 @@ public:
      */
     void dispose(util::OpenGLFunctions& gl);
 
+    //Mouse Functions
     void mousePressed(int x,int y);
     void mouseReleased(int x,int y);
     void mouseDragged(int x,int y);
+
+    //Keyboard Functions
+    void createShape(string shape);
+    void createCube();
+    void createSphere();
+    void createCylinder();
+    void createCone();
+    void clearScenegraph();
+
+
 
 private:
     //record the current window width and height
@@ -71,9 +84,14 @@ private:
     sgraph::Scenegraph *scenegraph;
     //the list of shader variables and their locations within the shader program
     util::ShaderLocationsVault shaderLocations;
-    //the GLSL shader
+   //the GLSL shader
     util::ShaderProgram program;
     sgraph::GLScenegraphRenderer renderer;
+
+    //Scenegraph File Location
+    string sgraph_file_location = "scenegraphs/sketch.xml";
+    string sgraph_updated = "scenegraphs/sketch_updated.xml";
+    string sgraph_default = "scenegraphs/sketch_default.xml";
 };
 
 #endif // VIEW_H

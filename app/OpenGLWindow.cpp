@@ -128,17 +128,31 @@ void OpenGLWindow::keyPressEvent(QKeyEvent *e)
 {
     switch(e->key())
     {
-    case Qt::key_1:
+    case Qt::Key_1:
         //Call Cube creation
+        view.createShape("box");
+        //Recreate scenegraph
+        view.recreateScenegraph(*gl, string("scenegraphs/sketch.xml"));
         break;
     case Qt::Key_2:
         //Call Sphere creation
+        view.createShape("sphere");
+        view.recreateScenegraph(*gl, string("scenegraphs/sketch.xml"));
         break;
     case Qt::Key_3:
         //Call Cylinder creation
+        view.createShape("cylinder");
+        view.recreateScenegraph(*gl, string("scenegraphs/sketch.xml"));
         break;
     case Qt::Key_4:
         //Call cone creation
+        view.createShape("cone");
+        view.recreateScenegraph(*gl, string("scenegraphs/sketch.xml"));
+        break;
+    case Qt::Key_C:
+        //Clear the scenegraph
+        view.clearScenegraph();
+        view.recreateScenegraph(*gl, string("scenegraphs/sketch.xml"));
         break;
     }
 }
