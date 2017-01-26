@@ -18,6 +18,14 @@ View::View()
   trackballTransform = glm::mat4(1.0);
   proj = glm::mat4(1.0);
   scenegraph = NULL;
+
+  //Populate the default attributes
+  default_attributes.insert(pair<string,vector<float>>("scale", {50, 50, 50}));
+  default_attributes.insert(pair<string,vector<float>>("ambient", {0.8f, 0.8f, 0.8f}));
+  default_attributes.insert(pair<string,vector<float>>("specular", {0.8f, 0.8f, 0.8f}));
+  default_attributes.insert(pair<string,vector<float>>("diffuse", {0.8f, 0.8f, 0.8f}));
+  default_attributes.insert(pair<string,vector<float>>("shininess", {100.0f}));
+
 }
 
 View::~View()
@@ -73,15 +81,16 @@ void View::recreateScenegraph(util::OpenGLFunctions &gl, const string& filename)
     if(scenegraph!=NULL)
         delete scenegraph;
 
+    //Allow group creation in XML
+    new_group = true;
+
     //Create scenegraph
-    program.enable(gl);
     sgraph::ScenegraphInfo<VertexAttrib> sinfo;
     sinfo = sgraph::SceneXMLReader::importScenegraph<VertexAttrib>(filename);
     scenegraph = sinfo.scenegraph;
 
-    //Pass scenegraph to renderer
+    //Pair scenegraph with renderer
     scenegraph->setRenderer(&renderer, sinfo.meshes);
-    program.disable(gl);
 
 }
 
@@ -167,13 +176,14 @@ void View::mouseDragged(int x,int y)
       trackballTransform;
 }
 
-//Keyboard Functions
+//Shape Creation Functions
 void View::createShape(string shape)
 {
     //This function will add a cube at the origin to the scenegraph. Done by
     //appending information to the scenegraph file
-    string xml_to_add;
+    string xml_to_add = generateXML(shape, default_attributes);
 
+    /*
     //Add the transformations -- for now we will set this to a scale of 50
     xml_to_add += "\n\t\t<transform>\n\t\t\t<set>\n\t\t\t\t<scale>50 50 50 </scale>\n\t\t\t</set>\n";
 
@@ -182,28 +192,48 @@ void View::createShape(string shape)
     xml_to_add += shape;
     xml_to_add += "\">\n\t\t\t\t<material>\n\t\t\t\t\t<ambient>0.8 0.8 0.8</ambient>\n\t\t\t\t\t<diffuse>0.8 0.8 0.8</diffuse>\n";
     xml_to_add += "\t\t\t\t\t<specular>0.8 0.8 0.8</specular>\n\t\t\t\t\t<shininess>100</shininess>\n\t\t\t\t</material>\n\t\t\t</object>\n\t\t</transform>\n";
+    */
 
     //Now let's append to xml -- will be done by parsing for group tag and then appending
     ifstream xml_read_file;
     xml_read_file.open(sgraph_file_location);
     ofstream copy_file;
     copy_file.open("temp.txt");
-    string group_string = "<group>";
+    string group_str = "<group>";
+    string append_str = "<!-- append -->"; //How else to denote insertion point?
 
     //Copy each line of xml into temp file -- when group tag has been parsed, add new xml
     string line;
     while(getline(xml_read_file, line))
     {
-        if(line.find(group_string) != std::string::npos)
+        if(!new_group)
         {
-            copy_file << line;
-            copy_file << xml_to_add;
+            if(line.find(group_str) != std::string::npos)
+            {
+                copy_file << line << xml_to_add;
+            }
+            else
+            {
+                copy_file << line << endl;
+            }
         }
         else
         {
-            copy_file << line << endl;
+            if(line.find(append_str) != std::string::npos)
+            {
+                copy_file << line << "\n\t<group>"<< xml_to_add << "\t</group>" << endl;
+            }
+            else
+            {
+                copy_file << line << endl;
+            }
+
         }
+
     }
+
+    //Set to false until new group is created
+    new_group = false;
 
     //Close files
     copy_file.close();
@@ -219,6 +249,82 @@ void View::createShape(string shape)
 
     //Delete old scene file
     std::remove(delete_name.c_str());
+}
+
+string View::generateXML(string shape, map<string,vector<float>> attributes)
+{
+    ///This function will generate the XML we will add to our file
+    string xml_to_add = "\n";
+
+    //Add transform/set tags
+    xml_to_add += "<transform>\n<set>\n</set>\n";
+
+    //Add object/material tags with correct shape
+    xml_to_add += "\n\n<object instanceof=\"";
+    xml_to_add += shape;
+    xml_to_add += "\">\n<material>\n</material>\n</object>\n</transform>\n";
+
+    //Now we'll parse attributes and add each to XML
+    xml_to_add = parseAttributes(xml_to_add, attributes);
+
+    return xml_to_add;
+}
+
+string View::parseAttributes(string xml, map<string,vector<float>> attributes)
+{
+    //At this point we have our transform, set, material and object tags in place. If we are
+    //doing a transformation, we will put inside of set, otherwise we will put inside
+    //of material
+    size_t insert_pos;
+    string insert_str;
+    string curr_val;
+    for(auto entry : attributes)
+    {
+        //Construct insert string
+        string tag = entry.first;
+        insert_str = "<" + tag + ">";
+
+        if(tag == "scale" || tag == "rotate" || tag == "translate")
+        {
+            //Do basic transform and put in <set>
+            insert_pos = xml.find("</set>"); //This should definitely be found because it is hardcoded
+            if(insert_pos == string::npos)
+            {
+                //Error
+                cerr << "Could not find set tag" << endl;
+            }
+        }
+        else
+        {
+            //Put inside <material>
+            insert_pos = xml.find("</material>");
+            if(insert_pos == string::npos)
+            {
+                //Error
+                cerr << "Could not find material tag" << endl;
+            }
+        }
+
+        //Iterate through values and add each
+        for(auto val : entry.second)
+        {
+            curr_val = to_string(val);
+            insert_str += curr_val + " ";
+        }
+        //After values inserted, close tag
+        insert_str += "</" + tag + ">\n";
+        //Insert new attribute string into xml
+        xml.insert(insert_pos, insert_str);
+    }
+
+    //Return new xml string
+    return xml;
+}
+
+void View::insertTabs(string& xml)
+{
+    ///This function will insert tabs into our xml string so it looks properly formatted
+
 }
 
 void View::reshape(util::OpenGLFunctions& gl,int width,int height)

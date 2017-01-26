@@ -18,20 +18,5 @@
         <spotdirection>0 -1 0 </spotdirection>
     </light>
 
-    <group>
-		<transform>
-			<set>
-				<scale>50 50 50 </scale>
-			</set>
-
-			<object instanceof="cone">
-				<material>
-					<ambient>0.8 0.8 0.8</ambient>
-					<diffuse>0.8 0.8 0.8</diffuse>
-					<specular>0.8 0.8 0.8</specular>
-					<shininess>100</shininess>
-				</material>
-			</object>
-		</transform>
-    </group>
+    <!-- append -->
 </scene>

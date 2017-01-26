@@ -18,6 +18,5 @@
         <spotdirection>0 -1 0 </spotdirection>
     </light>
 
-    <group>
-    </group>
+    <!-- append -->
 </scene>

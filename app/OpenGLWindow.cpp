@@ -11,17 +11,16 @@
 OpenGLWindow::OpenGLWindow(QWindow *parent)    
     :QOpenGLWindow(UpdateBehavior::NoPartialUpdate,parent)
 {
-    //changes the title shown on the window
+    //Set window parameters
     this->setTitle("Sketch Tool");
-    //resize the window to (800,800). This will result in a call to resizeGL
-    this->resize(500,500);
+    this->resize(800,800);
 
-    //make sure we have OpenGL 3.3 (major.minor), with 16-bit buffers
+    //Format
     QSurfaceFormat format;
- //   format.setDepthBufferSize(24);
+ // format.setDepthBufferSize(24);
     format.setStencilBufferSize(8);
-//    format.setMajorVersion(4);
-//    format.setMinorVersion(0);
+//  format.setMajorVersion(4);
+//  format.setMinorVersion(0);
     format.setProfile(QSurfaceFormat::CoreProfile);
     this->setFormat(format);
 
@@ -131,7 +130,6 @@ void OpenGLWindow::keyPressEvent(QKeyEvent *e)
     case Qt::Key_1:
         //Call Cube creation
         view.createShape("box");
-        //Recreate scenegraph
         view.recreateScenegraph(*gl, string("scenegraphs/sketch.xml"));
         break;
     case Qt::Key_2:

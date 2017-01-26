@@ -57,12 +57,11 @@ public:
     void mouseReleased(int x,int y);
     void mouseDragged(int x,int y);
 
-    //Keyboard Functions
+    //Shape Creation Functions
     void createShape(string shape);
-    void createCube();
-    void createSphere();
-    void createCylinder();
-    void createCone();
+    string generateXML(string shape, map<string,vector<float>> attributes);
+    string parseAttributes(string xml, map<string,vector<float>>);
+    void insertTabs(string&);
     void clearScenegraph();
 
 
@@ -92,6 +91,12 @@ private:
     string sgraph_file_location = "scenegraphs/sketch.xml";
     string sgraph_updated = "scenegraphs/sketch_updated.xml";
     string sgraph_default = "scenegraphs/sketch_default.xml";
+
+    //Used for auto-tabbing of XML
+    bool new_group = true;
+
+    //Used to assign attributes to new xml objects
+    map<string,vector<float>> default_attributes;
 };
 
 #endif // VIEW_H
