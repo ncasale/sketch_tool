@@ -292,7 +292,8 @@ public:
             if (textures.count(textureName)>0)
               textures[textureName]->getTexture()->bind();
             else if (textures.count("white")>0)
-              textures["white"]->getTexture()->bind();
+              //textures["white"]->getTexture()->bind();
+              textures["checkerboard"]->getTexture()->bind();
 
             meshRenderers[name]->draw(*glContext);
         }

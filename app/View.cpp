@@ -53,6 +53,9 @@ void View::clearScenegraph()
     //Close files
     sketch_file.close();
     default_file.close();
+
+    //Reset trackball transform
+    trackballTransform = glm::mat4(1.0f);
 }
 
 void View::initScenegraph(util::OpenGLFunctions &gl, const string& filename) throw(runtime_error)
@@ -72,6 +75,7 @@ void View::initScenegraph(util::OpenGLFunctions &gl, const string& filename) thr
   shaderVarsToVertexAttribs["vTexCoord"] = "texcoord";
   renderer.initShaderProgram(program,shaderVarsToVertexAttribs);
   scenegraph->setRenderer<VertexAttrib>(&renderer,sinfo.meshes);
+
   program.disable(gl);
 
 }
@@ -112,7 +116,7 @@ void View::init(util::OpenGLFunctions& gl) throw(runtime_error)
 
 void View::draw(util::OpenGLFunctions& gl)
 {
-  gl.glClearColor(0,0,0,1);
+  gl.glClearColor(0,1,0,1);
   gl.glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   gl.glEnable(GL_DEPTH_TEST);
 
@@ -131,7 +135,7 @@ void View::draw(util::OpenGLFunctions& gl)
          */
   modelview.push(glm::mat4(1.0));
   modelview.top() = modelview.top() *
-      glm::lookAt(glm::vec3(70.0f,100.0f,-80.0f),
+      glm::lookAt(glm::vec3(0.0f,0.0f,-100.0f),
                   glm::vec3(0.0f,0.0f,0.0f),
                   glm::vec3(0.0f,1.0f,0.0f)) *
       trackballTransform;
@@ -182,17 +186,6 @@ void View::createShape(string shape)
     //This function will add a cube at the origin to the scenegraph. Done by
     //appending information to the scenegraph file
     string xml_to_add = generateXML(shape, default_attributes);
-
-    /*
-    //Add the transformations -- for now we will set this to a scale of 50
-    xml_to_add += "\n\t\t<transform>\n\t\t\t<set>\n\t\t\t\t<scale>50 50 50 </scale>\n\t\t\t</set>\n";
-
-    //Add the object
-    xml_to_add += "\n\t\t\t<object instanceof=\"";
-    xml_to_add += shape;
-    xml_to_add += "\">\n\t\t\t\t<material>\n\t\t\t\t\t<ambient>0.8 0.8 0.8</ambient>\n\t\t\t\t\t<diffuse>0.8 0.8 0.8</diffuse>\n";
-    xml_to_add += "\t\t\t\t\t<specular>0.8 0.8 0.8</specular>\n\t\t\t\t\t<shininess>100</shininess>\n\t\t\t\t</material>\n\t\t\t</object>\n\t\t</transform>\n";
-    */
 
     //Now let's append to xml -- will be done by parsing for group tag and then appending
     ifstream xml_read_file;
@@ -321,11 +314,113 @@ string View::parseAttributes(string xml, map<string,vector<float>> attributes)
     return xml;
 }
 
-void View::insertTabs(string& xml)
+void View::insertTabs()
 {
-    ///This function will insert tabs into our xml string so it looks properly formatted
+    ///This function will insert tabs into our xml file for formatting
+    //Open XML File
+    fstream xml_file;
+    ofstream temp_file;
+    xml_file.open(sgraph_file_location);
+    string temp_file_name = "scenegraphs/temp_format.xml";
+    temp_file.open(temp_file_name);
 
+    //Bookkeeping
+    int current_tab = 0;
+    bool in_set = false;
+    bool in_material = false;
+
+    string line;
+    string formatted_line;
+
+    if(xml_file.is_open())
+    {
+        while(getline(xml_file, line))
+        {
+            //Clear formatted line
+            formatted_line.clear();
+
+            //Decrement tab count if needed
+            if(decrementTab(line))
+                current_tab--;
+
+            //Add correct amount of tabs
+            for(int i = 0; i < current_tab; i++)
+            {
+                formatted_line += "\t";
+            }
+
+            //Put line back into file
+            formatted_line += line;
+            temp_file << formatted_line << endl;
+
+            //Increment tab count if necessary
+            if(incrementTab(line))
+                current_tab++;
+        }
+    }
+
+    //Close files
+    xml_file.close();
+    temp_file.close();
+
+    //Once file copied, rename sgraph file name
+    string delete_name = "scenegraphs/delete.xml";
+    std::rename(sgraph_file_location.c_str(), delete_name.c_str());
+    int bad = std::rename(temp_file_name.c_str(), sgraph_file_location.c_str());
+    if(bad) {cout << "Couldn't rename\n"; }
+
+    //Delete old scene file
+    std::remove(delete_name.c_str());
 }
+
+bool View::incrementTab(string line)
+{
+    ///Returns true if we should increment tab count for xml file
+    if(line.find("<scene") != string::npos)
+        return true;
+
+    if(line.find("<light") != string::npos)
+        return true;
+
+    if(line.find("<group") != string::npos)
+        return true;
+
+    if(line.find("<transform") != string::npos)
+        return true;
+
+    if(line.find("<material") != string::npos)
+        return true;
+
+    if(line.find("<object") != string::npos)
+        return true;
+
+    return false;
+}
+
+bool View::decrementTab(string line)
+{
+    ///Returns true if we should decrement tab count for xml file
+    if(line.find("</scene") != string::npos)
+        return true;
+
+    if(line.find("</light") != string::npos)
+        return true;
+
+    if(line.find("</group") != string::npos)
+        return true;
+
+    if(line.find("</transform") != string::npos)
+        return true;
+
+    if(line.find("</material") != string::npos)
+        return true;
+
+    if(line.find("</object") != string::npos)
+        return true;
+
+    return false;
+}
+
 
 void View::reshape(util::OpenGLFunctions& gl,int width,int height)
 {

@@ -152,6 +152,10 @@ void OpenGLWindow::keyPressEvent(QKeyEvent *e)
         view.clearScenegraph();
         view.recreateScenegraph(*gl, string("scenegraphs/sketch.xml"));
         break;
+    case Qt::Key_T:
+        //Format XML file
+        view.insertTabs();
+        break;
     }
 }
 

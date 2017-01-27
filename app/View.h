@@ -61,7 +61,9 @@ public:
     void createShape(string shape);
     string generateXML(string shape, map<string,vector<float>> attributes);
     string parseAttributes(string xml, map<string,vector<float>>);
-    void insertTabs(string&);
+    void insertTabs();
+    bool incrementTab(string);
+    bool decrementTab(string);
     void clearScenegraph();
 
 
