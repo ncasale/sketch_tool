@@ -6,7 +6,7 @@
 <image name="white" path="textures/white.png" />
 <image name="earth" path="textures/earthmap.png" />
 <image name="dice" path="textures/die.png" />
-<image name="checkerboard" path="textures/checkerboard-box.png" />
+<image name="checkerboard" path="textures/checkerboard.png" />
 
 
 <light>
