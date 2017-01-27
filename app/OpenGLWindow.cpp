@@ -17,7 +17,7 @@ OpenGLWindow::OpenGLWindow(QWindow *parent)
 
     //Format
     QSurfaceFormat format;
- // format.setDepthBufferSize(24);
+    format.setDepthBufferSize(24);
     format.setStencilBufferSize(8);
 //  format.setMajorVersion(4);
 //  format.setMinorVersion(0);
