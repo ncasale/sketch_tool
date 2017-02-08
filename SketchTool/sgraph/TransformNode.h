@@ -34,6 +34,10 @@ namespace sgraph
      */
     INode *child;
 
+    /**
+      * Add transformation container here
+      */
+
   public:
     TransformNode(sgraph::Scenegraph *graph,const string& name)
       :AbstractNode(graph,name)
