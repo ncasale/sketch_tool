@@ -126,6 +126,8 @@ namespace sgraph
      */
     virtual void addLight(const util::Light& l)=0;
 
+    virtual void clearChildren()=0;
+
     /**
        * Return a list of all lights in this scene graph in the view coordinate
        * system This function is called on the root of the scene graph. It is

@@ -144,14 +144,13 @@ void OpenGLWindow::keyPressEvent(QKeyEvent *e)
     case Qt::Key_C:
         //Clear the scenegraph
         view.clearScenegraph();
-        view.recreateScenegraph(*gl, string("scenegraphs/sketch.xml"));
         break;
     case Qt::Key_T:
         //Format XML file
         view.insertTabs(view.getSgraphFileLocation());
         break;
     case Qt::Key_S:
-        //Save the XML Fi"le
+        //Save the XML File
         view.saveXMLFile("scenegraphs/test_save.xml");
         view.insertTabs("scenegraphs/test_save.xml");
         break;

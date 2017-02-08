@@ -81,6 +81,15 @@ void View::addShapeToSGraph(string shape)
 
 void View::clearScenegraph()
 {
+    //This will clear the scenegraph by deleting all children nodes
+    //of the root
+    scenegraph->getRoot()->clearChildren();
+    trackballTransform = glm::mat4(1.0f);
+}
+
+/* DEPRECATED
+ * void View::clearScenegraph()
+{
     //Revert sketch.xml back to default
     //Now let's append to xml -- will be done by parsing for group tag and then appending
     ifstream default_file;
@@ -102,6 +111,7 @@ void View::clearScenegraph()
     //Reset trackball transform
     trackballTransform = glm::mat4(1.0f);
 }
+*/
 
 void View::initScenegraph(util::OpenGLFunctions &gl, const string& filename) throw(runtime_error)
 {
@@ -125,6 +135,7 @@ void View::initScenegraph(util::OpenGLFunctions &gl, const string& filename) thr
 
 }
 
+/* DEPRECATED
 void View::recreateScenegraph(util::OpenGLFunctions &gl, const string& filename) throw(runtime_error)
 {
     if(scenegraph!=NULL)
@@ -142,6 +153,7 @@ void View::recreateScenegraph(util::OpenGLFunctions &gl, const string& filename)
     scenegraph->setRenderer(&renderer, sinfo.meshes);
 
 }
+*/
 
 void View::init(util::OpenGLFunctions& gl) throw(runtime_error)
 {
@@ -329,7 +341,7 @@ void View::saveLights(fstream& output_file)
 
 }
 
-/*
+/*DEPRECATED
 //Shape Creation Functions
 void View::createShape(string shape)
 {
@@ -394,6 +406,7 @@ void View::createShape(string shape)
     std::remove(delete_name.c_str());
 }
 
+DEPRECATED
 string View::generateXML(string shape, map<string,vector<float>> attributes)
 {
     ///This function will generate the XML we will add to our file
@@ -415,7 +428,7 @@ string View::generateXML(string shape, map<string,vector<float>> attributes)
 
 
 
-
+DEPRECATED
  string View::parseAttributes(string xml, map<string,vector<float>> attributes)
 {
     //At this point we have our transform, set, material and object tags in place. If we are

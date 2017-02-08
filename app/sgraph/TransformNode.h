@@ -49,6 +49,11 @@ namespace sgraph
         delete child;
     }
 
+    void clearChildren() throw(runtime_error)
+    {
+        throw runtime_error("Not a group node -- cannot clear children");
+    }
+
     /**
      * Creates a deep copy of the subtree rooted at this node
      * \return a deep copy of the subtree rooted at this node
