@@ -18,14 +18,6 @@ View::View()
   trackballTransform = glm::mat4(1.0);
   proj = glm::mat4(1.0);
   scenegraph = NULL;
-
-  //Populate the default attributes
-  default_attributes.insert(pair<string,vector<float>>("scale", {50, 50, 50}));
-  default_attributes.insert(pair<string,vector<float>>("ambient", {0.8f, 0.8f, 0.8f}));
-  default_attributes.insert(pair<string,vector<float>>("specular", {0.8f, 0.8f, 0.8f}));
-  default_attributes.insert(pair<string,vector<float>>("diffuse", {0.8f, 0.8f, 0.8f}));
-  default_attributes.insert(pair<string,vector<float>>("shininess", {100.0f}));
-
 }
 
 View::~View()
@@ -33,118 +25,6 @@ View::~View()
   if (scenegraph!=NULL)
     delete scenegraph;
 }
-
-void View::addShapeToSGraph(string shape)
-{
-    //Start by creating a new group node
-    //stack<sgraph::INode*> stacknodes;
-    sgraph::INode* group_node = new sgraph::GroupNode(scenegraph, "");
-    //stacknodes.push(group_node);
-    //Make group node child of root to start
-    scenegraph->getRoot()->addChild(group_node);
-
-
-    //Now create a transform node
-    sgraph::INode* transform_node = new sgraph::TransformNode(scenegraph, "");
-    //Apply scale of 50 to all dimensions
-    glm::mat4 transform_mat = glm::mat4(1.0f);
-    transform_mat = transform_mat *
-                    glm::scale(glm::mat4(1.0f), glm::vec3(50.0f, 50.0f, 50.0f));
-    transform_node->setTransform(transform_mat);
-    //Make transfrom node a child of group node
-    group_node->addChild(transform_node);
-
-    //Now let's create leaf (object) node
-    sgraph::INode* leaf_node = new sgraph::LeafNode(shape, scenegraph, "");
-    //Material for leaf
-    util::Material mat;
-    mat.setAmbient(0.8f, 0.8f, 0.8f);
-    mat.setDiffuse(0.8f, 0.8f, 0.8f);
-    mat.setSpecular(0.8f, 0.8f, 0.8f);
-    mat.setShininess(100.0f);
-    //Apply material
-    leaf_node->setMaterial(mat);
-    //Make leaf node child of transform node
-    transform_node->addChild(leaf_node);
-
-    return;
-}
-
-void View::clearScenegraph()
-{
-    //This will clear the scenegraph by deleting all children nodes
-    //of the root
-    scenegraph->getRoot()->clearChildren();
-    trackballTransform = glm::mat4(1.0f);
-}
-
-/* DEPRECATED
- * void View::clearScenegraph()
-{
-    //Revert sketch.xml back to default
-    //Now let's append to xml -- will be done by parsing for group tag and then appending
-    ifstream default_file;
-    default_file.open(sgraph_default);
-    ofstream sketch_file;
-    sketch_file.open(sgraph_file_location);
-
-    //Copy each line of default file into sketch.xml
-    string line;
-    while(getline(default_file, line))
-    {
-        sketch_file << line << endl;
-    }
-
-    //Close files
-    sketch_file.close();
-    default_file.close();
-
-    //Reset trackball transform
-    trackballTransform = glm::mat4(1.0f);
-}
-*/
-
-void View::initScenegraph(util::OpenGLFunctions &gl, const string& filename) throw(runtime_error)
-{
-  if (scenegraph!=NULL)
-    delete scenegraph;
-
-  program.enable(gl);
-  sgraph::ScenegraphInfo<VertexAttrib> sinfo;
-  sinfo = sgraph::SceneXMLReader::importScenegraph<VertexAttrib>(filename);
-  scenegraph = sinfo.scenegraph;
-
-  renderer.setContext(&gl);
-  map<string,string> shaderVarsToVertexAttribs;
-  shaderVarsToVertexAttribs["vPosition"] = "position";
-  shaderVarsToVertexAttribs["vNormal"] = "normal";
-  shaderVarsToVertexAttribs["vTexCoord"] = "texcoord";
-  renderer.initShaderProgram(program,shaderVarsToVertexAttribs);
-  scenegraph->setRenderer<VertexAttrib>(&renderer,sinfo.meshes);
-
-  program.disable(gl);
-
-}
-
-/* DEPRECATED
-void View::recreateScenegraph(util::OpenGLFunctions &gl, const string& filename) throw(runtime_error)
-{
-    if(scenegraph!=NULL)
-        delete scenegraph;
-
-    //Allow group creation in XML
-    new_group = true;
-
-    //Create scenegraph
-    sgraph::ScenegraphInfo<VertexAttrib> sinfo;
-    sinfo = sgraph::SceneXMLReader::importScenegraph<VertexAttrib>(filename);
-    scenegraph = sinfo.scenegraph;
-
-    //Pair scenegraph with renderer
-    scenegraph->setRenderer(&renderer, sinfo.meshes);
-
-}
-*/
 
 void View::init(util::OpenGLFunctions& gl) throw(runtime_error)
 {
@@ -162,6 +42,15 @@ void View::init(util::OpenGLFunctions& gl) throw(runtime_error)
   shaderLocations = program.getAllShaderVariables(gl);
 }
 
+/**
+ * @brief View::draw
+ * Main draw function. This is originally called from MyGLWidget::paintGL().
+ * Applies current trackball transformation to modelview matrix and then
+ * passes this modelview to the scenegraph for drawing.
+ *
+ * @param gl
+ * Wrapper for OpenGL functionality
+ */
 void View::draw(util::OpenGLFunctions& gl)
 {
   gl.glClearColor(0,1,0,1);
@@ -205,32 +94,172 @@ void View::draw(util::OpenGLFunctions& gl)
   program.disable(gl);
 }
 
-void View::mousePressed(int x,int y)
+/**
+ * @brief View::reshape
+ * This function is called whenever window is resized
+ *
+ * @param gl
+ * Wrapper for OpenGL functionality
+ *
+ * @param width
+ * The new width of the window
+ *
+ * @param height
+ * The new height of the window
+ */
+void View::reshape(util::OpenGLFunctions& gl,int width,int height)
 {
-  mousePos = glm::vec2(x,y);
+  //record the new width and height
+  WINDOW_WIDTH = width;
+  WINDOW_HEIGHT = height;
+
+  /*
+     * The viewport is the portion of the screen window where the drawing
+     * would be placed. We want it to take up the entire area of the window
+     * so we set the viewport to be the entire window.
+     * Look at documentation of glViewport
+     */
+
+  gl.glViewport(0, 0, width, height);
+
+  /*
+     * This sets up the part of our virtual world that will be visible in
+     * the screen window. Since this program is drawing 2D, the virtual world
+     * is 2D. Thus this window can be specified in terms of a rectangle
+     * Look at the documentation of glOrtho2D, which glm::ortho implements
+     */
+
+  proj = glm::perspective(glm::radians(120.0f),(float)width/height,0.1f,10000.0f);
+
 }
 
-void View::mouseReleased(int x,int y)
+/**
+ * @brief View::dispose
+ * Called when current window is no longer needed
+ * @param gl
+ * Wrapper for OpenGL functionality
+ */
+void View::dispose(util::OpenGLFunctions& gl)
 {
+  //clean up the OpenGL resources used by the object
+  scenegraph->dispose();
+  renderer.dispose();
+  //release the shader resources
+  program.releaseShaders(gl);
+}
+
+/**
+ * @brief View::initScenegraph
+ * Initializes the scenegraph used to render scene
+ *
+ * @param gl
+ * Wrapper for OpenGL functionality
+ *
+ * @param filename
+ * Name of the file from which to load the scenegraph
+ */
+void View::initScenegraph(util::OpenGLFunctions &gl, const string& filename) throw(runtime_error)
+{
+  if (scenegraph!=NULL)
+    delete scenegraph;
+
+  program.enable(gl);
+  sgraph::ScenegraphInfo<VertexAttrib> sinfo;
+  sinfo = sgraph::SceneXMLReader::importScenegraph<VertexAttrib>(filename);
+  scenegraph = sinfo.scenegraph;
+
+  renderer.setContext(&gl);
+  map<string,string> shaderVarsToVertexAttribs;
+  shaderVarsToVertexAttribs["vPosition"] = "position";
+  shaderVarsToVertexAttribs["vNormal"] = "normal";
+  shaderVarsToVertexAttribs["vTexCoord"] = "texcoord";
+  renderer.initShaderProgram(program,shaderVarsToVertexAttribs);
+  scenegraph->setRenderer<VertexAttrib>(&renderer,sinfo.meshes);
+
+  program.disable(gl);
 
 }
 
-void View::mouseDragged(int x,int y)
+/**
+ * @brief View::addToScenegraph
+ * Adds a new model to the scenegraph
+ *
+ * @param shape
+ * The type of model we want to add to scene. Options are:
+ *  - "box"
+ *  - "sphere"
+ *  - "cylinder"
+ *  - "cone"
+ */
+void View::addToScenegraph(string shape)
 {
-  glm::vec2 newM = glm::vec2((float)x,(float)y);
+    //Start by creating a new group node
+    //stack<sgraph::INode*> stacknodes;
+    sgraph::INode* group_node = new sgraph::GroupNode(scenegraph, "");
+    //stacknodes.push(group_node);
+    //Make group node child of root to start
+    scenegraph->getRoot()->addChild(group_node);
 
-  glm::vec2 delta = glm::vec2((float)(newM.x-mousePos.x),(float)(newM.y-mousePos.y));
-  mousePos = newM;
 
-  trackballTransform =
-      glm::rotate(glm::mat4(1.0),delta.x/trackballRadius,glm::vec3(0.0f,1.0f,0.0f)) *
-      glm::rotate(glm::mat4(1.0),delta.y/trackballRadius,glm::vec3(-1.0f,0.0f,0.0f)) *
-      trackballTransform;
+    //Now create a transform node
+    sgraph::INode* transform_node = new sgraph::TransformNode(scenegraph, "");
+    //Apply scale of 50 to all dimensions
+    glm::mat4 transform_mat = glm::mat4(1.0f);
+    transform_mat = transform_mat *
+                    glm::scale(glm::mat4(1.0f), glm::vec3(50.0f, 50.0f, 50.0f));
+    transform_node->setTransform(transform_mat);
+    //Make transfrom node a child of group node
+    group_node->addChild(transform_node);
+
+    //Now let's create leaf (object) node
+    sgraph::INode* leaf_node = new sgraph::LeafNode(shape, scenegraph, "");
+    //Material for leaf
+    util::Material mat;
+    mat.setAmbient(0.8f, 0.8f, 0.8f);
+    mat.setDiffuse(0.8f, 0.8f, 0.8f);
+    mat.setSpecular(0.8f, 0.8f, 0.8f);
+    mat.setShininess(100.0f);
+    //Apply material
+    leaf_node->setMaterial(mat);
+    //Make leaf node child of transform node
+    transform_node->addChild(leaf_node);
+
+    return;
 }
 
+/**
+ * @brief View::clearScenegraph
+ * Deletes all children of scenegraph root node - effectively clearing the
+ * scenegraph
+ */
+void View::clearScenegraph()
+{
+    //This will clear the scenegraph by deleting all children nodes
+    //of the root
+    scenegraph->getRoot()->clearChildren();
+    trackballTransform = glm::mat4(1.0f);
+}
+
+/**
+ * @brief View::init
+ * Initializes view by configuring shaders. Also the first function in which
+ * OpenGL functions will work -- don't try to use OpenGL in the constructor
+ *
+ * @param gl
+ * Wrapper for OpenGL functionality
+ */
+
+/**
+* @brief View::saveXMLFile
+* Used to save the current scenegraph to an XML file. Works similar to
+* scenegraph::draw function in that it recurses through graph structure
+* and creates XML snippets for Objects, Textures, Lights and Nodes.
+*
+* @param file_name: name of file to write to
+**/
 void View::saveXMLFile(string file_name)
 {
-    //This file will save the current scenegraph to a file designated by the file_name string
+    //Open file for writing
     fstream output_file;
     output_file.open(file_name, fstream::out);
 
@@ -252,6 +281,14 @@ void View::saveXMLFile(string file_name)
     }
 }
 
+/**
+ * @brief View::saveObjects
+ * Creates and saves XML snippet for each
+ * object file used in the rendering of scenegraph
+ *
+ * @param output_file:
+ * fstream object representing the file to which we are writing XML
+ */
 void View::saveObjects(fstream& output_file)
 {
     //Grab objects map from scenegraph
@@ -270,6 +307,14 @@ void View::saveObjects(fstream& output_file)
     }
 }
 
+/**
+ * @brief View::saveTextures
+ * Creates and saves XML snippet for each texture used in rendering of
+ * scenegraph
+ *
+ * @param output_file
+ * fstream object representing the file to which we are writing XML
+ */
 void View::saveTextures(fstream& output_file)
 {
     //Grab texture map from scenegraph
@@ -289,6 +334,14 @@ void View::saveTextures(fstream& output_file)
     }
 }
 
+/**
+ * @brief View::saveLights
+ * Creates and saves XML snippet for each texture used in rendering of
+ * scenegraph
+ *
+ * @param output_file
+ * fstream object representing the file to which we are writing XML
+ */
 void View::saveLights(fstream& output_file)
 {
     //Grab lights from scenegraph renderer
@@ -332,146 +385,15 @@ void View::saveLights(fstream& output_file)
 
 }
 
-/*DEPRECATED
-//Shape Creation Functions
-void View::createShape(string shape)
-{
-    //This function will add a cube at the origin to the scenegraph. Done by
-    //appending information to the scenegraph file
-    string xml_to_add = generateXML(shape, default_attributes);
-
-    //Now let's append to xml -- will be done by parsing for group tag and then appending
-    ifstream xml_read_file;
-    xml_read_file.open(sgraph_file_location);
-    ofstream copy_file;
-    copy_file.open("temp.txt");
-    string group_str = "<group>";
-    string append_str = "<!-- append -->"; //How else to denote insertion point?
-
-    //Copy each line of xml into temp file -- when group tag has been parsed, add new xml
-    string line;
-    while(getline(xml_read_file, line))
-    {
-        if(!new_group)
-        {
-            if(line.find(group_str) != std::string::npos)
-            {
-                copy_file << line << xml_to_add;
-            }
-            else
-            {
-                copy_file << line << endl;
-            }
-        }
-        else
-        {
-            if(line.find(append_str) != std::string::npos)
-            {
-                copy_file << line << "\n\t<group>"<< xml_to_add << "\t</group>" << endl;
-            }
-            else
-            {
-                copy_file << line << endl;
-            }
-
-        }
-
-    }
-
-    //Set to false until new group is created
-    new_group = false;
-
-    //Close files
-    copy_file.close();
-    xml_read_file.close();
-
-    cout << xml_to_add;
-
-    //Once file copied, rename sgraph file name
-    string delete_name = "scenegraphs/delete.xml";
-    std::rename(sgraph_file_location.c_str(), "scenegraphs/delete.xml");
-    int bad = std::rename("temp.txt", sgraph_file_location.c_str());
-    if(bad) {cout << "Couldn't rename\n"; }
-
-    //Delete old scene file
-    std::remove(delete_name.c_str());
-}
-
-DEPRECATED
-string View::generateXML(string shape, map<string,vector<float>> attributes)
-{
-    ///This function will generate the XML we will add to our file
-    string xml_to_add = "\n";
-
-    //Add transform/set tags
-    xml_to_add += "<transform>\n<set>\n</set>\n";
-
-    //Add object/material tags with correct shape
-    xml_to_add += "\n\n<object instanceof=\"";
-    xml_to_add += shape;
-    xml_to_add += "\">\n<material>\n</material>\n</object>\n</transform>\n";
-
-    //Now we'll parse attributes and add each to XML
-    xml_to_add = parseAttributes(xml_to_add, attributes);
-
-    return xml_to_add;
-}
-
-
-
-DEPRECATED
- string View::parseAttributes(string xml, map<string,vector<float>> attributes)
-{
-    //At this point we have our transform, set, material and object tags in place. If we are
-    //doing a transformation, we will put inside of set, otherwise we will put inside
-    //of material
-    size_t insert_pos;
-    string insert_str;
-    string curr_val;
-    for(auto entry : attributes)
-    {
-        //Construct insert string
-        string tag = entry.first;
-        insert_str = "<" + tag + ">";
-
-        if(tag == "scale" || tag == "rotate" || tag == "translate")
-        {
-            //Do basic transform and put in <set>
-            insert_pos = xml.find("</set>"); //This should definitely be found because it is hardcoded
-            if(insert_pos == string::npos)
-            {
-                //Error
-                cerr << "Could not find set tag" << endl;
-            }
-        }
-        else
-        {
-            //Put inside <material>
-            insert_pos = xml.find("</material>");
-            if(insert_pos == string::npos)
-            {
-                //Error
-                cerr << "Could not find material tag" << endl;
-            }
-        }
-
-        //Iterate through values and add each
-        for(auto val : entry.second)
-        {
-            curr_val = to_string(val);
-            insert_str += curr_val + " ";
-        }
-        //After values inserted, close tag
-        insert_str += "</" + tag + ">\n";
-        //Insert new attribute string into xml
-        xml.insert(insert_pos, insert_str);
-    }
-
-    //Return new xml string
-    return xml;
-}
-*/
-
+/**
+ * @brief View::insertTabs
+ * When XML is written to output file using View::saveXMLFile, it is not
+ * formatted in a visually appealing way. View::insertTabs parses the output
+ * file and tabs out portions of the XML to improve readability
+ *
+ * @param filename
+ * The name of the file we want to parse and insert tabs into
+ */
 void View::insertTabs(string filename)
 {
     ///This function will insert tabs into our xml file for formatting
@@ -531,6 +453,19 @@ void View::insertTabs(string filename)
     std::remove(delete_name.c_str());
 }
 
+/**
+ * @brief View::incrementTab
+ * Used to determine whether or not View::insertTabs should increment its
+ * internal count of the number of tabs to apply to the current line.
+ *
+ * @param line
+ * The current line of the XML output file. This parameter is parsed for
+ * specific tags that correspond to tab count being incremented.
+ *
+ * @return
+ * Returns true if View::insertTabs should increment its internal tab count.
+ * Returns false otherwise.
+ */
 bool View::incrementTab(string line)
 {
     ///Returns true if we should increment tab count for xml file
@@ -555,6 +490,19 @@ bool View::incrementTab(string line)
     return false;
 }
 
+/**
+ * @brief View::decrementTab
+ * Used to determine wheter or not View::insertTabs should decrement its
+ * internal count of the number of tabs to apply to the current line
+ *
+ * @param line
+ * The current line of the XML output file. This parameter is parsed for
+ * specific tags that each correspond to tab count being decremented.
+ *
+ * @return
+ * Returns true if View::insertTabs should decrement its internal tab count
+ * Returns false otherwise
+ */
 bool View::decrementTab(string line)
 {
     ///Returns true if we should decrement tab count for xml file
@@ -579,38 +527,25 @@ bool View::decrementTab(string line)
     return false;
 }
 
-
-void View::reshape(util::OpenGLFunctions& gl,int width,int height)
+void View::mousePressed(int x,int y)
 {
-  //record the new width and height
-  WINDOW_WIDTH = width;
-  WINDOW_HEIGHT = height;
+  mousePos = glm::vec2(x,y);
+}
 
-  /*
-     * The viewport is the portion of the screen window where the drawing
-     * would be placed. We want it to take up the entire area of the window
-     * so we set the viewport to be the entire window.
-     * Look at documentation of glViewport
-     */
-
-  gl.glViewport(0, 0, width, height);
-
-  /*
-     * This sets up the part of our virtual world that will be visible in
-     * the screen window. Since this program is drawing 2D, the virtual world
-     * is 2D. Thus this window can be specified in terms of a rectangle
-     * Look at the documentation of glOrtho2D, which glm::ortho implements
-     */
-
-  proj = glm::perspective(glm::radians(120.0f),(float)width/height,0.1f,10000.0f);
+void View::mouseReleased(int x,int y)
+{
 
 }
 
-void View::dispose(util::OpenGLFunctions& gl)
+void View::mouseDragged(int x,int y)
 {
-  //clean up the OpenGL resources used by the object
-  scenegraph->dispose();
-  renderer.dispose();
-  //release the shader resources
-  program.releaseShaders(gl);
+  glm::vec2 newM = glm::vec2((float)x,(float)y);
+
+  glm::vec2 delta = glm::vec2((float)(newM.x-mousePos.x),(float)(newM.y-mousePos.y));
+  mousePos = newM;
+
+  trackballTransform =
+      glm::rotate(glm::mat4(1.0),delta.x/trackballRadius,glm::vec3(0.0f,1.0f,0.0f)) *
+      glm::rotate(glm::mat4(1.0),delta.y/trackballRadius,glm::vec3(-1.0f,0.0f,0.0f)) *
+      trackballTransform;
 }
