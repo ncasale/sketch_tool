@@ -34,6 +34,51 @@ View::~View()
     delete scenegraph;
 }
 
+void View::printSgraphNodes()
+{
+    //Iterate through sgraph map and print nodes
+    for(auto entry : scenegraph->getNodes())
+    {
+
+    }
+}
+
+void View::addShapeToSGraph(string shape)
+{
+    //Start by creating a new group node
+    //stack<sgraph::INode*> stacknodes;
+    sgraph::INode* group_node = new sgraph::GroupNode(scenegraph, "");
+    //stacknodes.push(group_node);
+    //Make group node child of root to start
+    scenegraph->getRoot()->addChild(group_node);
+
+
+    //Now create a transform node
+    sgraph::INode* transform_node = new sgraph::TransformNode(scenegraph, "");
+    //Apply scale of 50 to all dimensions
+    glm::mat4 transform_mat = glm::mat4(1.0f);
+    transform_mat = transform_mat *
+                    glm::scale(glm::mat4(1.0f), glm::vec3(50.0f, 50.0f, 50.0f));
+    transform_node->setTransform(transform_mat);
+    //Make transfrom node a child of group node
+    group_node->addChild(transform_node);
+
+    //Now let's create leaf (object) node
+    sgraph::INode* leaf_node = new sgraph::LeafNode(shape, scenegraph, "");
+    //Material for leaf
+    util::Material mat;
+    mat.setAmbient(0.8f, 0.8f, 0.8f);
+    mat.setDiffuse(0.8f, 0.8f, 0.8f);
+    mat.setSpecular(0.8f, 0.8f, 0.8f);
+    mat.setShininess(100.0f);
+    //Apply material
+    leaf_node->setMaterial(mat);
+    //Make leaf node child of transform node
+    transform_node->addChild(leaf_node);
+
+    return;
+}
+
 void View::clearScenegraph()
 {
     //Revert sketch.xml back to default
@@ -180,6 +225,111 @@ void View::mouseDragged(int x,int y)
       trackballTransform;
 }
 
+void View::saveXMLFile(string file_name)
+{
+    //This file will save the current scenegraph to a file designated by the file_name string
+    fstream output_file;
+    output_file.open(file_name, fstream::out);
+
+    //Parse scenegraph and add to file
+    if(output_file.is_open())
+    {
+        //Add beginning scene tag
+        output_file << "<scene>" << endl;
+        //Add all objects
+        saveObjects(output_file);
+        //Add all textures
+        saveTextures(output_file);
+        //Add all lights -- cannot handle lights attached to nodes
+        saveLights(output_file);
+        //Add all nodes in sgraph
+        scenegraph->saveToXML(output_file);
+        //Add end scene tag
+        output_file << "</scene>";
+    }
+}
+
+void View::saveObjects(fstream& output_file)
+{
+    //Grab objects map from scenegraph
+    map<string,string> objects = scenegraph->getObjects();
+    //Iterate thorugh map and add each object to XML
+    for(auto entry : objects)
+    {
+        string str_to_add = "<instance name=\"";
+        str_to_add += entry.first;
+        str_to_add += "\" path=\"";
+        str_to_add += entry.second;
+        str_to_add += "\" ></instance>";
+
+        //Add new texture entry to xml file
+        output_file << str_to_add << endl;
+    }
+}
+
+void View::saveTextures(fstream& output_file)
+{
+    //Grab texture map from scenegraph
+    map<string,string> textures = scenegraph->getTextures();
+    //Iterate through map and add each texture
+    for(auto entry : textures)
+    {
+        string str_to_add = "<image name=\"";
+        str_to_add += entry.first;
+        str_to_add += "\" path=\"";
+        str_to_add += entry.second;
+        str_to_add += "\" />";
+
+        //Add new texture entry to xml file
+        output_file << str_to_add << endl;
+
+    }
+}
+
+void View::saveLights(fstream& output_file)
+{
+    //Grab lights from scenegraph renderer
+    vector<util::Light> lights = scenegraph->getRendererLights();
+    glm::vec3 ambient;
+    glm::vec3 diffuse;
+    glm::vec3 specular;
+    glm::vec4 position;
+    float spotangle;
+    glm::vec4 spotdirection;
+
+    //Iterate through lights, grab properties and insert into output file
+    for(auto light : lights)
+    {
+        //Set light properties
+        ambient = light.getAmbient();
+        diffuse = light.getDiffuse();
+        specular = light.getSpecular();
+        position = light.getPosition();
+        spotangle = light.getSpotCutoff();
+        spotdirection = light.getSpotDirection();
+
+        //Add light tag
+        output_file << "<light>" << endl;
+        //Add light properties
+        output_file << "<ambient> " << to_string(ambient[0]) << " " << to_string(ambient[1]) << " "
+                    << to_string(ambient[2]) << " </ambient>" << endl;
+        output_file << "<diffuse> " << to_string(diffuse[0]) << " " << to_string(diffuse[1]) << " "
+                    << to_string(diffuse[2]) << " </diffuse>" << endl;
+        output_file << "<specular> " << to_string(specular[0]) << " " << to_string(specular[1]) << " "
+                    << to_string(specular[2]) << " </specular>" << endl;
+        output_file << "<position> " << to_string(position[0]) << " " << to_string(position[1]) << " "
+                    << to_string(position[2]) << " </position>" << endl;
+        output_file << "<spotangle> " << to_string(spotangle) << " </spotangle>" << endl;
+        output_file << "<spotdirection> " << to_string(spotdirection[0]) << " " << to_string(spotdirection[1]) << " "
+                    << to_string(spotdirection[2]) << " </spotdirection>" << endl;
+        //Add ending light tag
+        output_file << "</light>" << endl;
+
+    }
+
+}
+
+/*
 //Shape Creation Functions
 void View::createShape(string shape)
 {
@@ -263,7 +413,10 @@ string View::generateXML(string shape, map<string,vector<float>> attributes)
     return xml_to_add;
 }
 
-string View::parseAttributes(string xml, map<string,vector<float>> attributes)
+
+
+
+ string View::parseAttributes(string xml, map<string,vector<float>> attributes)
 {
     //At this point we have our transform, set, material and object tags in place. If we are
     //doing a transformation, we will put inside of set, otherwise we will put inside
@@ -313,14 +466,15 @@ string View::parseAttributes(string xml, map<string,vector<float>> attributes)
     //Return new xml string
     return xml;
 }
+*/
 
-void View::insertTabs()
+void View::insertTabs(string filename)
 {
     ///This function will insert tabs into our xml file for formatting
     //Open XML File
     fstream xml_file;
     ofstream temp_file;
-    xml_file.open(sgraph_file_location);
+    xml_file.open(filename);
     string temp_file_name = "scenegraphs/temp_format.xml";
     temp_file.open(temp_file_name);
 
@@ -365,8 +519,8 @@ void View::insertTabs()
 
     //Once file copied, rename sgraph file name
     string delete_name = "scenegraphs/delete.xml";
-    std::rename(sgraph_file_location.c_str(), delete_name.c_str());
-    int bad = std::rename(temp_file_name.c_str(), sgraph_file_location.c_str());
+    std::rename(filename.c_str(), delete_name.c_str());
+    int bad = std::rename(temp_file_name.c_str(), filename.c_str());
     if(bad) {cout << "Couldn't rename\n"; }
 
     //Delete old scene file

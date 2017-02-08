@@ -6,13 +6,16 @@
 using namespace std;
 #include <glm/glm.hpp>
 #include "ShaderProgram.h"
-#include "sgraph/Scenegraph.h"
 #include "ShaderLocationsVault.h"
 #include "ObjectInstance.h"
 #include "VertexAttrib.h"
-#include "sgraph/GLScenegraphRenderer.h"
 #include <stack>
 #include <fstream>
+#include "sgraph/scenegraphinfo.h"
+#include "sgraph/GLScenegraphRenderer.h"
+#include "sgraph/Scenegraph.h"
+
+
 using namespace std;
 
 /*
@@ -52,19 +55,33 @@ public:
      */
     void dispose(util::OpenGLFunctions& gl);
 
+    //Getters
+    string getSgraphFileLocation(){return sgraph_file_location;}
+
     //Mouse Functions
     void mousePressed(int x,int y);
     void mouseReleased(int x,int y);
     void mouseDragged(int x,int y);
 
     //Shape Creation Functions
-    void createShape(string shape);
-    string generateXML(string shape, map<string,vector<float>> attributes);
-    string parseAttributes(string xml, map<string,vector<float>>);
-    void insertTabs();
+    //void createShape(string shape);
+    //string generateXML(string shape, map<string,vector<float>> attributes);
+    //string parseAttributes(string xml, map<string,vector<float>>);
+    void insertTabs(string);
     bool incrementTab(string);
     bool decrementTab(string);
     void clearScenegraph();
+
+    void addShapeToSGraph(string shape);
+
+    //Save functions
+    void saveXMLFile(string);
+    void saveObjects(fstream&);
+    void saveTextures(fstream&);
+    void saveLights(fstream&);
+
+    //Random Debug
+    void printSgraphNodes();
 
 
 
