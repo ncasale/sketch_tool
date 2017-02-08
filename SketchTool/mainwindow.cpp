@@ -21,8 +21,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_actionSave_triggered()
 {
-    //MyGLWidget* cent_widget = (MyGLWidget*)this->centralWidget();
-    //cent_widget->saveFile();
-
-    QMessageBox::information(this, "Successfully Saved", "Saved File.");
+    MyGLWidget* cent_widget = (MyGLWidget*)this->centralWidget();
+    cent_widget->saveFile();
 }
+

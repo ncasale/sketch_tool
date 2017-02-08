@@ -26,7 +26,10 @@ class MyGLWidget : public QOpenGLWidget
         explicit MyGLWidget(QWidget *parent=0);
         virtual ~MyGLWidget();
         void setAnimating(bool enabled);
+
+        //Actions
         void saveFile();
+        void clearScene();
 
     protected:
         //OpenGL Functions

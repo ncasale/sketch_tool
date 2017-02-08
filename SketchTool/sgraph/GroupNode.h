@@ -19,10 +19,11 @@ namespace sgraph
  */
   class GroupNode:public AbstractNode
   {
-    /**
-     * A list of its children
-     */
+
   protected:
+    /**
+     * A list of this node's children
+     */
     vector<INode *> children;
 
   public:
@@ -39,6 +40,10 @@ namespace sgraph
         }
     }
 
+    /**
+     * @brief clearChildren
+     * Will clear all children of this node
+     */
     void clearChildren() throw(runtime_error)
     {
         children.clear();
@@ -48,6 +53,17 @@ namespace sgraph
      * Searches recursively into its subtree to look for node with specified name.
      * \param name name of node to be searched
      * \return the node whose name this is if it exists within this subtree, null otherwise
+     */
+    /**
+     * @brief getNode
+     * Searches recursively into this node's subtree to look for a node with
+     * specified name
+     *
+     * @param name
+     * The name of the node to be found
+     *
+     * @return
+     * Node with specified name, null if node not found
      */
     INode *getNode(const string& name)
     {
@@ -69,9 +85,12 @@ namespace sgraph
     }
 
     /**
-     * Sets the reference to the scene graph object for this node, and then recurses down
-     * to children for the same
-     * \param graph a reference to the scenegraph object of which this tree is a part
+     * @brief setScenegraph
+     * Sets the reference to the scenegraph object for this node, and then
+     * recurses down to children to do the same
+     *
+     * @param graph
+     * The reference to the scenegraph object
      */
     void setScenegraph(sgraph::Scenegraph *graph)
     {
@@ -83,9 +102,14 @@ namespace sgraph
     }
 
     /**
-     * To draw this node, it simply delegates to all its children
-     * \param context the generic renderer context sgraph::IScenegraphRenderer
-     * \param modelView the stack of modelview matrices
+     * @brief draw
+     * To draw this node, we simply delegate drawing to each of its children
+     *
+     * @param context
+     * The generic renderer context sgraph::IScenegraphRenderer
+     *
+     * @param modelView
+     * The stack of modelview matrices (current transformation applied to node)
      */
     void draw(GLScenegraphRenderer& context,stack<glm::mat4>& modelView)
     {
@@ -95,6 +119,14 @@ namespace sgraph
         }
     }
 
+    /**
+     * @brief saveToXML
+     * Used to save XML for this node to the specified output file. Recursively
+     * instructs children to do the same.
+     *
+     * @param output_file
+     * The file to which the generated XML is saved
+     */
     void saveToXML(fstream& output_file)
     {
         //Add group tag to output file
@@ -108,8 +140,11 @@ namespace sgraph
     }
 
     /**
+     * @brief clone
      * Makes a deep copy of the subtree rooted at this node
-     * \return a deep copy of the subtree rooted at this node
+     *
+     * @return
+     * A deep copy of the subtree rooted at this node
      */
     INode *clone()
     {
@@ -137,10 +172,11 @@ namespace sgraph
     }
 
     /**
-     * Since a group node is capable of having children, this method overrides the default one
-     * in sgraph::AbstractNode and adds a child to this node
-     * \param child
-     * \throws runtime_error this class does not throw this exception
+     * @brief addChild
+     * Add a child to this node
+     *
+     * @param child
+     * The child to add to this node
      */
     void addChild(INode *child) throw(runtime_error)
     {
@@ -149,22 +185,30 @@ namespace sgraph
     }
 
     /**
-     * Get a list of all its children, for convenience purposes
-     * \return a list of all its children
+     * @brief getChildren
+     * Get a list of all this node's children
+     *
+     * @return
+     * A list of all this node's children
      */
-
     vector<INode *> getChildren()
     {
       return children;
     }
 
     /**
-       * Overridden version from @link{AbstractNode}. This version first collects
-       * all the lights from its children, and then appends to them the lights from
-       * this node as well.
-       *
-       * It uses the original version for getting the lights in this node.
-       */
+     * @brief getLightsInView
+     * Overridden version of @link{AbstractNode}. This version first collects
+     * all the lights from its children, and then appends to them the lights
+     * from this node as well. This function uses the original version to
+     * get the lights in this node.
+     *
+     * @param modelview
+     * The stack of transformations currently applied to this node
+     *
+     * @return
+     * A vector containing the lights currently in the view
+     */
     vector<util::Light> getLightsInView(stack<glm::mat4>& modelview)
     {
       vector<util::Light> lights,templights;

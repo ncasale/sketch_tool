@@ -28,6 +28,7 @@ class Ui_MainWindow
 public:
     QAction *actionClose;
     QAction *actionSave;
+    QAction *actionSave2;
     MyGLWidget *centralWidget;
     QMenuBar *menuBar;
     QMenu *menuFile;
@@ -47,6 +48,8 @@ public:
         QIcon icon;
         icon.addFile(QStringLiteral(":/Images/toolbar_icons/save-icon.png"), QSize(), QIcon::Normal, QIcon::Off);
         actionSave->setIcon(icon);
+        actionSave2 = new QAction(MainWindow);
+        actionSave2->setObjectName(QStringLiteral("actionSave2"));
         centralWidget = new MyGLWidget(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         MainWindow->setCentralWidget(centralWidget);
@@ -78,6 +81,7 @@ public:
         MainWindow->setWindowTitle(QApplication::translate("MainWindow", "MainWindow", 0));
         actionClose->setText(QApplication::translate("MainWindow", "Close", 0));
         actionSave->setText(QApplication::translate("MainWindow", "Save", 0));
+        actionSave2->setText(QApplication::translate("MainWindow", "Save2", 0));
         menuFile->setTitle(QApplication::translate("MainWindow", "File", 0));
     } // retranslateUi
 

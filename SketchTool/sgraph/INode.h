@@ -28,10 +28,16 @@ namespace sgraph
   class INode
   {
   public:
-    /**
-     * In the scene graph rooted at this node, get the node whose name is as given
-     * \param name name of node to be searched
-     * \return the node reference if it exists, null otherwise
+
+     /**
+     * @brief getNode
+     * In the scenegraph rooted at this node, get the node whose name is as given
+     *
+     * @param name
+     * The name of the node to be retrieved
+     *
+     * @return
+     * The node with the specified name
      */
     virtual INode *getNode(const string& name)=0;
     INode(){}
@@ -43,97 +49,150 @@ namespace sgraph
      * \param context the generic renderer context {@link sgraph.IScenegraphRenderer}
      * \param modelView the stack of modelview matrices
      */
+    /**
+     * @brief draw
+     * Draw the scenegraph rooted at this node, using the modelview and context
+     *
+     * @param context
+     * The generic renderer context {@link sgraph.IScenegraphRenderer}
+     *
+     * @param modelView
+     * The stack of modelview transformations applied to this node
+     */
     virtual void draw(GLScenegraphRenderer& context,stack<glm::mat4>& modelView)=0;\
 
     /**
-     * Return a deep copy of the scene graph subtree rooted at this node
-     * \return a reference to the root of the copied subtree
+     * @brief clone
+     * Returns a deep copy of the scenegraph subtree rooted at this node
+     *
+     * @return
+     * A reference to the root of the copied subtree
      */
     virtual INode *clone()=0;
 
     /**
+     * @brief setParent
      * Set the parent of this node. Each node except the root has a parent
-     * \param parent the node that is to be the parent of this node
+     *
+     * @param parent
+     * A reference to the desiered parent
      */
     virtual void setParent(INode *parent)=0;
 
     /**
-     * Traverse the scene graph rooted at this node, and store references to the scenegraph object
-     * \param graph a reference to the scenegraph object of which this tree is a part
+     * @brief setScenegraph
+     * Traverse the scenegraph rooted at this node and store references to the
+     * scenegraph object
+     *
+     * @param graph
+     * A reference to the scenegraph object of which this tree is a part
      */
-
     virtual void setScenegraph(sgraph::Scenegraph *graph)=0;
 
     /**
-     * Set the name of this node. The name is not guaranteed to be unique in the tree, but it should be.
-     * \param name the name of this node
+     * @brief setName
+     * Set the name of this node. The name is not guaranteed to be unique in
+     * the tree, but it should be.
+     *
+     * @param name
+     * The name of this node
      */
     virtual void setName(const string& name)=0;
 
-
     /**
+     * @brief getName
      * Get the name of this node
-     * \return the name of this node
+     *
+     * @return
+     * The name of this node
      */
     virtual string getName()=0;
 
     /**
-     * Add a child to this node. Not all types of nodes have the capability of having children.
-     * If the node cannot have a child, this method throws a runtime exception
-     * \param node the node that must be added as a child to this node
-     * \throws runtime_error if this node is unable to have children (i.e. leaves)
+     * @brief addChild
+     * Add a child to this node. Not all types of nodes have children. If the
+     * node cannot have a child, this function throws a runtime exception
+     *
+     * @param node
+     * The child to add to this node
      */
     virtual void addChild(INode *node) throw(runtime_error)=0;
 
     /**
-     * Set the transformation associated with this node. Not all types of nodes can have transformations.
-     * If the node cannot store a transformation, this method throws a runtime_error
-     * \param m the transformation matrix associated with this transformation
-     * \throws runtime_error if this node is unable to store a transformation (all nodes except TransformNode)
+     * @brief setTransform
+     * Set the transformation associated with this node. Not all nodes can have
+     * transformations. If the node cannot store a transformations, this
+     * function throws a runtime error
+     *
+     * @param m
+     * The transformation matrix associated with this transformation
      */
     virtual void setTransform(const glm::mat4& m) throw(runtime_error)=0;
 
-
     /**
-     * Set the animation transformation associated with this node. Not all types of nodes can have transformations.
-     * If the node cannot store an animation transformation, this method throws a runtime_error
-     * \param m the animation tranformation matrix associated with this node
-     * \throws runtime_error if this node is unable to store a transformation (all nodes except TransformNode)
+     * @brief setAnimationTransform
+     * Set the animation transform associated with this node. Not all nodes can
+     * have animation transforms. If this node cannot store an animation
+     * transform, this function throws a runtime exception
+     *
+     * @param m
+     * The animation transformation matrix associated with this node
      */
     virtual void setAnimationTransform(const glm::mat4& m) throw(runtime_error)=0;
 
 
     /**
-     * Set the material associated with this node. Not all types of nodes can have materials associated with them.
-     * If the node cannot have a material, this method throws a runtime_error
-     * \param m the material object to be associated with this node
-     * \throws runtime_error if this node is unable to store a material (all nodes except leaves)
+     * @brief setMaterial
+     * Set the material associated with this node. Not all nodes can have
+     * materials. If this node cannot have a material, this function throws
+     * a runtime error
+     *
+     * @param m
+     * The material object associated with this node
      */
     virtual void setMaterial(const util::Material& m) throw(runtime_error)=0;
 
     /**
-     * Sets the texture to be associated with this node. Not all types of nodes
-     * can have textures associated with them. If the node cannot have a texture, this
-     * method throws a runtime_error.
-     * \param name
-     * \throws runtime_error
+     * @brief setTextureName
+     * Sets the texture associated with this node. Not all nodes can have a
+     * texture. If this node can't have a texture, this function throws a
+     * runtime error.
+     *
+     * @param name
+     * Name of the texture to be applied to this node
      */
     virtual void setTextureName(const string& name) throw(runtime_error)=0;
 
     /**
-     * Adds a new light to this node.
-     * \param l
+     * @brief addLight
+     * Add a new light to this node
+     *
+     * @param l
+     * The light to be added
      */
     virtual void addLight(const util::Light& l)=0;
 
+
+    /**
+     * @brief clearChildren
+     * Clear the children of this node
+     */
     virtual void clearChildren()=0;
 
     /**
-       * Return a list of all lights in this scene graph in the view coordinate
-       * system This function is called on the root of the scene graph. It is
-       * assumed that the modelview.peek is set to the world-to-view
-       * transformation.
-       */
+     * @brief getLightsInView
+     * Return a list of all lights in this scenegraph in the view coordinate
+     * system. This function is called on the root of the scenegraph. It is
+     * assumed that the modelview.top() is set to the world-to-view
+     * transformation
+     *
+     * @param modelview
+     * The stack of transformations applied to the scenegraph
+     *
+     * @return
+     * A vector containing all the lights in the scenegraphs view coordinate
+     * system
+     */
     virtual vector<util::Light> getLightsInView(stack<glm::mat4>& modelview)=0;
 
     //Used to save each node to the passed XML file

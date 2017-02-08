@@ -176,17 +176,16 @@ void MyGLWidget::keyPressEvent(QKeyEvent *e)
         view.addToScenegraph("cone");
         break;
     case Qt::Key_C:
-        //Clear the scenegraph
-        view.clearScenegraph();
+        //Clear the scenegraph -- ask user if they would like to.
+        clearScene();
         break;
     case Qt::Key_T:
         //Format XML file
         view.insertTabs(view.getSgraphFileLocation());
         break;
     case Qt::Key_S:
-        //Save the XML Fi"le
-        view.saveXMLFile("scenegraphs/test_save.xml");
-        view.insertTabs("scenegraphs/test_save.xml");
+        //Save the XML File
+        saveFile();
         break;
     }
 }
@@ -243,14 +242,37 @@ void MyGLWidget::setAnimating(bool enabled)
 
 /**
  * @brief MyGLWidget::saveFile
- * Called when Save action is exeuted from File menu or Main Toolbar
+ * Called when Save action is executed from File menu or Main Toolbar.
+ * Saves file to save location
  */
 void MyGLWidget::saveFile()
 {
-    QMessageBox msg_box;
-    msg_box.setText("File Saved");
-    msg_box.exec();
+    view.saveXMLFile("scenegraphs/test_save.xml");
+    view.insertTabs("scenegraphs/test_save.xml");
+
+    QMessageBox::information(this, "File Saved", "File successfully saved.");
 }
+
+/**
+ * @brief MyGLWidget::clearScene
+ * Clears the current scene -- Asks user permission beforehand.
+ */
+void MyGLWidget::clearScene()
+{
+    //Parameters for popup message box
+    const QString popup_title = "Clear Scene?";
+    const QString popup_msg = "Clear Scene? (This cannot be undone)";
+
+    //Ask user to confirm their clear of scene
+    QMessageBox::StandardButton reply;
+    reply = QMessageBox::question(this, popup_title, popup_msg,
+                                  QMessageBox::Yes|QMessageBox::No);
+    if(reply == QMessageBox::Yes)
+        view.clearScenegraph();
+    else
+        return;
+}
+
 
 
 

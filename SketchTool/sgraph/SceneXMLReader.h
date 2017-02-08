@@ -30,6 +30,15 @@ namespace sgraph
  */
   class SceneXMLReader {
   public:
+      /**
+     * @brief importScenegraph
+     * Call this function to import a scenegraph and store in a Scenegraph
+     * object
+     *
+     * @param filename
+     * The name of the file holding the scenegraph information. This must be
+     * an XML file
+     */
     template <class K>
     static sgraph::ScenegraphInfo<K> importScenegraph(const string& filename) throw(runtime_error)
     {
@@ -82,10 +91,25 @@ namespace sgraph
     vector<float> data;
 
   public:
+    /**
+     * @brief getScenegraph
+     * Gets the scenegraph associated with this XML reader
+     *
+     * @return
+     * The scenegraph associated with this XML reader
+     */
     sgraph::Scenegraph *getScenegraph() {
       return scenegraph;
     }
 
+    /**
+     * @brief getMeshes
+     * Get the map of meshes assocated with this XML reader
+     *
+     * @return
+     * The map of (name,util::PolygonMesh) pairs associated with this XML
+     * readers
+     */
     map<string,util::PolygonMesh<K>> getMeshes()
     {
       return meshes;
@@ -95,6 +119,13 @@ namespace sgraph
     {
     }
 
+    /**
+     * @brief startDocument
+     * Initialize parameters to begin parsing new scenegraph file
+     *
+     * @return
+     * Always returns true if fully executed
+     */
     bool startDocument()
     {
       node = NULL;
@@ -106,6 +137,24 @@ namespace sgraph
     
 
 
+    /**
+     * @brief startElement
+     * Begin parsing the scenegraph. Looks for beginning tags (e.g. <scene>,
+     * <group>, <transform>, etc.) and constructs the scenegraph accordingly.
+     *
+     * @param namespaceURI
+     *
+     * @param localName
+     *
+     * @param qName
+     * The text contained within the beginning tag (e.g. scene, group, etc)
+     *
+     * @param atts
+     * The attributes associated with this tag
+     *
+     * @return
+     * Returns "true" if fully executed
+     */
     bool startElement( const QString & namespaceURI,const QString & localName,const QString & qName,const QXmlAttributes & atts)
     {
       if (qName.compare("scene")==0)
@@ -267,6 +316,17 @@ namespace sgraph
       return true;
     }
 
+    /**
+     * @brief endElement
+     * Begin parsing the scenegraph. Looks for end tags (e.g. </scene>,
+     * </group>, </transform>, etc.) and constructs the scenegraph accordingly.
+     *
+     * @param qName
+     * The text within the end tag (e.g. scene, group, etc.)
+     *
+     * @return
+     * Returns "true" if fully executes
+     */
     bool endElement( const QString&, const QString&, const QString& qName)
     {
       if (qName.compare("scene")==0)
@@ -438,6 +498,16 @@ namespace sgraph
     }
 
 
+    /**
+     * @brief characters
+     * Removes tabs and newlines, and generally helps in parsing XML lines
+     *
+     * @param text
+     * The text this function will parse
+     *
+     * @return
+     * Returns "true" if @param text is successfully parsed
+     */
     bool characters(const QString& text)
     {
       int c;

@@ -20,17 +20,22 @@ namespace sgraph
  */
 class LeafNode: public AbstractNode
 {
+
+protected:
     /**
      * The name of the object instance that this leaf contains. All object instances are stored
      * in the scene graph itself, so that an instance can be reused in several leaves
      */
-protected:
     string objInstanceName;
+
     /**
      * The material associated with the object instance at this leaf
      */
     util::Material material;
 
+    /**
+     * The name of the texture associated with the object instance at tbis leaf
+     */
     string textureName;
 
 public:
@@ -42,33 +47,49 @@ public:
 	
 	~LeafNode(){}
 
-
-
-    /*
-	 *Set the material of each vertex in this object
-	 */
+    /**
+     * @brief setMaterial
+     * Set the material of each vertex in this object
+     *
+     * @param mat
+     * The material to set
+     */
     void setMaterial(const util::Material& mat) throw(runtime_error)
     {
         material = mat;
     }
 
     /**
-     * Set texture ID of the texture to be used for this leaf
-     * \param name
+     * @brief setTextureName
+     * Set the texture ID of the texture to be used for this leaf
+     *
+     * @param name
+     * Name of desired texture
      */
     void setTextureName(const string& name) throw(runtime_error)
     {
         textureName = name;
     }
 
-    /*
-     * gets the material
+    /**
+     * @brief getMaterial
+     * Get the material associated with the object instance at this leaf
+     *
+     * @return
+     * The material associated with the object instance at this leaf
      */
     util::Material getMaterial()
     {
         return material;
     }
 
+    /**
+     * @brief clone
+     * Makes a copy of this leaf node
+     *
+     * @return
+     * A copy of this leaf node
+     */
     INode *clone()
     {
         LeafNode *newclone = new LeafNode(this->objInstanceName,scenegraph,name);
@@ -76,16 +97,18 @@ public:
         return newclone;
     }
 
-
     /**
-     * Delegates to the scene graph for rendering. This has two advantages:
-     * <ul>
-     *     <li>It keeps the leaf light.</li>
-     *     <li>It abstracts the actual drawing to the specific implementation of the scene graph renderer</li>
-     * </ul>
-     * \param context the generic renderer context {@link sgraph.IScenegraphRenderer}
-     * \param modelView the stack of modelview matrices
-     * \throws runtime_error
+     * @brief draw
+     * Delegates to the scenegraph for rendering. This has two advantages:
+     *  1. It keeps the leaf light
+     *  2. It abstracts the actual drawing to the specific implementation of
+     *     the scenegraph renderer
+     *
+     * @param context
+     * The generic renderer context {@link sgraph::IScenegraphRenderer}
+     *
+     * @param modelView
+     * The stack of modelview matrices
      */
     void draw(GLScenegraphRenderer& context,stack<glm::mat4>& modelView) throw(runtime_error)
     {
@@ -95,11 +118,23 @@ public:
         }
     }
 
+    /**
+     * @brief clearChildren
+     * Throws a runetime error since leaf nodes cannot have children
+     */
     void clearChildren() throw(runtime_error)
     {
         throw runtime_error("Not a group node -- cannot clear children");
     }
 
+    /**
+     * @brief saveToXML
+     * Saves an XML snippet for the object at this leaf node into the specified
+     * output file.
+     *
+     * @param output_file
+     * An fstream object representing the XML output file.
+     */
     void saveToXML(fstream& output_file)
     {
         if(objInstanceName.length() > 0)
