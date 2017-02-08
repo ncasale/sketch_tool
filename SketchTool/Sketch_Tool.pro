@@ -40,3 +40,6 @@ FORMS    += mainwindow.ui
 DISTFILES += \
     shaders/phong-multiple.frag \
     shaders/phong-multiple.vert
+
+RESOURCES += \
+    myres.qrc

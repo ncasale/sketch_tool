@@ -44,6 +44,9 @@ public:
         actionClose->setObjectName(QStringLiteral("actionClose"));
         actionSave = new QAction(MainWindow);
         actionSave->setObjectName(QStringLiteral("actionSave"));
+        QIcon icon;
+        icon.addFile(QStringLiteral(":/Images/toolbar_icons/save-icon.png"), QSize(), QIcon::Normal, QIcon::Off);
+        actionSave->setIcon(icon);
         centralWidget = new MyGLWidget(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         MainWindow->setCentralWidget(centralWidget);
@@ -63,6 +66,7 @@ public:
 
         menuBar->addAction(menuFile->menuAction());
         menuFile->addAction(actionSave);
+        mainToolBar->addAction(actionSave);
 
         retranslateUi(MainWindow);
 

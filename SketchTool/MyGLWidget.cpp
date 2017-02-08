@@ -119,19 +119,19 @@ void MyGLWidget::keyPressEvent(QKeyEvent *e)
     {
     case Qt::Key_1:
         //Call Cube creation
-        view.addShapeToSGraph("box");
+        view.addToScenegraph("box");
         break;
     case Qt::Key_2:
         //Call Sphere creation
-        view.addShapeToSGraph("sphere");
+        view.addToScenegraph("sphere");
         break;
     case Qt::Key_3:
         //Call Cylinder creation
-        view.addShapeToSGraph("cylinder");
+        view.addToScenegraph("cylinder");
         break;
     case Qt::Key_4:
         //Call cone creation
-        view.addShapeToSGraph("cone");
+        view.addToScenegraph("cone");
         break;
     case Qt::Key_C:
         //Clear the scenegraph
