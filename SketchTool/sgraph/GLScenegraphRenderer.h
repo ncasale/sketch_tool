@@ -29,10 +29,11 @@ namespace sgraph
  */
 class GLScenegraphRenderer
 {
+
+private:
     /**
      * The Qt specific rendering context
      */
-private:
     util::OpenGLFunctions *glContext;
     /**
      * A table of shader locations and variable names
@@ -72,23 +73,43 @@ public:
      * rendering context
      * \param obj the rendering context (should be OpenGLFunctions)
      */
+    /**
+     * @brief setContext
+     * Sets our OpenGL rendering context
+     *
+     * @param obj
+     * An OpenGL wrapper class that allows for OpenGL functionality to be used
+     * througout the program
+     */
     void setContext(util::OpenGLFunctions *obj)
     {
         glContext = obj;
 
     }
 
+    /**
+     * @brief getLights
+     * Returns all lights contained within this renderer
+     * @return
+     * A vector of util::Light
+     */
     vector<util::Light> getLights()
     {
         return lights;
     }
 
     /**
-     * Add a mesh to be drawn later.
-     * The rendering context should be set before calling this function, as this function needs it
+     * @brief addMesh
+     * Add a mesh to be drawn later. The rendering context should be set before
+     * calling this function, as this function needs it to perform its tasks.
      * This function creates a new sgraph::GLMeshRenderer object for this mesh
-     * \param name the name by which this mesh is referred to by the scene graph
-     * \param mesh the util::PolygonMesh object that represents this mesh
+     *
+     * @param name
+     * The name by which this mesh is referred to by the scenegraph
+     *
+     * @param
+     * mesh
+     * The util::PolygonMesh object that represents this mesh
      */
     template <class K>
     void addMesh(const string& name,
@@ -116,6 +137,16 @@ public:
         this->meshRenderers[name] = mr;
     }
 
+    /**
+     * @brief addTexture
+     * Add a new util::TextureImage to this renderer
+     *
+     * @param name
+     * Name of the new texture
+     *
+     * @param path
+     * Path to the texture file
+     */
     void addTexture(const string& name,const string& path)
     {
         util::TextureImage *image = NULL;
@@ -132,9 +163,14 @@ public:
     }
 
     /**
-     * Begin rendering of the scene graph from the root
-     * \param root
-     * \param modelView
+     * @brief draw
+     * Begin rendering of the scenegraph from the root
+     *
+     * @param root
+     * The root node of the scenegraph
+     *
+     * @param modelView
+     * The composite transformation applied to the rendered scene
      */
     void draw(INode *root, stack<glm::mat4>& modelView)
     {
@@ -150,11 +186,29 @@ public:
       root->draw(*this,modelView);
     }
 
+    /**
+     * @brief startSave
+     * Begin the process of saving the scenegraph to an XML file starting at
+     * the root node
+     *
+     * @param root
+     * A reference to the root node of the scenegraph
+     *
+     * @param output_file
+     * An fstream object representing the output XML file
+     */
     void startSave(INode* root, fstream& output_file)
     {
         root->saveToXML(output_file);
     }
 
+    /**
+     * @brief initLightsInShader
+     * Used to add the lights to the shader
+     *
+     * @param lights
+     * A vector of util::Light to pass to the shader
+     */
     void initLightsInShader(const vector<util::Light>& lights)
     {
         int loc = -1;
@@ -222,6 +276,10 @@ public:
       }
 
 
+    /**
+     * @brief dispose
+     * Called when this renderer is destroyed
+     */
     void dispose()
     {
         for (map<string,util::ObjectInstance *>::iterator it=meshRenderers.begin();
@@ -230,15 +288,24 @@ public:
             it->second->cleanup(*glContext);
           }
     }
+
     /**
-     * Draws a specific mesh.
-     * If the mesh has been added to this renderer, it delegates to its correspond mesh renderer
-     * This function first passes the material to the shader. Currently it uses the shader variable
-     * "vColor" and passes it the ambient part of the material. When lighting is enabled, this method must
-     * be overriden to set the ambient, diffuse, specular, shininess etc. values to the shader
-     * \param name
-     * \param material
-     * \param transformation
+     * @brief drawMesh
+     * Draws a specific mesh. If the mesh has been added to this renderer, it
+     * delegates to its corresponding mesh renderer. This function first passes
+     * the material to the shader.
+     *
+     * @param name
+     * The name of the mesh to draw
+     *
+     * @param material
+     * The material to be applied to the mesh during rendering
+     *
+     * @param textureName
+     * The name of the texture to be applied to the mesh during rendering
+     *
+     * @param transformation
+     * The current transformation applied to this mesh (from modelview)
      */
     void drawMesh(const string& name,
                   const util::Material& material,
@@ -316,8 +383,16 @@ public:
 
 
     /**
-     * Queries the shader program for all variables and locations, and adds them to itself
-     * \param shaderProgram
+     * @brief initShaderProgram
+     * Queries the shader program for all variables and locations then adds
+     * them to the renderer
+     *
+     * @param shaderProgram
+     * The shader program we are querying
+     *
+     * @param shaderVarsToVertexAttribs
+     * A map containing the shader variables and thier corresponding vertex
+     * attributes
      */
     void initShaderProgram(util::ShaderProgram& shaderProgram,
                            map<string,string>& shaderVarsToVertexAttribs)
@@ -331,6 +406,16 @@ public:
 
     }
 
+    /**
+     * @brief getShaderLocation
+     * Gets the location of a passed shader variable within the shader
+     *
+     * @param name
+     * The name of the variable whose location will be returned
+     *
+     * @return
+     * The location of the passed shader variable
+     */
     int getShaderLocation(const string& name)
     {
         return shaderLocations.getLocation(name);
