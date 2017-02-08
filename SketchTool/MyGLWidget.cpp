@@ -119,29 +119,23 @@ void MyGLWidget::keyPressEvent(QKeyEvent *e)
     {
     case Qt::Key_1:
         //Call Cube creation
-        std::cout << "Pressed 1..." << endl;
-        view.createShape("box");
-        view.recreateScenegraph(*gl, string("scenegraphs/sketch.xml"));
+        view.addShapeToSGraph("box");
         break;
     case Qt::Key_2:
         //Call Sphere creation
-        view.createShape("sphere");
-        view.recreateScenegraph(*gl, string("scenegraphs/sketch.xml"));
+        view.addShapeToSGraph("sphere");
         break;
     case Qt::Key_3:
         //Call Cylinder creation
-        view.createShape("cylinder");
-        view.recreateScenegraph(*gl, string("scenegraphs/sketch.xml"));
+        view.addShapeToSGraph("cylinder");
         break;
     case Qt::Key_4:
         //Call cone creation
-        view.createShape("cone");
-        view.recreateScenegraph(*gl, string("scenegraphs/sketch.xml"));
+        view.addShapeToSGraph("cone");
         break;
     case Qt::Key_C:
         //Clear the scenegraph
         view.clearScenegraph();
-        view.recreateScenegraph(*gl, string("scenegraphs/sketch.xml"));
         break;
     case Qt::Key_T:
         //Format XML file
@@ -184,6 +178,13 @@ void MyGLWidget::setAnimating(bool enabled)
     } else {
         disconnect(this, SIGNAL(frameSwapped()), this, SLOT(update()));
     }
+}
+
+void MyGLWidget::saveFile()
+{
+    QMessageBox msg_box;
+    msg_box.setText("File Saved");
+    msg_box.exec();
 }
 
 

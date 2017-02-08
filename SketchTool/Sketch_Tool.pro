@@ -15,24 +15,25 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
     View.cpp \
-    MyGLWidget.cpp \
+    MyGLWidget.cpp
 
 INCLUDEPATH += ../headers
 
 HEADERS  += mainwindow.h \
     View.h \
     VertexAttrib.h \
-    sgraph/AbstractNode.h \
     sgraph/GLScenegraphRenderer.h \
-    sgraph/GroupNode.h \
-    sgraph/INode.h \
     sgraph/IScenegraph.h \
-    sgraph/LeafNode.h \
-    sgraph/Scenegraph.h \
     sgraph/scenegraphinfo.h \
     sgraph/SceneXMLReader.h \
-    sgraph/TransformNode.h \
     MyGLWidget.h \
+    sgraph/AbstractNode.h \
+    sgraph/GroupNode.h \
+    sgraph/INode.h \
+    sgraph/LeafNode.h \
+    sgraph/Scenegraph.h \
+    sgraph/TransformNode.h \
+    ui_mainwindow.h
 
 FORMS    += mainwindow.ui
 

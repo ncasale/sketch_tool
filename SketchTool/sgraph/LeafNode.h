@@ -95,6 +95,11 @@ public:
         }
     }
 
+    void clearChildren() throw(runtime_error)
+    {
+        throw runtime_error("Not a group node -- cannot clear children");
+    }
+
     void saveToXML(fstream& output_file)
     {
         if(objInstanceName.length() > 0)

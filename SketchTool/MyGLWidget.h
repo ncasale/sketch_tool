@@ -9,6 +9,8 @@
 #include <QTime>
 #include <QMouseEvent>
 #include <QKeyEvent>
+#include <QtCore>
+#include <QtGui>
 #include "View.h"
 
 /*
@@ -24,6 +26,7 @@ class MyGLWidget : public QOpenGLWidget
         explicit MyGLWidget(QWidget *parent=0);
         virtual ~MyGLWidget();
         void setAnimating(bool enabled);
+        void saveFile();
 
     protected:
         /*
@@ -68,6 +71,8 @@ class MyGLWidget : public QOpenGLWidget
         void keyPressEvent(QKeyEvent *);
 
 
+
+
         /*
          * this class encapsulates all our program-specific rendering.
          * This provides a clean divide from Qt-specific window setup and
@@ -76,6 +81,7 @@ class MyGLWidget : public QOpenGLWidget
          * new application, retain this class as-is and change the View class
          */
         View view;
+
 
         /*
          * normally OpenGL is for the C language (i.e. no objects). Thus all

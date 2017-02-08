@@ -1,0 +1,13 @@
+INPUT(
+./release\main.o
+./release\mainwindow.o
+./release\View.o
+./release\MyGLWidget.o
+./release\moc_mainwindow.o
+./release\moc_MyGLWidget.o
+./release\moc_OpenGLWindow.o
+./release\OpenGLWindow.o
+./release\moc_mainwindow.o
+./release\moc_MyGLWidget.o
+./release\moc_OpenGLWindow.o
+);

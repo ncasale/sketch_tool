@@ -127,35 +127,30 @@ void OpenGLWindow::keyPressEvent(QKeyEvent *e)
     {
     case Qt::Key_1:
         //Call Cube creation
-        view.createShape("box");
-        view.recreateScenegraph(*gl, string("scenegraphs/sketch.xml"));
+        view.addShapeToSGraph("box");
         break;
     case Qt::Key_2:
         //Call Sphere creation
-        view.createShape("sphere");
-        view.recreateScenegraph(*gl, string("scenegraphs/sketch.xml"));
+        view.addShapeToSGraph("sphere");
         break;
     case Qt::Key_3:
         //Call Cylinder creation
-        view.createShape("cylinder");
-        view.recreateScenegraph(*gl, string("scenegraphs/sketch.xml"));
+        view.addShapeToSGraph("cylinder");
         break;
     case Qt::Key_4:
         //Call cone creation
-        view.createShape("cone");
-        view.recreateScenegraph(*gl, string("scenegraphs/sketch.xml"));
+        view.addShapeToSGraph("cone");
         break;
     case Qt::Key_C:
         //Clear the scenegraph
         view.clearScenegraph();
-        view.recreateScenegraph(*gl, string("scenegraphs/sketch.xml"));
         break;
     case Qt::Key_T:
         //Format XML file
         view.insertTabs(view.getSgraphFileLocation());
         break;
     case Qt::Key_S:
-        //Save the XML Fi"le
+        //Save the XML File
         view.saveXMLFile("scenegraphs/test_save.xml");
         view.insertTabs("scenegraphs/test_save.xml");
         break;

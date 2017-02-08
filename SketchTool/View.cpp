@@ -34,7 +34,52 @@ View::~View()
     delete scenegraph;
 }
 
+void View::addShapeToSGraph(string shape)
+{
+    //Start by creating a new group node
+    //stack<sgraph::INode*> stacknodes;
+    sgraph::INode* group_node = new sgraph::GroupNode(scenegraph, "");
+    //stacknodes.push(group_node);
+    //Make group node child of root to start
+    scenegraph->getRoot()->addChild(group_node);
+
+
+    //Now create a transform node
+    sgraph::INode* transform_node = new sgraph::TransformNode(scenegraph, "");
+    //Apply scale of 50 to all dimensions
+    glm::mat4 transform_mat = glm::mat4(1.0f);
+    transform_mat = transform_mat *
+                    glm::scale(glm::mat4(1.0f), glm::vec3(50.0f, 50.0f, 50.0f));
+    transform_node->setTransform(transform_mat);
+    //Make transfrom node a child of group node
+    group_node->addChild(transform_node);
+
+    //Now let's create leaf (object) node
+    sgraph::INode* leaf_node = new sgraph::LeafNode(shape, scenegraph, "");
+    //Material for leaf
+    util::Material mat;
+    mat.setAmbient(0.8f, 0.8f, 0.8f);
+    mat.setDiffuse(0.8f, 0.8f, 0.8f);
+    mat.setSpecular(0.8f, 0.8f, 0.8f);
+    mat.setShininess(100.0f);
+    //Apply material
+    leaf_node->setMaterial(mat);
+    //Make leaf node child of transform node
+    transform_node->addChild(leaf_node);
+
+    return;
+}
+
 void View::clearScenegraph()
+{
+    //This will clear the scenegraph by deleting all children nodes
+    //of the root
+    scenegraph->getRoot()->clearChildren();
+    trackballTransform = glm::mat4(1.0f);
+}
+
+/* DEPRECATED
+ * void View::clearScenegraph()
 {
     //Revert sketch.xml back to default
     //Now let's append to xml -- will be done by parsing for group tag and then appending
@@ -57,6 +102,7 @@ void View::clearScenegraph()
     //Reset trackball transform
     trackballTransform = glm::mat4(1.0f);
 }
+*/
 
 void View::initScenegraph(util::OpenGLFunctions &gl, const string& filename) throw(runtime_error)
 {
@@ -80,6 +126,7 @@ void View::initScenegraph(util::OpenGLFunctions &gl, const string& filename) thr
 
 }
 
+/* DEPRECATED
 void View::recreateScenegraph(util::OpenGLFunctions &gl, const string& filename) throw(runtime_error)
 {
     if(scenegraph!=NULL)
@@ -97,6 +144,7 @@ void View::recreateScenegraph(util::OpenGLFunctions &gl, const string& filename)
     scenegraph->setRenderer(&renderer, sinfo.meshes);
 
 }
+*/
 
 void View::init(util::OpenGLFunctions& gl) throw(runtime_error)
 {
@@ -284,6 +332,7 @@ void View::saveLights(fstream& output_file)
 
 }
 
+/*DEPRECATED
 //Shape Creation Functions
 void View::createShape(string shape)
 {
@@ -348,6 +397,7 @@ void View::createShape(string shape)
     std::remove(delete_name.c_str());
 }
 
+DEPRECATED
 string View::generateXML(string shape, map<string,vector<float>> attributes)
 {
     ///This function will generate the XML we will add to our file
@@ -369,7 +419,8 @@ string View::generateXML(string shape, map<string,vector<float>> attributes)
 
 
 
-string View::parseAttributes(string xml, map<string,vector<float>> attributes)
+DEPRECATED
+ string View::parseAttributes(string xml, map<string,vector<float>> attributes)
 {
     //At this point we have our transform, set, material and object tags in place. If we are
     //doing a transformation, we will put inside of set, otherwise we will put inside
@@ -419,6 +470,7 @@ string View::parseAttributes(string xml, map<string,vector<float>> attributes)
     //Return new xml string
     return xml;
 }
+*/
 
 void View::insertTabs(string filename)
 {

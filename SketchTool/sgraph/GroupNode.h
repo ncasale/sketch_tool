@@ -39,6 +39,11 @@ namespace sgraph
         }
     }
 
+    void clearChildren() throw(runtime_error)
+    {
+        children.clear();
+    }
+
     /**
      * Searches recursively into its subtree to look for node with specified name.
      * \param name name of node to be searched

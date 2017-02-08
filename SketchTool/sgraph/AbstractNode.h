@@ -118,6 +118,11 @@ namespace sgraph
       throw runtime_error(getName()+" is not a transform node");
     }
 
+    void clearChildren() throw(runtime_error)
+    {
+        throw runtime_error("Not a group node -- cannot clear children");
+    }
+
 
     /**
      * By default, throws an exception. Any nodes that are capable of storing transformations
