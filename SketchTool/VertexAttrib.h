@@ -28,7 +28,19 @@ public:
     ~VertexAttrib(){}
 
 
-
+    /**
+     * @brief hasData
+     * This vertex has three attributes: Position, normal and texcoord. An
+     * attribute name is passed to this function and if it is one of these
+     * three attributes, true is returned.
+     *
+     * @param attribName
+     * Name of attribute in question
+     *
+     * @return
+     * Returns "true" if attribute one of the three contained in vertex
+     * Returns "false" otherwise
+     */
     bool hasData(string attribName)
     {
 
@@ -44,6 +56,16 @@ public:
         }
     }
 
+    /**
+     * @brief getData
+     * Returns the values for a given attribute
+     *
+     * @param attribName
+     * The attribute whose values will be returned
+     *
+     * @return
+     * Returns a vector containing the values for the passed attribute
+     */
     vector<float> getData(string attribName) throw(runtime_error)
     {
         vector<float> result;
@@ -80,6 +102,17 @@ public:
         return result;
     }
 
+    /**
+     * @brief setData
+     * Sets the data for a given attribute
+     *
+     * @param attribName
+     * The name of the attribute whose data will be set
+     *
+     * @param data
+     * The data to store for the passed attribute, represented as a vector of
+     * floats
+     */
     void setData(string attribName, const vector<float>& data) throw(runtime_error)
     {
         stringstream message;
@@ -133,6 +166,14 @@ public:
         }
     }
 
+    /**
+     * @brief getAllAttributes
+     * Used to get the names of all attributes stored at vertex
+     *
+     * @return
+     * A vector of strings containing the names of all attributes stored at
+     * vertex
+     */
     vector<string> getAllAttributes()
     {
         vector<string> attributes;

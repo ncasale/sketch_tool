@@ -29,45 +29,16 @@ class MyGLWidget : public QOpenGLWidget
         void saveFile();
 
     protected:
-        /*
-         * this function will be called when the window is being initialized
-         * (it will be called only once)
-         */
+        //OpenGL Functions
         void initializeGL();
-
-        /*
-         * this function is called every time the window is drawing itself.
-         * To refresh the window, call update()
-         */
         void paintGL();
-
-   //     void paintOverGL();
-
-        /*
-         * this function is called whenever the window resizes itself
-         * (manually or due to calling resize)
-         */
+        //void paintOverGL();
         void resizeGL(int w,int h);
 
-        /*
-                       * this function is called whenever the mouse is moved (even hovered).
-                       */
+        //Mouse/Keyboard Events
         void mouseMoveEvent(QMouseEvent *);
-
-        /*
-                       * this function is called whenever a mouse button is pressed.
-                       */
         void mousePressEvent(QMouseEvent *);
-
-        /*
-                       * this function is called whenever a mouse button is released.
-                       */
         void mouseReleaseEvent(QMouseEvent *);
-
-        /*
-         * This function called whenever a key pressed
-         */
-
         void keyPressEvent(QKeyEvent *);
 
 

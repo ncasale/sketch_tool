@@ -12,7 +12,7 @@
 		<ambient> 0.800000 0.800000 0.800000 </ambient>
 		<diffuse> 0.800000 0.800000 0.800000 </diffuse>
 		<specular> 0.800000 0.800000 0.800000 </specular>
-		<position> 53.782982 7.220601 -72.518112 </position>
+		<position> 60.000000 10.000000 -100.000000 </position>
 		<spotangle> 180.000000 </spotangle>
 		<spotdirection> 0.000000 -1.000000 0.000000 </spotdirection>
 	</light>
@@ -20,7 +20,7 @@
 		<ambient> 0.800000 0.800000 0.800000 </ambient>
 		<diffuse> 0.800000 0.800000 0.800000 </diffuse>
 		<specular> 0.800000 0.800000 0.800000 </specular>
-		<position> -53.782982 -7.220601 -127.481888 </position>
+		<position> -60.000000 -10.000000 -100.000000 </position>
 		<spotangle> 180.000000 </spotangle>
 		<spotdirection> 0.000000 -1.000000 0.000000 </spotdirection>
 	</light>
@@ -28,7 +28,7 @@
 		<ambient> 0.800000 0.800000 0.800000 </ambient>
 		<diffuse> 0.800000 0.800000 0.800000 </diffuse>
 		<specular> 0.800000 0.800000 0.800000 </specular>
-		<position> 5.245597 -97.628822 -121.002396 </position>
+		<position> 0.000000 -100.000000 -100.000000 </position>
 		<spotangle> 180.000000 </spotangle>
 		<spotdirection> 0.000000 -1.000000 0.000000 </spotdirection>
 	</light>
@@ -41,20 +41,5 @@
 		<spotdirection> 0.000000 -1.000000 0.000000 </spotdirection>
 	</light>
 	<group>
-		<group>
-			<transform> 
-				<set>
-				<scale>50 50 50 </scale>
-				</set>
-				<object instanceof ="sphere">
-					<material>
-						<ambient>0.800000 0.800000 0.8</ambient>
-						<diffuse>0.800000 0.800000 0.8</diffuse>
-						<specular>0.800000 0.800000 0.8</specular>
-						<shininess>100.000000</shininess>
-					</material>
-				</object>
-			</transform>
-		</group>
 	</group>
 </scene>
