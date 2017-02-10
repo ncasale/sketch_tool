@@ -29,6 +29,7 @@ public:
     QAction *actionClose;
     QAction *actionSave;
     QAction *actionSave2;
+    QAction *actionClear;
     MyGLWidget *centralWidget;
     QMenuBar *menuBar;
     QMenu *menuFile;
@@ -50,6 +51,8 @@ public:
         actionSave->setIcon(icon);
         actionSave2 = new QAction(MainWindow);
         actionSave2->setObjectName(QStringLiteral("actionSave2"));
+        actionClear = new QAction(MainWindow);
+        actionClear->setObjectName(QStringLiteral("actionClear"));
         centralWidget = new MyGLWidget(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         MainWindow->setCentralWidget(centralWidget);
@@ -69,6 +72,7 @@ public:
 
         menuBar->addAction(menuFile->menuAction());
         menuFile->addAction(actionSave);
+        menuFile->addAction(actionClear);
         mainToolBar->addAction(actionSave);
 
         retranslateUi(MainWindow);
@@ -82,6 +86,7 @@ public:
         actionClose->setText(QApplication::translate("MainWindow", "Close", 0));
         actionSave->setText(QApplication::translate("MainWindow", "Save", 0));
         actionSave2->setText(QApplication::translate("MainWindow", "Save2", 0));
+        actionClear->setText(QApplication::translate("MainWindow", "Clear", 0));
         menuFile->setTitle(QApplication::translate("MainWindow", "File", 0));
     } // retranslateUi
 

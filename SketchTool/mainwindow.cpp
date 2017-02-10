@@ -25,3 +25,9 @@ void MainWindow::on_actionSave_triggered()
     cent_widget->saveFile();
 }
 
+
+void MainWindow::on_actionClear_triggered()
+{
+    MyGLWidget* cent_widget = (MyGLWidget*)this->centralWidget();
+    cent_widget->clearScene();
+}
