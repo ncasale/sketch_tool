@@ -5,6 +5,7 @@
 #include <QPainter>
 #include <QDebug>
 #include <QStaticText>
+#include <QInputDialog>
 #include <iostream>
 
 
@@ -187,6 +188,45 @@ void MyGLWidget::keyPressEvent(QKeyEvent *e)
         //Save the XML File
         saveFile();
         break;
+    case Qt::Key_P:
+        //Used for debug printing
+        view.printNodeNames();
+        break;
+    case Qt::Key_Shift:
+        //Apply a translate to specified object
+        QString result = QInputDialog::getText(this,"Specify Node Name", "Node name:");
+        //Grab our scenegraph
+        sgraph::Scenegraph* scenegraph = view.getScenegraph();
+        //Find node -- first check if passed name is valid
+        bool valid = scenegraph->isValidNodeName(result.toStdString());
+
+        /*
+        if(!valid)
+        {
+            QMessageBox::information(this, "Invalid Node Name", "Invalid node name: " + result);
+            break;
+        }
+        else
+        {
+            //Traverse scenegraph to find node
+            sgraph::INode* node = scenegraph.getRoot()->getNode(result);
+            //If parent is TransformNode, add translation to it
+            if(node->getNodeType() == sgraph::TRANSFORM)
+            {
+                sgraph::TransformNode* t_node = (sgraph::TransformNode*) node;
+                t_node->addTranslation(10.0f, 10.0f, 10.0f);
+            }
+            else
+            {
+                //If parent is not Transform node, add a transform node as parent
+                //and set parent of transform node to old parent
+                sgraph::TransformNode* new_t_node = new sgraph::TransformNode;
+                new_t_node->addTranslation(10.0f, 10.0f, 10.0f);
+                new_t_node->setParent(node->getParent());
+                node->setParent(new_t_node);
+            }
+        }*/
+
     }
 }
 

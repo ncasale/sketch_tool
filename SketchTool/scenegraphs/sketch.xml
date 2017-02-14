@@ -1,68 +1,90 @@
 <scene>
-<instance name="sphere" path="models/sphere"></instance>
-<instance name="box" path="models/box-outside"></instance>
-<instance name="cone" path="models/cone"></instance>
-<instance name="cylinder" path="models/cylinder"></instance>
-<image name="white" path="textures/white.png" />
-<image name="earth" path="textures/earthmap.png" />
-<image name="dice" path="textures/die.png" />
-<image name="checkerboard" path="textures/checkerboard.png" />
-<image name="checkerboard-box" path="textures/checkerboard-box.png" />
-
-
-<light>
-<ambient>0.8 0.8 0.8</ambient>
-<diffuse>0.8 0.8 0.8</diffuse>
-<specular>0.8 0.8 0.8</specular>
-<position>-60 10 0 </position>
-<spotangle>180</spotangle>
-<spotdirection>0 -1 0 </spotdirection>
-</light>
-
-<light>
-<ambient>0.8 0.8 0.8</ambient>
-<diffuse>0.8 0.8 0.8</diffuse>
-<specular>0.8 0.8 0.8</specular>
-<position>60 -10 0 </position>
-<spotangle>180</spotangle>
-<spotdirection>0 -1 0 </spotdirection>
-</light>
-
-<light>
-<ambient>0.8 0.8 0.8</ambient>
-<diffuse>0.8 0.8 0.8</diffuse>
-<specular>0.8 0.8 0.8</specular>
-<position>0 -100 0 </position>
-<spotangle>180</spotangle>
-<spotdirection>0 -1 0 </spotdirection>
-</light>
-
-<light>
-<ambient>0.8 0.8 0.8</ambient>
-<diffuse>0.8 0.8 0.8</diffuse>
-<specular>0.8 0.8 0.8</specular>
-<position>0 -00 0 </position>
-<spotangle>180</spotangle>
-<spotdirection>0 -1 0 </spotdirection>
-</light>
-
-
-<!-- append -->
-	<group>
-<transform>
-<set>
-<scale>50.000000 50.000000 50.000000 </scale>
-</set>
-
-
-<object instanceof="box">
-<material>
-<ambient>0.800000 0.800000 0.800000 </ambient>
-<diffuse>0.800000 0.800000 0.800000 </diffuse>
-<shininess>100.000000 </shininess>
-<specular>0.800000 0.800000 0.800000 </specular>
-</material>
-</object>
-</transform>
+	<instance name="box" path="models/box-outside" ></instance>
+	<instance name="cone" path="models/cone" ></instance>
+	<instance name="cylinder" path="models/cylinder" ></instance>
+	<instance name="sphere" path="models/sphere" ></instance>
+	<image name="checkerboard" path="textures/checkerboard.png" />
+	<image name="checkerboard-box" path="textures/checkerboard-box.png" />
+	<image name="dice" path="textures/die.png" />
+	<image name="earth" path="textures/earthmap.png" />
+	<image name="white" path="textures/white.png" />
+	<light>
+		<ambient> 0.800000 0.800000 0.800000 </ambient>
+		<diffuse> 0.800000 0.800000 0.800000 </diffuse>
+		<specular> 0.800000 0.800000 0.800000 </specular>
+		<position> 60.000000 10.000000 -100.000000 </position>
+		<spotangle> 180.000000 </spotangle>
+		<spotdirection> 0.000000 -1.000000 0.000000 </spotdirection>
+	</light>
+	<light>
+		<ambient> 0.800000 0.800000 0.800000 </ambient>
+		<diffuse> 0.800000 0.800000 0.800000 </diffuse>
+		<specular> 0.800000 0.800000 0.800000 </specular>
+		<position> -60.000000 -10.000000 -100.000000 </position>
+		<spotangle> 180.000000 </spotangle>
+		<spotdirection> 0.000000 -1.000000 0.000000 </spotdirection>
+	</light>
+	<light>
+		<ambient> 0.800000 0.800000 0.800000 </ambient>
+		<diffuse> 0.800000 0.800000 0.800000 </diffuse>
+		<specular> 0.800000 0.800000 0.800000 </specular>
+		<position> 0.000000 -100.000000 -100.000000 </position>
+		<spotangle> 180.000000 </spotangle>
+		<spotdirection> 0.000000 -1.000000 0.000000 </spotdirection>
+	</light>
+	<light>
+		<ambient> 0.800000 0.800000 0.800000 </ambient>
+		<diffuse> 0.800000 0.800000 0.800000 </diffuse>
+		<specular> 0.800000 0.800000 0.800000 </specular>
+		<position> 0.000000 0.000000 -100.000000 </position>
+		<spotangle> 180.000000 </spotangle>
+		<spotdirection> 0.000000 -1.000000 0.000000 </spotdirection>
+	</light>
+	<group name="Root of scene graph">
+		<group name="Group 0">
+			<transform name="Transform 0">
+				<set>
+				<scale> 50.000000 50.000000 50.000000</scale>
+				</set>
+				<object instanceof="cylinder" name="Leaf 0">
+					<material>
+						<ambient>0.800000 0.800000 0.8</ambient>
+						<diffuse>0.800000 0.800000 0.8</diffuse>
+						<specular>0.800000 0.800000 0.8</specular>
+						<shininess>100.000000</shininess>
+					</material>
+				</object>
+			</transform>
+		</group>
+		<group name="Group 1">
+			<transform name="Transform 1">
+				<set>
+				<scale> 50.000000 50.000000 50.000000</scale>
+				</set>
+				<object instanceof="sphere" name="Leaf 1">
+					<material>
+						<ambient>0.800000 0.800000 0.8</ambient>
+						<diffuse>0.800000 0.800000 0.8</diffuse>
+						<specular>0.800000 0.800000 0.8</specular>
+						<shininess>100.000000</shininess>
+					</material>
+				</object>
+			</transform>
+		</group>
+		<group name="Group 2">
+			<transform name="Transform 2">
+				<set>
+				<scale> 50.000000 50.000000 50.000000</scale>
+				</set>
+				<object instanceof="box" name="Leaf 2">
+					<material>
+						<ambient>0.800000 0.800000 0.8</ambient>
+						<diffuse>0.800000 0.800000 0.8</diffuse>
+						<specular>0.800000 0.800000 0.8</specular>
+						<shininess>100.000000</shininess>
+					</material>
+				</object>
+			</transform>
+		</group>
 	</group>
 </scene>

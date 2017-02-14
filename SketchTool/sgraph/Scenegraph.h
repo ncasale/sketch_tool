@@ -10,6 +10,8 @@
 #include <string>
 #include <map>
 #include <fstream>
+#include <iostream>
+
 using namespace std;
 
 namespace sgraph
@@ -51,6 +53,12 @@ namespace sgraph
      * render the scene graph
      */
     GLScenegraphRenderer *renderer;
+
+    /**
+     * @brief node_names
+     * A vector containing the names of all nodes in the scenegraph
+     */
+    vector<string> node_names;
 
 
   public:
@@ -264,6 +272,52 @@ namespace sgraph
     void addObject(const string& name, const string& path)
     {
         objects[name] = path;
+    }
+
+    /**
+     * @brief addNodeName
+     * Used to add a name to node_names vector. This vector keeps track of
+     * the names used by nodes in the scenegraph.
+     *
+     * @param name
+     * The name to add to the node_names vector
+     */
+    void addNodeName(const string& name)
+    {
+        node_names.push_back(name);
+    }
+
+    /**
+     * @brief printNodeNames
+     * Will print out all names contained in member node_names
+     */
+    void printNodeNames()
+    {
+        for(auto name : node_names)
+            std::cout << name << endl;
+    }
+
+    /**
+     * @brief isValidNodeName
+     * Returns 'true' if passed name is the name of a node in scenegraph,
+     * 'false' otherwise.
+     *
+     * @param name
+     * The name of the node being searched for
+     *
+     * @return
+     * 'true' if @param name is the name of a node in the scenegraph, 'false'
+     * otherwise.
+     */
+    bool isValidNodeName(const string& name)
+    {
+        for(auto entry : node_names)
+        {
+            if(name == entry)
+                return true;
+        }
+
+        return false;
     }
   };
 }

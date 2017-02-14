@@ -12,6 +12,11 @@
 #include <QtCore>
 #include <QtGui>
 #include "View.h"
+#include "sgraph/Scenegraph.h"
+#include "sgraph/INode.h"
+#include "sgraph/TransformNode.h"
+#include "sgraph/LeafNode.h"
+#include "sgraph/GroupNode.h"
 
 /*
  * This is the main OpenGL-based window in our application

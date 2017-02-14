@@ -3,7 +3,6 @@
 
 #include "OpenGLFunctions.h"
 #include <exception>
-using namespace std;
 #include <glm/glm.hpp>
 #include "ShaderProgram.h"
 #include "ShaderLocationsVault.h"
@@ -33,6 +32,10 @@ public:
 
     //Getters
     string getSgraphFileLocation(){return sgraph_file_location;}
+    int getGroupNodeCount(){return group_node_count;}
+    int getTransformNodeCount(){return transform_node_count;}
+    int getLeafNodeCount(){return leaf_node_count;}
+    sgraph::Scenegraph* getScenegraph(){return scenegraph;}
 
     //Rendering Functions
     void init(util::OpenGLFunctions& e) throw(runtime_error);
@@ -60,6 +63,10 @@ public:
     void mouseDragged(int x,int y);
 
     //Random Debug
+    void printNodeNames()
+    {
+        scenegraph->printNodeNames();
+    }
 
 private:
     //record the current window width and height
@@ -87,6 +94,11 @@ private:
 
     //location of default (cleared) scenegraph file
     string sgraph_default = "scenegraphs/sketch_default.xml";
+
+    //Counts of each of the types of nodes
+    int group_node_count = 0;
+    int transform_node_count = 0;
+    int leaf_node_count = 0;
 };
 
 #endif // VIEW_H

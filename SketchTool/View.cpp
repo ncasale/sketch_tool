@@ -26,6 +26,7 @@ View::~View()
     delete scenegraph;
 }
 
+
 void View::init(util::OpenGLFunctions& gl) throw(runtime_error)
 {
   //do this if your initialization throws an error (e.g. shader not found,
@@ -72,7 +73,7 @@ void View::draw(util::OpenGLFunctions& gl)
          */
   modelview.push(glm::mat4(1.0));
   modelview.top() = modelview.top() *
-      glm::lookAt(glm::vec3(0.0f,0.0f,-100.0f),
+      glm::lookAt(glm::vec3(0.0f,0.0f,-200.0f),
                   glm::vec3(0.0f,0.0f,0.0f),
                   glm::vec3(0.0f,1.0f,0.0f)) *
       trackballTransform;
@@ -194,25 +195,21 @@ void View::initScenegraph(util::OpenGLFunctions &gl, const string& filename) thr
 void View::addToScenegraph(string shape)
 {
     //Start by creating a new group node
-    //stack<sgraph::INode*> stacknodes;
     sgraph::INode* group_node = new sgraph::GroupNode(scenegraph, "");
-    //stacknodes.push(group_node);
     //Make group node child of root to start
     scenegraph->getRoot()->addChild(group_node);
 
 
     //Now create a transform node
-    sgraph::INode* transform_node = new sgraph::TransformNode(scenegraph, "");
+    sgraph::TransformNode* transform_node = new sgraph::TransformNode(scenegraph, "");
     //Apply scale of 50 to all dimensions
-    glm::mat4 transform_mat = glm::mat4(1.0f);
-    transform_mat = transform_mat *
-                    glm::scale(glm::mat4(1.0f), glm::vec3(50.0f, 50.0f, 50.0f));
-    transform_node->setTransform(transform_mat);
+    transform_node->addScale(50.0f, 50.0f, 50.0f);
+
     //Make transfrom node a child of group node
     group_node->addChild(transform_node);
 
     //Now let's create leaf (object) node
-    sgraph::INode* leaf_node = new sgraph::LeafNode(shape, scenegraph, "");
+    sgraph::LeafNode* leaf_node = new sgraph::LeafNode(shape, scenegraph, "");
     //Material for leaf
     util::Material mat;
     mat.setAmbient(0.8f, 0.8f, 0.8f);
@@ -224,8 +221,32 @@ void View::addToScenegraph(string shape)
     //Make leaf node child of transform node
     transform_node->addChild(leaf_node);
 
+    //Name each node according to respective counts
+    string group_node_name = "group_" + to_string(group_node_count);
+    string transform_node_name = "transform_" + to_string(transform_node_count);
+    string leaf_node_name = "leaf_" + to_string(leaf_node_count);
+
+    if(group_node->getName() == "")
+        group_node->setName(group_node_name);
+    if(transform_node->getName() == "")
+        transform_node->setName(transform_node_name);
+    if(leaf_node->getName() == "")
+        leaf_node->setName(leaf_node_name);
+
+    //Add these new names to the node_names member of the scenegraph
+    scenegraph->addNodeName(group_node_name);
+    scenegraph->addNodeName(transform_node_name);
+    scenegraph->addNodeName(leaf_node_name);
+
+    //Increment node counts
+    group_node_count++;
+    transform_node_count++;
+    leaf_node_count++;
+
     return;
 }
+
+
 
 /**
  * @brief View::clearScenegraph

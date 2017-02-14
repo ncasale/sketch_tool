@@ -147,7 +147,14 @@ public:
             float shininess = material.getShininess();
 
             //Add object tag
-            output_file << "<object instanceof =\"" << objInstanceName << "\">" << endl;
+            if(name == "")
+                output_file << "<object instanceof =\"" << objInstanceName << "\">" << endl;
+            else
+            {
+                string tag_string = "<object instanceof=\"" + objInstanceName +
+                        "\" name=\"" + name + "\">";
+                output_file << tag_string << endl;
+            }
             //Add material tag
             output_file << "<material>" << endl;
             //Add material properties
@@ -163,7 +170,11 @@ public:
             //Add end object rag
             output_file << "</object>" << endl;
         }
+    }
 
+    NodeType getNodeType()
+    {
+        return LEAF;
     }
 };
 }

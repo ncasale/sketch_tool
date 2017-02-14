@@ -4,6 +4,8 @@
 #include "AbstractNode.h"
 #include "OpenGLFunctions.h"
 #include "glm/glm.hpp"
+#include <glm/gtc/type_ptr.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 #include "Light.h"
 using namespace std;
 #include <vector>
@@ -13,6 +15,12 @@ using namespace std;
 
 namespace sgraph
 {
+
+enum transformation_type{
+    TRANSLATE,
+    ROTATE,
+    SCALE
+};
 
   /**
  * This node represents a transformation in the scene graph. It has only one child. The transformation
@@ -37,6 +45,7 @@ namespace sgraph
     /**
       * Add transformation container here
       */
+    vector<pair<transformation_type,vector<float>>> transformation_order;
 
   public:
     TransformNode(sgraph::Scenegraph *graph,const string& name)
@@ -169,9 +178,51 @@ namespace sgraph
     void saveToXML(fstream& output_file)
     {
         //Add transform tag to file
-        output_file << "<transform> " << endl;
-        //Add set and default scale of 50
-        output_file << "<set>" << endl << "<scale>50 50 50 </scale>" << endl << "</set>" << endl;
+        if(name == "")
+            output_file << "<transform> " << endl;
+        else
+        {
+            string tag_string = "<transform name=\"" + name + "\">";
+            output_file << tag_string << endl;
+        }
+
+        //Add set tag
+        output_file << "<set>" << endl;
+        //Iterate through transformation_order and apply correct tags
+        string xml_string = "";
+        vector<float> data;
+        for(auto entry : transformation_order)
+        {
+            data = entry.second;
+
+            //Apply scale
+            if(entry.first == SCALE)
+            {
+                xml_string = "<scale> " + to_string(data[0]) + " " +
+                        to_string(data[1]) + " " + to_string(data[2]) +
+                        "</scale>";
+                output_file << xml_string << endl;
+            }
+
+            //Apply Rotation
+            else if(entry.first == ROTATE)
+            {
+                xml_string = "<rotate> " + to_string(data[0]) + " " +
+                        to_string(data[1]) + " " + to_string(data[2]) + " "
+                        + to_string(data[3]) + "</rotate";
+                output_file << xml_string << endl;
+            }
+
+            //Apply translation
+            else if(entry.first == TRANSLATE)
+            {
+                xml_string = "<translate> " + to_string(data[0]) + " " +
+                        to_string(data[1]) + " " + to_string(data[2]) +
+                        "</translate>";
+                output_file << xml_string << endl;
+            }
+        }
+        output_file << "</set>" << endl;
         if(child != NULL)
             child->saveToXML(output_file);
         //Add ending transform tag
@@ -280,6 +331,93 @@ namespace sgraph
           lights.push_back(templights[i]);
         }
       return lights;
+    }
+
+    /**
+     * @brief addScale
+     * Used to add a scale transformation to our node's list of applied
+     * transformations as well as apply this scale to the node's transform
+     *
+     * @param x_scale
+     * The scaling factor in the x direction
+     *
+     * @param y_scale
+     * The scaling factor in the y direction
+     *
+     * @param z_scale
+     * The scaling factor in the z direction
+     */
+    void addScale(float x_scale, float y_scale, float z_scale)
+    {
+        //Add a scale entry to the transformation_order vector
+        vector<float> data = {x_scale, y_scale, z_scale};
+        transformation_type t = SCALE;
+        pair<transformation_type, vector<float>> new_entry(t, data);
+        transformation_order.push_back(new_entry);
+
+        //Apply scale to node's transform
+        transform *= glm::scale(glm::mat4(1.0f), glm::vec3(x_scale, y_scale, z_scale));
+    }
+
+    /**
+     * @brief addRotation
+     * Used to add a rotate transformation to node's list of applied
+     * transformations as well as apply this rotation to node's transform.
+     *
+     * @param angle
+     * The angle of the rotation in degrees
+     *
+     * @param x_axis
+     * 1 if rotation of angle @param angle about x-axis should be applied , 0 otherwise
+     *
+     * @param y_axis
+     * 1 if rotation of angle @param angle about y-axis should be applied , 0 otherwise
+     *
+     * @param z_axis
+     * 1 if rotation of angle @param angle about z-axis should be applied , 0 otherwise
+     */
+    void addRotation(float angle, float x_axis, float y_axis, float z_axis)
+    {
+        //Add a roatation entry to the transformation_order vector
+        vector<float> data = {angle, x_axis, y_axis, z_axis};
+        transformation_type t = ROTATE;
+        pair<transformation_type, vector<float>> new_entry(t, data);
+        transformation_order.push_back(new_entry);
+
+        //Apply rotation to node's transformation
+        transform *= glm::rotate(glm::mat4(1.0f), glm::radians(angle), glm::vec3(x_axis, y_axis, z_axis));
+
+    }
+
+    /**
+     * @brief addTranslation
+     * Used to add a translate transformation to a node's list of applied
+     * transformations as well as apply this translation to node's transform.
+     *
+     * @param x_trans
+     * Amount to translate along the x-axis
+     *
+     * @param y_trans
+     * Amount to translate along the y-axis
+     *
+     * @param z_trans
+     * Amount to translate along the z-axis
+     */
+    void addTranslation(float x_trans, float y_trans, float z_trans)
+    {
+        //Add a translation entry to the transformation_order vector
+        vector<float> data = {x_trans, y_trans, z_trans};
+        transformation_type t = TRANSLATE;
+        pair<transformation_type, vector<float>> new_entry(t, data);
+        transformation_order.push_back(new_entry);
+
+        //Apply translation to transformation member
+        transform *= glm::translate(glm::mat4(1.0f), glm::vec3(x_trans, y_trans, z_trans));
+    }
+
+    NodeType getNodeType()
+    {
+        return TRANSFORM;
     }
   };
 }

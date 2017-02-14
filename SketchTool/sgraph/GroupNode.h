@@ -130,7 +130,13 @@ namespace sgraph
     void saveToXML(fstream& output_file)
     {
         //Add group tag to output file
-        output_file << "<group>" << endl;
+        if(name == "")
+            output_file << "<group>" << endl;
+        else
+        {
+            string tag_string = "<group name=\"" + name + "\">";
+            output_file << tag_string << endl;
+        }
         for(int i=0; i < children.size(); i++)
         {
             children[i]->saveToXML(output_file);
@@ -227,6 +233,11 @@ namespace sgraph
           lights.push_back(templights[i]);
         }
       return lights;
+    }
+
+    NodeType getNodeType()
+    {
+        return GROUP;
     }
   };
 }

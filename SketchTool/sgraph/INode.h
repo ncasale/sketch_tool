@@ -5,6 +5,7 @@
 #include <glm/glm.hpp>
 #include "Light.h"
 #include "Material.h"
+#include "View.h"
 #include <vector>
 #include <stack>
 #include <string>
@@ -17,6 +18,12 @@ namespace sgraph
   class Scenegraph;
   class GLScenegraphRenderer;
 
+  enum NodeType{
+      GROUP,
+      TRANSFORM,
+      LEAF
+  };
+
   /**
  * This interface represents all the operations offered by any type of node in our scenegraph.
  * Not all types of nodes are able to offer all types of operations.
@@ -27,6 +34,7 @@ namespace sgraph
  */
   class INode
   {
+
   public:
 
      /**
@@ -78,6 +86,8 @@ namespace sgraph
      * A reference to the desiered parent
      */
     virtual void setParent(INode *parent)=0;
+
+    virtual INode *getParent()=0;
 
     /**
      * @brief setScenegraph
@@ -197,6 +207,8 @@ namespace sgraph
 
     //Used to save each node to the passed XML file
     virtual void saveToXML(fstream& output_file) = 0;
+
+    virtual NodeType getNodeType() = 0;
   };
 }
 

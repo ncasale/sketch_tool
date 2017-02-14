@@ -3,6 +3,7 @@
 
 #include "INode.h"
 #include "glm/glm.hpp"
+#include "View.h"
 #include <string>
 using namespace std;
 
@@ -17,7 +18,9 @@ namespace sgraph
  */
   class AbstractNode:public INode
   {
-    /**
+      friend class ::View;
+
+     /**
      * The name given to this node
      */
   protected:
@@ -63,6 +66,13 @@ namespace sgraph
       return NULL;
     }
 
+    NodeType getNodeType()
+    {
+        //Return group as default, although this will never be called
+        //on an abstract node
+        return GROUP;
+    }
+
     /**
      * @brief setParent
      * Sets the parent of this node
@@ -106,6 +116,8 @@ namespace sgraph
     {
       this->name = name;
     }
+
+    INode* getParent() {return parent;}
 
     /**
      * @brief getName
