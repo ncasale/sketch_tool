@@ -41,6 +41,7 @@ class MyGLWidget : public QOpenGLWidget
         void setAnimating(bool enabled);
         void setSelectedAxis(SelectedAxis val) {selected_axis = val;}
         void setSelectedNodeName(string name) {selected_node_name = name;}
+        void toggleAllAxesSelected() {all_axes_selected = !all_axes_selected;}
 
         //Actions
         void saveFile();
@@ -108,6 +109,7 @@ private:
         string selected_node_name = "";
         bool node_selected = false;
         bool axis_selected = false;
+        bool all_axes_selected = false;
 };
 
 

@@ -201,16 +201,24 @@ void MyGLWidget::keyPressEvent(QKeyEvent *e)
         //Used to select X-axis
         setSelectedAxis(X_AXIS);
         axis_selected = true;
+        all_axes_selected = false;
         break;
     case Qt::Key_Y:
         //Used to select Y-axis
         setSelectedAxis(Y_AXIS);
         axis_selected = true;
+        all_axes_selected = false;
         break;
     case Qt::Key_Z:
         //Used to select Z-axis
         setSelectedAxis(Z_AXIS);
         axis_selected = true;
+        all_axes_selected = false;
+        break;
+
+    case Qt::Key_A:
+        //Used to select all axes of object
+        toggleAllAxesSelected();
         break;
     case Qt::Key_O:
     {
@@ -286,16 +294,132 @@ void MyGLWidget::keyPressEvent(QKeyEvent *e)
             {
             case X_AXIS:
                 data = {-1.0f, 0.0f, 0.0f};
-                view.addTransformNode(selected_node_name, View::TRANSLATION, data);
                 break;
             case Y_AXIS:
                 data = {0.0f, -1.0f, 0.0f};
-                view.addTransformNode(selected_node_name, View::TRANSLATION, data);
+                break;
             case Z_AXIS:
                 data = {0.0f, 0.0f, -1.0f};
-                view.addTransformNode(selected_node_name, View::TRANSLATION, data);
+                break;
             }
+
+            view.addTransformNode(selected_node_name, View::TRANSLATION, data);
         }
+        break;
+    }
+
+    case Qt::Key_Period:
+    {
+        if(!axis_selected || !node_selected)
+            break;
+        vector<float> data;
+
+        switch(selected_axis)
+        {
+        case X_AXIS:
+            data = {5.0f, 1.0f, 0.0f, 0.0f};
+            break;
+        case Y_AXIS:
+            data = {5.0f, 0.0f, 1.0f, 0.0f};
+            break;
+        case Z_AXIS:
+            data = {5.0f, 0.0f, 0.0f, 1.0f};
+            break;
+        }
+
+        view.addTransformNode(selected_node_name, View::ROTATION, data);
+        break;
+    }
+
+    case Qt::Key_Comma:
+    {
+        if(!axis_selected || !node_selected)
+            break;
+        vector<float> data;
+
+        switch(selected_axis)
+        {
+        case X_AXIS:
+            data = {-5.0f, 1.0f, 0.0f, 0.0f};
+            break;
+        case Y_AXIS:
+            data = {-5.0f, 0.0f, 1.0f, 0.0f};
+            break;
+        case Z_AXIS:
+            data = {-5.0f, 0.0f, 0.0f, 1.0f};
+            break;
+        }
+
+        view.addTransformNode(selected_node_name, View::ROTATION, data);
+        break;
+    }
+
+    case Qt::Key_Up:
+    {
+        vector<float> data;
+        if(!node_selected)
+            break;
+        if(all_axes_selected)
+        {
+            data = {1.25f, 1.25f, 1.25f};
+            view.addTransformNode(selected_node_name, View::SCALE, data);
+            break;
+        }
+
+        if(!axis_selected)
+            break;
+
+        switch(selected_axis)
+        {
+        case X_AXIS:
+            data = {1.25f, 1.0f, 1.0f};
+            break;
+        case Y_AXIS:
+            data = {1.0f, 1.25f, 1.0f};
+            break;
+        case Z_AXIS:
+            data = {1.0f, 1.0f, 1.25f};
+            break;
+        default:
+            data = {1.25f, 1.25f, 1.25f};
+            break;
+        }
+
+        view.addTransformNode(selected_node_name, View::SCALE, data);
+        break;
+    }
+
+    case Qt::Key_Down:
+    {
+        vector<float> data;
+        if(!node_selected)
+            break;
+        if(all_axes_selected)
+        {
+            data = {0.8f, 0.8f, 0.8f};
+            view.addTransformNode(selected_node_name, View::SCALE, data);
+            break;
+        }
+
+        if(!axis_selected)
+            break;
+        switch(selected_axis)
+        {
+        case X_AXIS:
+            data = {0.8f, 1.0f, 1.0f};
+            break;
+        case Y_AXIS:
+            data = {1.0f, 0.8f, 1.0f};
+            break;
+        case Z_AXIS:
+            data = {1.0f, 1.0f, 0.8f};
+            break;
+        default:
+            data = {0.8f, 0.8f, 0.8f};
+            break;
+        }
+
+        view.addTransformNode(selected_node_name, View::SCALE, data);
         break;
     }
     case Key_Translate:

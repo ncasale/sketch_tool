@@ -38,14 +38,12 @@ public:
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
     QToolBar *toolBar;
-    QToolBar *toolBar_2;
-    QToolBar *toolBar_3;
 
     void setupUi(QMainWindow *MainWindow)
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QStringLiteral("MainWindow"));
-        MainWindow->resize(684, 298);
+        MainWindow->resize(800, 800);
         MainWindow->setFocusPolicy(Qt::StrongFocus);
         actionClose = new QAction(MainWindow);
         actionClose->setObjectName(QStringLiteral("actionClose"));
@@ -70,7 +68,7 @@ public:
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 684, 17));
+        menuBar->setGeometry(QRect(0, 0, 800, 17));
         menuFile = new QMenu(menuBar);
         menuFile->setObjectName(QStringLiteral("menuFile"));
         menuFile->setFocusPolicy(Qt::StrongFocus);
@@ -84,12 +82,6 @@ public:
         toolBar = new QToolBar(MainWindow);
         toolBar->setObjectName(QStringLiteral("toolBar"));
         MainWindow->addToolBar(Qt::TopToolBarArea, toolBar);
-        toolBar_2 = new QToolBar(MainWindow);
-        toolBar_2->setObjectName(QStringLiteral("toolBar_2"));
-        MainWindow->addToolBar(Qt::TopToolBarArea, toolBar_2);
-        toolBar_3 = new QToolBar(MainWindow);
-        toolBar_3->setObjectName(QStringLiteral("toolBar_3"));
-        MainWindow->addToolBar(Qt::TopToolBarArea, toolBar_3);
 
         menuBar->addAction(menuFile->menuAction());
         menuFile->addAction(actionSave);
@@ -113,8 +105,6 @@ public:
         actionOpen->setText(QApplication::translate("MainWindow", "Open", 0));
         menuFile->setTitle(QApplication::translate("MainWindow", "File", 0));
         toolBar->setWindowTitle(QApplication::translate("MainWindow", "toolBar", 0));
-        toolBar_2->setWindowTitle(QApplication::translate("MainWindow", "toolBar_2", 0));
-        toolBar_3->setWindowTitle(QApplication::translate("MainWindow", "toolBar_3", 0));
     } // retranslateUi
 
 };
