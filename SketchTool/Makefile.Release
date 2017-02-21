@@ -124,7 +124,8 @@ compiler_rcc_make_all: release/qrc_myres.cpp
 compiler_rcc_clean:
 	-$(DEL_FILE) release\qrc_myres.cpp
 release/qrc_myres.cpp: myres.qrc \
-		toolbar_icons/save-icon.png
+		toolbar_icons/save-icon.png \
+		toolbar_icons/folder-open-icon.png
 	C:\Qt\5.6\mingw49_32\bin\rcc.exe -name myres myres.qrc -o release\qrc_myres.cpp
 
 compiler_moc_header_make_all: release/moc_mainwindow.cpp release/moc_MyGLWidget.cpp release/moc_customdialog.cpp
@@ -2552,7 +2553,45 @@ release/MyGLWidget.o: MyGLWidget.cpp MyGLWidget.h \
 		C:/Qt/5.6/mingw49_32/include/QtWidgets/QInputDialog \
 		C:/Qt/5.6/mingw49_32/include/QtWidgets/qinputdialog.h \
 		C:/Qt/5.6/mingw49_32/include/QtWidgets/qlineedit.h \
-		C:/Qt/5.6/mingw49_32/include/QtWidgets/qframe.h
+		C:/Qt/5.6/mingw49_32/include/QtWidgets/qframe.h \
+		customdialog.h \
+		C:/Qt/5.6/mingw49_32/include/QtWidgets/qaction.h \
+		C:/Qt/5.6/mingw49_32/include/QtWidgets/qactiongroup.h \
+		C:/Qt/5.6/mingw49_32/include/QtWidgets/qapplication.h \
+		C:/Qt/5.6/mingw49_32/include/QtWidgets/qdesktopwidget.h \
+		C:/Qt/5.6/mingw49_32/include/QtWidgets/qpushbutton.h \
+		C:/Qt/5.6/mingw49_32/include/QtWidgets/qabstractbutton.h \
+		C:/Qt/5.6/mingw49_32/include/QtWidgets/qcheckbox.h \
+		C:/Qt/5.6/mingw49_32/include/QtWidgets/qlabel.h \
+		C:/Qt/5.6/mingw49_32/include/QtWidgets/qcombobox.h \
+		C:/Qt/5.6/mingw49_32/include/QtWidgets/qabstractitemdelegate.h \
+		C:/Qt/5.6/mingw49_32/include/QtWidgets/qstyleoption.h \
+		C:/Qt/5.6/mingw49_32/include/QtWidgets/qabstractspinbox.h \
+		C:/Qt/5.6/mingw49_32/include/QtWidgets/qslider.h \
+		C:/Qt/5.6/mingw49_32/include/QtWidgets/qabstractslider.h \
+		C:/Qt/5.6/mingw49_32/include/QtWidgets/qstyle.h \
+		C:/Qt/5.6/mingw49_32/include/QtWidgets/qtabbar.h \
+		C:/Qt/5.6/mingw49_32/include/QtWidgets/qtabwidget.h \
+		C:/Qt/5.6/mingw49_32/include/QtWidgets/qrubberband.h \
+		C:/Qt/5.6/mingw49_32/include/QtWidgets/qbuttongroup.h \
+		C:/Qt/5.6/mingw49_32/include/QtWidgets/qradiobutton.h \
+		C:/Qt/5.6/mingw49_32/include/QtWidgets/qspinbox.h \
+		C:/Qt/5.6/mingw49_32/include/QtWidgets/qlayout.h \
+		C:/Qt/5.6/mingw49_32/include/QtWidgets/qlayoutitem.h \
+		C:/Qt/5.6/mingw49_32/include/QtWidgets/qboxlayout.h \
+		C:/Qt/5.6/mingw49_32/include/QtWidgets/qgridlayout.h \
+		C:/Qt/5.6/mingw49_32/include/QtWidgets/qgroupbox.h \
+		C:/Qt/5.6/mingw49_32/include/QtWidgets/qtextedit.h \
+		C:/Qt/5.6/mingw49_32/include/QtWidgets/qabstractscrollarea.h \
+		C:/Qt/5.6/mingw49_32/include/QtWidgets/qprogressbar.h \
+		C:/Qt/5.6/mingw49_32/include/QtWidgets/qtooltip.h \
+		C:/Qt/5.6/mingw49_32/include/QtWidgets/qcompleter.h \
+		C:/Qt/5.6/mingw49_32/include/QtWidgets/QHBoxLayout \
+		C:/Qt/5.6/mingw49_32/include/QtWidgets/QLabel \
+		C:/Qt/5.6/mingw49_32/include/QtWidgets/QVBoxLayout \
+		C:/Qt/5.6/mingw49_32/include/QtGui/QDesktopServices \
+		C:/Qt/5.6/mingw49_32/include/QtCore/QDir \
+		C:/Qt/5.6/mingw49_32/include/QtCore/QUrl
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\MyGLWidget.o MyGLWidget.cpp
 
 release/customdialog.o: customdialog.cpp customdialog.h \

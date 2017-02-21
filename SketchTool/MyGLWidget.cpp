@@ -417,6 +417,11 @@ void MyGLWidget::clearScene()
         return;
 }
 
+void MyGLWidget::openFile()
+{
+
+}
+
 
 
 
