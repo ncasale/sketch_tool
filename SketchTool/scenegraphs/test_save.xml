@@ -44,22 +44,62 @@
 		<group name="group_0">
 			<transform name="transform_0">
 				<set>
+				<translate> 1.000000 0.000000 0.000000</translate>
+				<translate> 1.000000 0.000000 0.000000</translate>
+				<translate> 1.000000 0.000000 0.000000</translate>
+				<translate> -1.000000 0.000000 0.000000</translate>
+				<translate> -1.000000 0.000000 0.000000</translate>
+				<translate> -1.000000 0.000000 0.000000</translate>
+				<translate> -1.000000 0.000000 0.000000</translate>
+				<translate> -1.000000 0.000000 0.000000</translate>
+				<translate> -1.000000 0.000000 0.000000</translate>
+				<translate> 1.000000 0.000000 0.000000</translate>
+				<translate> -1.000000 0.000000 0.000000</translate>
+				<translate> 1.000000 0.000000 0.000000</translate>
+				<translate> -1.000000 0.000000 0.000000</translate>
+				<translate> 1.000000 0.000000 0.000000</translate>
+				<translate> -1.000000 0.000000 0.000000</translate>
+				<translate> 1.000000 0.000000 0.000000</translate>
+				<translate> -1.000000 0.000000 0.000000</translate>
+				<translate> 1.000000 0.000000 0.000000</translate>
+				<translate> 1.000000 0.000000 0.000000</translate>
+				<translate> 1.000000 0.000000 0.000000</translate>
+				<translate> 1.000000 0.000000 0.000000</translate>
+				<translate> 1.000000 0.000000 0.000000</translate>
+				<translate> -1.000000 0.000000 0.000000</translate>
+				<translate> -1.000000 0.000000 0.000000</translate>
+				<translate> -1.000000 0.000000 0.000000</translate>
+				<translate> -1.000000 0.000000 0.000000</translate>
+				<translate> -1.000000 0.000000 0.000000</translate>
+				<translate> 1.000000 0.000000 0.000000</translate>
+				<translate> 1.000000 0.000000 0.000000</translate>
+				<translate> 1.000000 0.000000 0.000000</translate>
+				<translate> 1.000000 0.000000 0.000000</translate>
+				<translate> 1.000000 0.000000 0.000000</translate>
+				<translate> 1.000000 0.000000 0.000000</translate>
+				<translate> -1.000000 0.000000 0.000000</translate>
+				<translate> -1.000000 0.000000 0.000000</translate>
+				<translate> -1.000000 0.000000 0.000000</translate>
+				<translate> -1.000000 0.000000 0.000000</translate>
+				<translate> -1.000000 0.000000 0.000000</translate>
+				<translate> -1.000000 0.000000 0.000000</translate>
+				<translate> 1.000000 0.000000 0.000000</translate>
+				<translate> 1.000000 0.000000 0.000000</translate>
+				<translate> 1.000000 0.000000 0.000000</translate>
+				<translate> 1.000000 0.000000 0.000000</translate>
+				<translate> 1.000000 0.000000 0.000000</translate>
+				<translate> 1.000000 0.000000 0.000000</translate>
+				<translate> -1.000000 0.000000 0.000000</translate>
+				<translate> -1.000000 0.000000 0.000000</translate>
+				<translate> -1.000000 0.000000 0.000000</translate>
+				<translate> -1.000000 0.000000 0.000000</translate>
+				<translate> -1.000000 0.000000 0.000000</translate>
+				<translate> -1.000000 0.000000 0.000000</translate>
+				<translate> 1.000000 0.000000 0.000000</translate>
+				<translate> 1.000000 0.000000 0.000000</translate>
+				<translate> 1.000000 0.000000 0.000000</translate>
 				</set>
-				<object instanceof="cylinder" name="leaf_0">
-					<material>
-						<ambient>0.800000 0.800000 0.8</ambient>
-						<diffuse>0.800000 0.800000 0.8</diffuse>
-						<specular>0.800000 0.800000 0.8</specular>
-						<shininess>100.000000</shininess>
-					</material>
-				</object>
-			</transform>
-		</group>
-		<group name="group_1">
-			<transform name="transform_1">
-				<set>
-				</set>
-				<object instanceof="sphere" name="leaf_1">
+				<object instanceof="box" name="leaf_0">
 					<material>
 						<ambient>0.800000 0.800000 0.8</ambient>
 						<diffuse>0.800000 0.800000 0.8</diffuse>

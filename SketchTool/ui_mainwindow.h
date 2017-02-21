@@ -19,7 +19,8 @@
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QToolBar>
-#include "myglwidget.h"
+#include <QtWidgets/QVBoxLayout>
+#include <myglwidget.h>
 
 QT_BEGIN_NAMESPACE
 
@@ -31,16 +32,20 @@ public:
     QAction *actionClear;
     QAction *actionOpen;
     MyGLWidget *centralWidget;
+    QVBoxLayout *verticalLayout;
     QMenuBar *menuBar;
     QMenu *menuFile;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
+    QToolBar *toolBar;
+    QToolBar *toolBar_2;
+    QToolBar *toolBar_3;
 
     void setupUi(QMainWindow *MainWindow)
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QStringLiteral("MainWindow"));
-        MainWindow->resize(400, 300);
+        MainWindow->resize(684, 298);
         MainWindow->setFocusPolicy(Qt::StrongFocus);
         actionClose = new QAction(MainWindow);
         actionClose->setObjectName(QStringLiteral("actionClose"));
@@ -58,10 +63,14 @@ public:
         actionOpen->setIcon(icon1);
         centralWidget = new MyGLWidget(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
+        verticalLayout = new QVBoxLayout(centralWidget);
+        verticalLayout->setSpacing(6);
+        verticalLayout->setContentsMargins(11, 11, 11, 11);
+        verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 400, 17));
+        menuBar->setGeometry(QRect(0, 0, 684, 17));
         menuFile = new QMenu(menuBar);
         menuFile->setObjectName(QStringLiteral("menuFile"));
         menuFile->setFocusPolicy(Qt::StrongFocus);
@@ -72,6 +81,15 @@ public:
         statusBar = new QStatusBar(MainWindow);
         statusBar->setObjectName(QStringLiteral("statusBar"));
         MainWindow->setStatusBar(statusBar);
+        toolBar = new QToolBar(MainWindow);
+        toolBar->setObjectName(QStringLiteral("toolBar"));
+        MainWindow->addToolBar(Qt::TopToolBarArea, toolBar);
+        toolBar_2 = new QToolBar(MainWindow);
+        toolBar_2->setObjectName(QStringLiteral("toolBar_2"));
+        MainWindow->addToolBar(Qt::TopToolBarArea, toolBar_2);
+        toolBar_3 = new QToolBar(MainWindow);
+        toolBar_3->setObjectName(QStringLiteral("toolBar_3"));
+        MainWindow->addToolBar(Qt::TopToolBarArea, toolBar_3);
 
         menuBar->addAction(menuFile->menuAction());
         menuFile->addAction(actionSave);
@@ -94,6 +112,9 @@ public:
         actionClear->setText(QApplication::translate("MainWindow", "Clear", 0));
         actionOpen->setText(QApplication::translate("MainWindow", "Open", 0));
         menuFile->setTitle(QApplication::translate("MainWindow", "File", 0));
+        toolBar->setWindowTitle(QApplication::translate("MainWindow", "toolBar", 0));
+        toolBar_2->setWindowTitle(QApplication::translate("MainWindow", "toolBar_2", 0));
+        toolBar_3->setWindowTitle(QApplication::translate("MainWindow", "toolBar_3", 0));
     } // retranslateUi
 
 };

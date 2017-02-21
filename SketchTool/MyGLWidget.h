@@ -23,6 +23,12 @@
  * The QOpenGLWindow class exposes some convenient functionality for any OpenGL program to override
  *
 */
+enum SelectedAxis{
+    NONE,
+    X_AXIS,
+    Y_AXIS,
+    Z_AXIS
+};
 
 class MyGLWidget : public QOpenGLWidget
 {
@@ -30,7 +36,11 @@ class MyGLWidget : public QOpenGLWidget
     public:
         explicit MyGLWidget(QWidget *parent=0);
         virtual ~MyGLWidget();
+
+        //Setters
         void setAnimating(bool enabled);
+        void setSelectedAxis(SelectedAxis val) {selected_axis = val;}
+        void setSelectedNodeName(string name) {selected_node_name = name;}
 
         //Actions
         void saveFile();
@@ -94,6 +104,10 @@ private:
         int frames;
         QTime timer;
         float framerate;
+        SelectedAxis selected_axis = NONE;
+        string selected_node_name = "";
+        bool node_selected = false;
+        bool axis_selected = false;
 };
 
 

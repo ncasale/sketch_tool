@@ -197,6 +197,107 @@ void MyGLWidget::keyPressEvent(QKeyEvent *e)
         //Used for debug printing
         view.printNodeNames();
         break;
+    case Qt::Key_X:
+        //Used to select X-axis
+        setSelectedAxis(X_AXIS);
+        axis_selected = true;
+        break;
+    case Qt::Key_Y:
+        //Used to select Y-axis
+        setSelectedAxis(Y_AXIS);
+        axis_selected = true;
+        break;
+    case Qt::Key_Z:
+        //Used to select Z-axis
+        setSelectedAxis(Z_AXIS);
+        axis_selected = true;
+        break;
+    case Qt::Key_O:
+    {
+        //Used to select the current object to manipulate
+        CustomDialog d("Select Node", this);
+        axis_selected = false;
+
+        d.addLineEdit("Node Name: ", &selected_node_name);
+
+        d.exec();
+
+        if(d.wasCancelled())
+            break;
+
+        //Grab our scenegraph
+        sgraph::Scenegraph* scenegraph = view.getScenegraph();
+        //Ensure node is valid
+        bool valid = scenegraph->isValidNodeName(selected_node_name);
+
+        if(!valid)
+        {
+            QString msg(selected_node_name.c_str());
+            QMessageBox::information(this, "Invalid Node Name", "Invalid node name: " + msg);
+            node_selected = false;
+            break;
+        }
+        else
+        {
+            node_selected = true;
+        }
+    }
+
+    case Qt::Key_Right:
+    {
+        //Translates along positive axis if selected
+        if(!axis_selected)
+            break;
+        else
+        {
+            if(!node_selected)
+                break;
+
+            vector<float> data;
+            switch(selected_axis)
+            {
+            case X_AXIS:
+                data = {1.0f, 0.0f, 0.0f};
+                view.addTransformNode(selected_node_name, View::TRANSLATION, data);
+                break;
+            case Y_AXIS:
+                data = {0.0f, 1.0f, 0.0f};
+                view.addTransformNode(selected_node_name, View::TRANSLATION, data);
+            case Z_AXIS:
+                data = {0.0f, 0.0f, 1.0f};
+                view.addTransformNode(selected_node_name, View::TRANSLATION, data);
+            }
+        }
+        break;
+    }
+
+    case Qt::Key_Left:
+    {
+        //Translates along negative axis if selected
+        if(!axis_selected)
+            break;
+        else
+        {
+            if(!node_selected)
+                break;
+
+            vector<float> data;
+            switch(selected_axis)
+            {
+            case X_AXIS:
+                data = {-1.0f, 0.0f, 0.0f};
+                view.addTransformNode(selected_node_name, View::TRANSLATION, data);
+                break;
+            case Y_AXIS:
+                data = {0.0f, -1.0f, 0.0f};
+                view.addTransformNode(selected_node_name, View::TRANSLATION, data);
+            case Z_AXIS:
+                data = {0.0f, 0.0f, -1.0f};
+                view.addTransformNode(selected_node_name, View::TRANSLATION, data);
+            }
+        }
+        break;
+    }
     case Key_Translate:
     {
         //Used for translation

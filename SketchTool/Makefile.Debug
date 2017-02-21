@@ -1522,7 +1522,50 @@ debug/mainwindow.o: mainwindow.cpp mainwindow.h \
 		C:/Qt/5.6/mingw49_32/include/QtWidgets/qtabwidget.h \
 		C:/Qt/5.6/mingw49_32/include/QtGui/qicon.h \
 		ui_mainwindow.h \
-		MyGLWidget.h \
+		C:/Qt/5.6/mingw49_32/include/QtCore/QVariant \
+		C:/Qt/5.6/mingw49_32/include/QtWidgets/QAction \
+		C:/Qt/5.6/mingw49_32/include/QtWidgets/qaction.h \
+		C:/Qt/5.6/mingw49_32/include/QtWidgets/qactiongroup.h \
+		C:/Qt/5.6/mingw49_32/include/QtWidgets/QApplication \
+		C:/Qt/5.6/mingw49_32/include/QtWidgets/qapplication.h \
+		C:/Qt/5.6/mingw49_32/include/QtCore/qcoreapplication.h \
+		C:/Qt/5.6/mingw49_32/include/QtCore/qeventloop.h \
+		C:/Qt/5.6/mingw49_32/include/QtWidgets/qdesktopwidget.h \
+		C:/Qt/5.6/mingw49_32/include/QtGui/qguiapplication.h \
+		C:/Qt/5.6/mingw49_32/include/QtGui/qinputmethod.h \
+		C:/Qt/5.6/mingw49_32/include/QtWidgets/QButtonGroup \
+		C:/Qt/5.6/mingw49_32/include/QtWidgets/qbuttongroup.h \
+		C:/Qt/5.6/mingw49_32/include/QtWidgets/QHeaderView \
+		C:/Qt/5.6/mingw49_32/include/QtWidgets/qheaderview.h \
+		C:/Qt/5.6/mingw49_32/include/QtWidgets/qabstractitemview.h \
+		C:/Qt/5.6/mingw49_32/include/QtWidgets/qabstractscrollarea.h \
+		C:/Qt/5.6/mingw49_32/include/QtWidgets/qframe.h \
+		C:/Qt/5.6/mingw49_32/include/QtCore/qabstractitemmodel.h \
+		C:/Qt/5.6/mingw49_32/include/QtCore/qitemselectionmodel.h \
+		C:/Qt/5.6/mingw49_32/include/QtWidgets/qabstractitemdelegate.h \
+		C:/Qt/5.6/mingw49_32/include/QtWidgets/qstyleoption.h \
+		C:/Qt/5.6/mingw49_32/include/QtWidgets/qabstractspinbox.h \
+		C:/Qt/5.6/mingw49_32/include/QtGui/qvalidator.h \
+		C:/Qt/5.6/mingw49_32/include/QtCore/qregularexpression.h \
+		C:/Qt/5.6/mingw49_32/include/QtWidgets/qslider.h \
+		C:/Qt/5.6/mingw49_32/include/QtWidgets/qabstractslider.h \
+		C:/Qt/5.6/mingw49_32/include/QtWidgets/qstyle.h \
+		C:/Qt/5.6/mingw49_32/include/QtWidgets/qtabbar.h \
+		C:/Qt/5.6/mingw49_32/include/QtWidgets/qrubberband.h \
+		C:/Qt/5.6/mingw49_32/include/QtWidgets/QMenu \
+		C:/Qt/5.6/mingw49_32/include/QtWidgets/qmenu.h \
+		C:/Qt/5.6/mingw49_32/include/QtWidgets/QMenuBar \
+		C:/Qt/5.6/mingw49_32/include/QtWidgets/qmenubar.h \
+		C:/Qt/5.6/mingw49_32/include/QtWidgets/QStatusBar \
+		C:/Qt/5.6/mingw49_32/include/QtWidgets/qstatusbar.h \
+		C:/Qt/5.6/mingw49_32/include/QtWidgets/QToolBar \
+		C:/Qt/5.6/mingw49_32/include/QtWidgets/qtoolbar.h \
+		C:/Qt/5.6/mingw49_32/include/QtWidgets/QVBoxLayout \
+		C:/Qt/5.6/mingw49_32/include/QtWidgets/qboxlayout.h \
+		C:/Qt/5.6/mingw49_32/include/QtWidgets/qlayout.h \
+		C:/Qt/5.6/mingw49_32/include/QtWidgets/qlayoutitem.h \
+		C:/Qt/5.6/mingw49_32/include/QtWidgets/qgridlayout.h \
+		myglwidget.h \
 		C:/Qt/5.6/mingw49_32/include/QtWidgets/QOpenGLWidget \
 		C:/Qt/5.6/mingw49_32/include/QtWidgets/qopenglwidget.h \
 		C:/Qt/5.6/mingw49_32/include/QtWidgets/QWidget \
@@ -1538,8 +1581,6 @@ debug/mainwindow.o: mainwindow.cpp mainwindow.h \
 		C:/Qt/5.6/mingw49_32/include/QtGui/qopengles2ext.h \
 		C:/Qt/5.6/mingw49_32/include/QtGui/qopenglext.h \
 		C:/Qt/5.6/mingw49_32/include/QtCore/QCoreApplication \
-		C:/Qt/5.6/mingw49_32/include/QtCore/qcoreapplication.h \
-		C:/Qt/5.6/mingw49_32/include/QtCore/qeventloop.h \
 		../headers/OpenGLFunctions.h \
 		C:/Qt/5.6/mingw49_32/include/QtGui/QOpenGLFunctions_3_3_Core \
 		C:/Qt/5.6/mingw49_32/include/QtGui/qopenglfunctions_3_3_core.h \
@@ -1589,10 +1630,8 @@ debug/mainwindow.o: mainwindow.cpp mainwindow.h \
 		C:/Qt/5.6/mingw49_32/include/QtCore/qstorageinfo.h \
 		C:/Qt/5.6/mingw49_32/include/QtCore/qtemporarydir.h \
 		C:/Qt/5.6/mingw49_32/include/QtCore/qtemporaryfile.h \
-		C:/Qt/5.6/mingw49_32/include/QtCore/qabstractitemmodel.h \
 		C:/Qt/5.6/mingw49_32/include/QtCore/qabstractproxymodel.h \
 		C:/Qt/5.6/mingw49_32/include/QtCore/qidentityproxymodel.h \
-		C:/Qt/5.6/mingw49_32/include/QtCore/qitemselectionmodel.h \
 		C:/Qt/5.6/mingw49_32/include/QtCore/qsortfilterproxymodel.h \
 		C:/Qt/5.6/mingw49_32/include/QtCore/qstringlistmodel.h \
 		C:/Qt/5.6/mingw49_32/include/QtCore/qjsonarray.h \
@@ -1655,7 +1694,6 @@ debug/mainwindow.o: mainwindow.cpp mainwindow.h \
 		C:/Qt/5.6/mingw49_32/include/QtCore/qlinkedlist.h \
 		C:/Qt/5.6/mingw49_32/include/QtCore/qmessageauthenticationcode.h \
 		C:/Qt/5.6/mingw49_32/include/QtCore/qqueue.h \
-		C:/Qt/5.6/mingw49_32/include/QtCore/qregularexpression.h \
 		C:/Qt/5.6/mingw49_32/include/QtCore/qscopedvaluerollback.h \
 		C:/Qt/5.6/mingw49_32/include/QtCore/qstack.h \
 		C:/Qt/5.6/mingw49_32/include/QtCore/qtextboundaryfinder.h \
@@ -1685,8 +1723,6 @@ debug/mainwindow.o: mainwindow.cpp mainwindow.h \
 		C:/Qt/5.6/mingw49_32/include/QtGui/qdrag.h \
 		C:/Qt/5.6/mingw49_32/include/QtGui/qgenericplugin.h \
 		C:/Qt/5.6/mingw49_32/include/QtGui/qgenericpluginfactory.h \
-		C:/Qt/5.6/mingw49_32/include/QtGui/qguiapplication.h \
-		C:/Qt/5.6/mingw49_32/include/QtGui/qinputmethod.h \
 		C:/Qt/5.6/mingw49_32/include/QtGui/qoffscreensurface.h \
 		C:/Qt/5.6/mingw49_32/include/QtGui/qsurface.h \
 		C:/Qt/5.6/mingw49_32/include/QtGui/qopenglwindow.h \
@@ -1744,7 +1780,6 @@ debug/mainwindow.o: mainwindow.cpp mainwindow.h \
 		C:/Qt/5.6/mingw49_32/include/QtGui/qtextlist.h \
 		C:/Qt/5.6/mingw49_32/include/QtGui/qtexttable.h \
 		C:/Qt/5.6/mingw49_32/include/QtGui/qdesktopservices.h \
-		C:/Qt/5.6/mingw49_32/include/QtGui/qvalidator.h \
 		C:/Qt/5.6/mingw49_32/include/QtGui/qtguiversion.h \
 		View.h \
 		../headers/glm/glm.hpp \
@@ -1852,6 +1887,11 @@ debug/mainwindow.o: mainwindow.cpp mainwindow.h \
 		../headers/glm/gtc/matrix_transform.inl \
 		sgraph/LeafNode.h \
 		sgraph/GroupNode.h \
+		MyGLWidget.h \
+		C:/Qt/5.6/mingw49_32/include/QtWidgets/QTextEdit \
+		C:/Qt/5.6/mingw49_32/include/QtWidgets/qtextedit.h \
+		C:/Qt/5.6/mingw49_32/include/QtWidgets/QSplitter \
+		C:/Qt/5.6/mingw49_32/include/QtWidgets/qsplitter.h \
 		C:/Qt/5.6/mingw49_32/include/QtWidgets/QMessageBox \
 		C:/Qt/5.6/mingw49_32/include/QtWidgets/qmessagebox.h \
 		C:/Qt/5.6/mingw49_32/include/QtWidgets/qdialog.h
