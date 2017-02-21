@@ -48,6 +48,7 @@
     <bool>false</bool>
    </attribute>
    <addaction name="actionSave"/>
+   <addaction name="actionOpen"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionClose">
@@ -62,11 +63,6 @@
    </property>
    <property name="text">
     <string>Save</string>
-   </property>
-  </action>
-  <action name="actionSave2">
-   <property name="text">
-    <string>Save2</string>
    </property>
   </action>
   <action name="actionClear">

@@ -12,7 +12,7 @@
 		<ambient> 0.800000 0.800000 0.800000 </ambient>
 		<diffuse> 0.800000 0.800000 0.800000 </diffuse>
 		<specular> 0.800000 0.800000 0.800000 </specular>
-		<position> -110.517220 -30.842505 -176.876877 </position>
+		<position> -60.000000 10.000000 96.000000 </position>
 		<spotangle> 180.000000 </spotangle>
 		<spotdirection> 0.000000 -1.000000 0.000000 </spotdirection>
 	</light>
@@ -20,7 +20,7 @@
 		<ambient> 0.800000 0.800000 0.800000 </ambient>
 		<diffuse> 0.800000 0.800000 0.800000 </diffuse>
 		<specular> 0.800000 0.800000 0.800000 </specular>
-		<position> -20.699455 -53.667213 -98.061935 </position>
+		<position> 60.000000 -10.000000 96.000000 </position>
 		<spotangle> 180.000000 </spotangle>
 		<spotdirection> 0.000000 -1.000000 0.000000 </spotdirection>
 	</light>
@@ -28,7 +28,7 @@
 		<ambient> 0.800000 0.800000 0.800000 </ambient>
 		<diffuse> 0.800000 0.800000 0.800000 </diffuse>
 		<specular> 0.800000 0.800000 0.800000 </specular>
-		<position> -38.040497 -132.803711 -169.732697 </position>
+		<position> 0.000000 -100.000000 96.000000 </position>
 		<spotangle> 180.000000 </spotangle>
 		<spotdirection> 0.000000 -1.000000 0.000000 </spotdirection>
 	</light>
@@ -36,7 +36,7 @@
 		<ambient> 0.800000 0.800000 0.800000 </ambient>
 		<diffuse> 0.800000 0.800000 0.800000 </diffuse>
 		<specular> 0.800000 0.800000 0.800000 </specular>
-		<position> -65.608337 -42.254860 -137.469406 </position>
+		<position> 0.000000 0.000000 96.000000 </position>
 		<spotangle> 180.000000 </spotangle>
 		<spotdirection> 0.000000 -1.000000 0.000000 </spotdirection>
 	</light>
@@ -44,10 +44,22 @@
 		<group name="group_0">
 			<transform name="transform_0">
 				<set>
-				<scale> 50.000000 50.000000 50.000000</scale>
-				<translate> 10.000000 10.000000 10.000000</translate>
 				</set>
-				<object instanceof="box" name="leaf_0">
+				<object instanceof="cylinder" name="leaf_0">
+					<material>
+						<ambient>0.800000 0.800000 0.8</ambient>
+						<diffuse>0.800000 0.800000 0.8</diffuse>
+						<specular>0.800000 0.800000 0.8</specular>
+						<shininess>100.000000</shininess>
+					</material>
+				</object>
+			</transform>
+		</group>
+		<group name="group_1">
+			<transform name="transform_1">
+				<set>
+				</set>
+				<object instanceof="sphere" name="leaf_1">
 					<material>
 						<ambient>0.800000 0.800000 0.8</ambient>
 						<diffuse>0.800000 0.800000 0.8</diffuse>

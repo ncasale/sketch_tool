@@ -28,8 +28,8 @@ class Ui_MainWindow
 public:
     QAction *actionClose;
     QAction *actionSave;
-    QAction *actionSave2;
     QAction *actionClear;
+    QAction *actionOpen;
     MyGLWidget *centralWidget;
     QMenuBar *menuBar;
     QMenu *menuFile;
@@ -49,10 +49,13 @@ public:
         QIcon icon;
         icon.addFile(QStringLiteral(":/Images/toolbar_icons/save-icon.png"), QSize(), QIcon::Normal, QIcon::Off);
         actionSave->setIcon(icon);
-        actionSave2 = new QAction(MainWindow);
-        actionSave2->setObjectName(QStringLiteral("actionSave2"));
         actionClear = new QAction(MainWindow);
         actionClear->setObjectName(QStringLiteral("actionClear"));
+        actionOpen = new QAction(MainWindow);
+        actionOpen->setObjectName(QStringLiteral("actionOpen"));
+        QIcon icon1;
+        icon1.addFile(QStringLiteral(":/Images/toolbar_icons/folder-open-icon.png"), QSize(), QIcon::Normal, QIcon::Off);
+        actionOpen->setIcon(icon1);
         centralWidget = new MyGLWidget(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         MainWindow->setCentralWidget(centralWidget);
@@ -72,8 +75,11 @@ public:
 
         menuBar->addAction(menuFile->menuAction());
         menuFile->addAction(actionSave);
+        menuFile->addAction(actionOpen);
+        menuFile->addSeparator();
         menuFile->addAction(actionClear);
         mainToolBar->addAction(actionSave);
+        mainToolBar->addAction(actionOpen);
 
         retranslateUi(MainWindow);
 
@@ -85,8 +91,8 @@ public:
         MainWindow->setWindowTitle(QApplication::translate("MainWindow", "MainWindow", 0));
         actionClose->setText(QApplication::translate("MainWindow", "Close", 0));
         actionSave->setText(QApplication::translate("MainWindow", "Save", 0));
-        actionSave2->setText(QApplication::translate("MainWindow", "Save2", 0));
         actionClear->setText(QApplication::translate("MainWindow", "Clear", 0));
+        actionOpen->setText(QApplication::translate("MainWindow", "Open", 0));
         menuFile->setTitle(QApplication::translate("MainWindow", "File", 0));
     } // retranslateUi
 

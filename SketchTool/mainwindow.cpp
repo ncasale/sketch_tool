@@ -34,5 +34,6 @@ void MainWindow::on_actionClear_triggered()
 
 void MainWindow::on_actionOpen_triggered()
 {
-
+    MyGLWidget* cent_widget = (MyGLWidget*)this->centralWidget();
+    cent_widget->openFile();
 }

@@ -7,6 +7,7 @@
 #include <QStaticText>
 #include <QInputDialog>
 #include <iostream>
+#include <QFileDialog>
 #include "customdialog.h"
 
 #define Key_Translate Qt::Key_Shift
@@ -419,6 +420,16 @@ void MyGLWidget::clearScene()
 
 void MyGLWidget::openFile()
 {
+    cout << "OPENING FILE..." << endl;
+
+    QString fileName = QFileDialog::getOpenFileName(this, "Select File to Open", "scenegraphs/", tr("Scenegraph Files(*.xml)"));
+
+    if(fileName.toStdString() != "")
+    {
+        std::cout << fileName.toStdString() << endl;
+        view.initScenegraph(*gl, fileName.toStdString());
+    }
+
 
 }
 
