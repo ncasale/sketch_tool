@@ -25,7 +25,13 @@ using namespace std;
 
 class View
 {
+
 public:
+    enum TransfromType{
+        TRANSLATION,
+        ROTATION,
+        SCALE
+    };
     //Constructor/Destructor
     View();
     ~View();
@@ -47,6 +53,7 @@ public:
     void initScenegraph(util::OpenGLFunctions& e,const string& in) throw(runtime_error);
     void addToScenegraph(string shape);
     void clearScenegraph();
+    void addTransformNode(const string&, TransfromType, vector<float>&);
 
     //Save functions
     void saveXMLFile(string);

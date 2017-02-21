@@ -31,3 +31,8 @@ void MainWindow::on_actionClear_triggered()
     MyGLWidget* cent_widget = (MyGLWidget*)this->centralWidget();
     cent_widget->clearScene();
 }
+
+void MainWindow::on_actionOpen_triggered()
+{
+
+}

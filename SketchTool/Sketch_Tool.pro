@@ -15,7 +15,8 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
     View.cpp \
-    MyGLWidget.cpp
+    MyGLWidget.cpp \
+    customdialog.cpp
 
 INCLUDEPATH += ../headers
 
@@ -33,7 +34,8 @@ HEADERS  += mainwindow.h \
     sgraph/LeafNode.h \
     sgraph/Scenegraph.h \
     sgraph/TransformNode.h \
-    ui_mainwindow.h
+    ui_mainwindow.h \
+    customdialog.h
 
 FORMS    += mainwindow.ui
 

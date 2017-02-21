@@ -34,6 +34,8 @@
      <string>File</string>
     </property>
     <addaction name="actionSave"/>
+    <addaction name="actionOpen"/>
+    <addaction name="separator"/>
     <addaction name="actionClear"/>
    </widget>
    <addaction name="menuFile"/>
@@ -70,6 +72,15 @@
   <action name="actionClear">
    <property name="text">
     <string>Clear</string>
+   </property>
+  </action>
+  <action name="actionOpen">
+   <property name="icon">
+    <iconset resource="myres.qrc">
+     <normaloff>:/Images/toolbar_icons/folder-open-icon.png</normaloff>:/Images/toolbar_icons/folder-open-icon.png</iconset>
+   </property>
+   <property name="text">
+    <string>Open</string>
    </property>
   </action>
  </widget>

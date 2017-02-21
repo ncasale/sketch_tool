@@ -73,7 +73,7 @@ void View::draw(util::OpenGLFunctions& gl)
          */
   modelview.push(glm::mat4(1.0));
   modelview.top() = modelview.top() *
-      glm::lookAt(glm::vec3(0.0f,0.0f,-200.0f),
+      glm::lookAt(glm::vec3(0.0f,0.0f,-4.0f),
                   glm::vec3(0.0f,0.0f,0.0f),
                   glm::vec3(0.0f,1.0f,0.0f)) *
       trackballTransform;
@@ -203,7 +203,7 @@ void View::addToScenegraph(string shape)
     //Now create a transform node
     sgraph::TransformNode* transform_node = new sgraph::TransformNode(scenegraph, "");
     //Apply scale of 50 to all dimensions
-    transform_node->addScale(50.0f, 50.0f, 50.0f);
+    //transform_node->addScale(50.0f, 50.0f, 50.0f);
 
     //Make transfrom node a child of group node
     group_node->addChild(transform_node);
@@ -300,6 +300,61 @@ void View::saveXMLFile(string file_name)
         //Add end scene tag
         output_file << "</scene>";
     }
+}
+
+/**
+ * @brief View::addTransformNode
+ * Will add a transform node to the View's scenegraph and set its child
+ * to be the node named by @param name
+ *
+ * @param name
+ * The name of the node to which we want to add a transform node
+ */
+void View::addTransformNode(const string& name, View::TransfromType type, vector<float>& data)
+{
+
+    //Traverse scenegraph to find node
+    sgraph::INode* node = scenegraph->getRoot()->getNode(name);
+    //If parent is TransformNode, add translation to it
+    if(node->getParent()->getNodeType() == sgraph::TRANSFORM)
+    {
+        sgraph::TransformNode* t_node = (sgraph::TransformNode*) node->getParent();
+        switch(type)
+        {
+        case TRANSLATION:
+            t_node->addTranslation(data[0], data[1], data[2]);
+            break;
+        case SCALE:
+            t_node->addScale(data[0], data[1], data[2]);
+            break;
+        case ROTATION:
+            t_node->addRotation(data[0], data[1], data[2], data[3]);
+            break;
+        }
+    }
+
+    else
+    {
+        //If parent is not Transform node, add a transform node as parent
+        //and set parent of transform node to old parent
+        sgraph::TransformNode* new_t_node = new sgraph::TransformNode(scenegraph, "added_trans");
+        switch(type)
+        {
+        case TRANSLATION:
+            new_t_node->addTranslation(data[0], data[1], data[2]);
+            break;
+        case SCALE:
+            new_t_node->addScale(data[0], data[1], data[2]);
+            break;
+        case ROTATION:
+            new_t_node->addRotation(data[0], data[1], data[2], data[3]);
+            break;
+        }
+        new_t_node->setParent(node->getParent());
+        new_t_node->addChild(node);
+        node->setParent(new_t_node);
+    }
+
 }
 
 /**

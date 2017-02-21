@@ -35,6 +35,7 @@ class MyGLWidget : public QOpenGLWidget
         //Actions
         void saveFile();
         void clearScene();
+        void openFile();
 
     protected:
         //OpenGL Functions

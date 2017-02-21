@@ -12,7 +12,7 @@
 		<ambient> 0.800000 0.800000 0.800000 </ambient>
 		<diffuse> 0.800000 0.800000 0.800000 </diffuse>
 		<specular> 0.800000 0.800000 0.800000 </specular>
-		<position> 60.000000 10.000000 -100.000000 </position>
+		<position> -110.517220 -30.842505 -176.876877 </position>
 		<spotangle> 180.000000 </spotangle>
 		<spotdirection> 0.000000 -1.000000 0.000000 </spotdirection>
 	</light>
@@ -20,7 +20,7 @@
 		<ambient> 0.800000 0.800000 0.800000 </ambient>
 		<diffuse> 0.800000 0.800000 0.800000 </diffuse>
 		<specular> 0.800000 0.800000 0.800000 </specular>
-		<position> -60.000000 -10.000000 -100.000000 </position>
+		<position> -20.699455 -53.667213 -98.061935 </position>
 		<spotangle> 180.000000 </spotangle>
 		<spotdirection> 0.000000 -1.000000 0.000000 </spotdirection>
 	</light>
@@ -28,7 +28,7 @@
 		<ambient> 0.800000 0.800000 0.800000 </ambient>
 		<diffuse> 0.800000 0.800000 0.800000 </diffuse>
 		<specular> 0.800000 0.800000 0.800000 </specular>
-		<position> 0.000000 -100.000000 -100.000000 </position>
+		<position> -38.040497 -132.803711 -169.732697 </position>
 		<spotangle> 180.000000 </spotangle>
 		<spotdirection> 0.000000 -1.000000 0.000000 </spotdirection>
 	</light>
@@ -36,47 +36,18 @@
 		<ambient> 0.800000 0.800000 0.800000 </ambient>
 		<diffuse> 0.800000 0.800000 0.800000 </diffuse>
 		<specular> 0.800000 0.800000 0.800000 </specular>
-		<position> 0.000000 0.000000 -100.000000 </position>
+		<position> -65.608337 -42.254860 -137.469406 </position>
 		<spotangle> 180.000000 </spotangle>
 		<spotdirection> 0.000000 -1.000000 0.000000 </spotdirection>
 	</light>
 	<group name="Root of scene graph">
-		<group name="Group 0">
-			<transform name="Transform 0">
+		<group name="group_0">
+			<transform name="transform_0">
 				<set>
 				<scale> 50.000000 50.000000 50.000000</scale>
+				<translate> 10.000000 10.000000 10.000000</translate>
 				</set>
-				<object instanceof="cylinder" name="Leaf 0">
-					<material>
-						<ambient>0.800000 0.800000 0.8</ambient>
-						<diffuse>0.800000 0.800000 0.8</diffuse>
-						<specular>0.800000 0.800000 0.8</specular>
-						<shininess>100.000000</shininess>
-					</material>
-				</object>
-			</transform>
-		</group>
-		<group name="Group 1">
-			<transform name="Transform 1">
-				<set>
-				<scale> 50.000000 50.000000 50.000000</scale>
-				</set>
-				<object instanceof="sphere" name="Leaf 1">
-					<material>
-						<ambient>0.800000 0.800000 0.8</ambient>
-						<diffuse>0.800000 0.800000 0.8</diffuse>
-						<specular>0.800000 0.800000 0.8</specular>
-						<shininess>100.000000</shininess>
-					</material>
-				</object>
-			</transform>
-		</group>
-		<group name="Group 2">
-			<transform name="Transform 2">
-				<set>
-				<scale> 50.000000 50.000000 50.000000</scale>
-				</set>
-				<object instanceof="box" name="Leaf 2">
+				<object instanceof="box" name="leaf_0">
 					<material>
 						<ambient>0.800000 0.800000 0.8</ambient>
 						<diffuse>0.800000 0.800000 0.8</diffuse>

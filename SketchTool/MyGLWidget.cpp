@@ -7,7 +7,11 @@
 #include <QStaticText>
 #include <QInputDialog>
 #include <iostream>
+#include "customdialog.h"
 
+#define Key_Translate Qt::Key_Shift
+#define Key_Scale  Qt::Key_U
+#define Key_Rotate  Qt::Key_R
 
 MyGLWidget::MyGLWidget(QWidget *parent)
     :QOpenGLWidget(parent)
@@ -192,40 +196,140 @@ void MyGLWidget::keyPressEvent(QKeyEvent *e)
         //Used for debug printing
         view.printNodeNames();
         break;
-    case Qt::Key_Shift:
-        //Apply a translate to specified object
-        QString result = QInputDialog::getText(this,"Specify Node Name", "Node name:");
+    case Key_Translate:
+    {
+        //Used for translation
+        //Use custom dialog to ask for translation
+        string node_name = "";
+        string x_trans = "";
+        string y_trans = "";
+        string z_trans = "";
+
+        CustomDialog d("Add Translation", this);
+        d.addLineEdit("Node Name: ", &node_name);
+        d.addLineEdit("X-axis Translation: ", &x_trans);
+        d.addLineEdit("Y-axis Translation: ", &y_trans);
+        d.addLineEdit("Z-axis Translation: ", &z_trans);
+
+        d.exec();
+
+        if(d.wasCancelled())
+            break;
+
         //Grab our scenegraph
         sgraph::Scenegraph* scenegraph = view.getScenegraph();
         //Find node -- first check if passed name is valid
-        bool valid = scenegraph->isValidNodeName(result.toStdString());
+        bool valid = scenegraph->isValidNodeName(node_name);
 
-        /*
         if(!valid)
         {
-            QMessageBox::information(this, "Invalid Node Name", "Invalid node name: " + result);
+            QString msg(node_name.c_str());
+            QMessageBox::information(this, "Invalid Node Name", "Invalid node name: " + msg);
             break;
         }
         else
         {
-            //Traverse scenegraph to find node
-            sgraph::INode* node = scenegraph.getRoot()->getNode(result);
-            //If parent is TransformNode, add translation to it
-            if(node->getNodeType() == sgraph::TRANSFORM)
-            {
-                sgraph::TransformNode* t_node = (sgraph::TransformNode*) node;
-                t_node->addTranslation(10.0f, 10.0f, 10.0f);
-            }
-            else
-            {
-                //If parent is not Transform node, add a transform node as parent
-                //and set parent of transform node to old parent
-                sgraph::TransformNode* new_t_node = new sgraph::TransformNode;
-                new_t_node->addTranslation(10.0f, 10.0f, 10.0f);
-                new_t_node->setParent(node->getParent());
-                node->setParent(new_t_node);
-            }
-        }*/
+            //Convert translation values to floats
+            vector<float> data;
+            data.push_back(atof(x_trans.c_str()));
+            data.push_back(atof(y_trans.c_str()));
+            data.push_back(atof(z_trans.c_str()));
+
+            view.addTransformNode(node_name, View::TRANSLATION, data);
+        }
+
+        break;
+    }
+
+    case Key_Scale:
+    {
+        //Use custom dialog to ask for Scale
+        string node_name = "";
+        string x_scale = "";
+        string y_scale = "";
+        string z_scale = "";
+
+        CustomDialog d("Add Scale", this);
+        d.addLineEdit("Node Name: ", &node_name);
+        d.addLineEdit("X-axis Scale: ", &x_scale);
+        d.addLineEdit("Y-axis Scale: ", &y_scale);
+        d.addLineEdit("Z-axis Scale: ", &z_scale);
+
+        d.exec();
+
+        if(d.wasCancelled())
+            break;
+
+        //Grab our scenegraph
+        sgraph::Scenegraph* scenegraph = view.getScenegraph();
+        //Find node -- first check if passed name is valid
+        bool valid = scenegraph->isValidNodeName(node_name);
+
+        if(!valid)
+        {
+            QString msg(node_name.c_str());
+            QMessageBox::information(this, "Invalid Node Name", "Invalid node name: " + msg);
+            break;
+        }
+        else
+        {
+            //Convert scale values to floats
+            vector<float> data;
+            data.push_back(atof(x_scale.c_str()));
+            data.push_back(atof(y_scale.c_str()));
+            data.push_back(atof(z_scale.c_str()));
+
+            view.addTransformNode(node_name, View::SCALE, data);
+        }
+
+        break;
+    }
+    case Key_Rotate:
+    {
+        //Use custom dialog to ask for roatation
+        string node_name = "";
+        bool x_axis = false;
+        bool y_axis = false;
+        bool z_axis = false;
+        string angle = "";
+
+        CustomDialog d("Add Rotation", this);
+        d.addLineEdit("Node Name: ", &node_name);
+        d.addLineEdit("Rotation Angle: ", &angle, "In Degrees.");
+        d.addLabel("Select which axis/axes to rotate about:", true);
+        d.addCheckBox("X-Axis: ", &x_axis);
+        d.addCheckBox("Y-Axis: ", &y_axis);
+        d.addCheckBox("Z-Axis: ", &z_axis);
+
+        d.exec();
+
+        if(d.wasCancelled())
+            break;
+
+        //Grab our scenegraph
+        sgraph::Scenegraph* scenegraph = view.getScenegraph();
+        //Find node -- first check if passed name is valid
+        bool valid = scenegraph->isValidNodeName(node_name);
+
+        if(!valid)
+        {
+            QString msg(node_name.c_str());
+            QMessageBox::information(this, "Invalid Node Name", "Invalid node name: " + msg);
+            break;
+        }
+        else
+        {
+            //Convert rotation values to floats
+            vector<float> data;
+            data.push_back(atof(angle.c_str()));
+            data.push_back((float)x_axis);
+            data.push_back((float)y_axis);
+            data.push_back((float)z_axis);
+            view.addTransformNode(node_name, View::ROTATION, data);
+        }
+        break;
+    }
+
 
     }
 }
