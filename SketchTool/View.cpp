@@ -177,6 +177,12 @@ void View::initScenegraph(util::OpenGLFunctions &gl, const string& filename) thr
   renderer.initShaderProgram(program,shaderVarsToVertexAttribs);
   scenegraph->setRenderer<VertexAttrib>(&renderer,sinfo.meshes);
 
+  //Get all names of nodes
+  for(auto entry : scenegraph->getNodes())
+  {
+      scenegraph->addNodeName(entry.first);
+  }
+
   program.disable(gl);
 
 }

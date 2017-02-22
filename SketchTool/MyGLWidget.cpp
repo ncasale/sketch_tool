@@ -101,7 +101,14 @@ void MyGLWidget::paintGL()
     painter.setPen(QColor(255, 0, 0));
     painter.setFont(QFont("Sans", 12));
     QStaticText text(QString("Frame rate: %1 fps").arg(framerate));
+    string axis_string = "Selected Axis: " + curr_axis_str;
+    QStaticText axis_text(QString(axis_string.c_str()));
+    string obj_string = "Selected Object: " + selected_node_name;
+    QStaticText obj_text(QString(obj_string.c_str()));
     painter.drawStaticText(5, 20, text);
+    painter.drawStaticText(5, 50, axis_text);
+    painter.drawStaticText(5,80,obj_text);
+
 
 }
 
@@ -202,29 +209,35 @@ void MyGLWidget::keyPressEvent(QKeyEvent *e)
         setSelectedAxis(X_AXIS);
         axis_selected = true;
         all_axes_selected = false;
+        curr_axis_str = "X-Axis";
         break;
     case Qt::Key_Y:
         //Used to select Y-axis
         setSelectedAxis(Y_AXIS);
         axis_selected = true;
         all_axes_selected = false;
+        curr_axis_str = "Y-Axis";
         break;
     case Qt::Key_Z:
         //Used to select Z-axis
         setSelectedAxis(Z_AXIS);
         axis_selected = true;
         all_axes_selected = false;
+        curr_axis_str = "Z-Axis";
         break;
 
     case Qt::Key_A:
         //Used to select all axes of object
         toggleAllAxesSelected();
+        setSelectedAxis(NONE);
+        curr_axis_str = "ALL";
         break;
     case Qt::Key_O:
     {
         //Used to select the current object to manipulate
         CustomDialog d("Select Node", this);
         axis_selected = false;
+        curr_axis_str = "";
 
         d.addLineEdit("Node Name: ", &selected_node_name);
 
@@ -266,15 +279,19 @@ void MyGLWidget::keyPressEvent(QKeyEvent *e)
             {
             case X_AXIS:
                 data = {1.0f, 0.0f, 0.0f};
-                view.addTransformNode(selected_node_name, View::TRANSLATION, data);
                 break;
             case Y_AXIS:
                 data = {0.0f, 1.0f, 0.0f};
-                view.addTransformNode(selected_node_name, View::TRANSLATION, data);
+                break;
             case Z_AXIS:
                 data = {0.0f, 0.0f, 1.0f};
-                view.addTransformNode(selected_node_name, View::TRANSLATION, data);
+                break;
+            default:
+                data = {0.0f, 0.0f, 0.0f};
+                break;
             }
+
+            view.addTransformNode(selected_node_name, View::TRANSLATION, data);
         }
         break;
     }
@@ -301,6 +318,9 @@ void MyGLWidget::keyPressEvent(QKeyEvent *e)
             case Z_AXIS:
                 data = {0.0f, 0.0f, -1.0f};
                 break;
+            default:
+                data = {0.0f, 0.0f, 0.0f};
+                break;
             }
 
             view.addTransformNode(selected_node_name, View::TRANSLATION, data);
@@ -325,6 +345,9 @@ void MyGLWidget::keyPressEvent(QKeyEvent *e)
         case Z_AXIS:
             data = {5.0f, 0.0f, 0.0f, 1.0f};
             break;
+        default:
+            data = {0.0f, 0.0f, 0.0f, 0.0f};
+            break;
         }
 
         view.addTransformNode(selected_node_name, View::ROTATION, data);
@@ -347,6 +370,9 @@ void MyGLWidget::keyPressEvent(QKeyEvent *e)
             break;
         case Z_AXIS:
             data = {-5.0f, 0.0f, 0.0f, 1.0f};
+            break;
+        default:
+            data = {0.0f, 0.0f, 0.0f, 0.0f};
             break;
         }
 
@@ -617,10 +643,15 @@ void MyGLWidget::setAnimating(bool enabled)
  */
 void MyGLWidget::saveFile()
 {
-    view.saveXMLFile("scenegraphs/test_save.xml");
-    view.insertTabs("scenegraphs/test_save.xml");
+    if(current_save_file == "")
+        saveAs();
+    else
+    {
+        view.saveXMLFile(current_save_file);
+        view.insertTabs(current_save_file);
+        QMessageBox::information(this, "File Saved", "File successfully saved.");
+    }
 
-    QMessageBox::information(this, "File Saved", "File successfully saved.");
 }
 
 /**
@@ -638,11 +669,22 @@ void MyGLWidget::clearScene()
     reply = QMessageBox::question(this, popup_title, popup_msg,
                                   QMessageBox::Yes|QMessageBox::No);
     if(reply == QMessageBox::Yes)
+    {
         view.clearScenegraph();
+        selected_node_name = "";
+        curr_axis_str = "";
+        axis_selected = false;
+        node_selected = false;
+    }
     else
         return;
 }
 
+/**
+ * @brief MyGLWidget::openFile
+ * Will open a file explorer, allowing the user to select any XML file to load
+ * into the current scene. This clears the current scene.
+ */
 void MyGLWidget::openFile()
 {
     cout << "OPENING FILE..." << endl;
@@ -652,10 +694,24 @@ void MyGLWidget::openFile()
     if(fileName.toStdString() != "")
     {
         std::cout << fileName.toStdString() << endl;
+        view.dispose(*gl);
+        view.init(*gl);
         view.initScenegraph(*gl, fileName.toStdString());
     }
 
+}
 
+void MyGLWidget::saveAs()
+{
+    QString save_file_name = QFileDialog::getSaveFileName(this, "Save File", "scenegraphs/", tr("XML(*.xml)"));
+
+    if(save_file_name.isEmpty())
+        return;
+    else
+    {
+        current_save_file = save_file_name.toStdString();
+        saveFile();
+    }
 }
 
 

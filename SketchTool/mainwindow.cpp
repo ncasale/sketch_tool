@@ -41,3 +41,9 @@ void MainWindow::on_actionOpen_triggered()
     MyGLWidget* cent_widget = (MyGLWidget*)this->centralWidget();
     cent_widget->openFile();
 }
+
+void MainWindow::on_actionSave_As_triggered()
+{
+    MyGLWidget* cent_widget = (MyGLWidget*)this->centralWidget();
+    cent_widget->saveAs();
+}

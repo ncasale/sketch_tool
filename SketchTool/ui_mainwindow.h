@@ -31,6 +31,7 @@ public:
     QAction *actionSave;
     QAction *actionClear;
     QAction *actionOpen;
+    QAction *actionSave_As;
     MyGLWidget *centralWidget;
     QVBoxLayout *verticalLayout;
     QMenuBar *menuBar;
@@ -59,6 +60,11 @@ public:
         QIcon icon1;
         icon1.addFile(QStringLiteral(":/Images/toolbar_icons/folder-open-icon.png"), QSize(), QIcon::Normal, QIcon::Off);
         actionOpen->setIcon(icon1);
+        actionSave_As = new QAction(MainWindow);
+        actionSave_As->setObjectName(QStringLiteral("actionSave_As"));
+        QIcon icon2;
+        icon2.addFile(QStringLiteral(":/Images/toolbar_icons/save_as.png"), QSize(), QIcon::Normal, QIcon::Off);
+        actionSave_As->setIcon(icon2);
         centralWidget = new MyGLWidget(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         verticalLayout = new QVBoxLayout(centralWidget);
@@ -85,10 +91,12 @@ public:
 
         menuBar->addAction(menuFile->menuAction());
         menuFile->addAction(actionSave);
+        menuFile->addAction(actionSave_As);
         menuFile->addAction(actionOpen);
         menuFile->addSeparator();
         menuFile->addAction(actionClear);
         mainToolBar->addAction(actionSave);
+        mainToolBar->addAction(actionSave_As);
         mainToolBar->addAction(actionOpen);
 
         retranslateUi(MainWindow);
@@ -103,6 +111,7 @@ public:
         actionSave->setText(QApplication::translate("MainWindow", "Save", 0));
         actionClear->setText(QApplication::translate("MainWindow", "Clear", 0));
         actionOpen->setText(QApplication::translate("MainWindow", "Open", 0));
+        actionSave_As->setText(QApplication::translate("MainWindow", "Save As", 0));
         menuFile->setTitle(QApplication::translate("MainWindow", "File", 0));
         toolBar->setWindowTitle(QApplication::translate("MainWindow", "toolBar", 0));
     } // retranslateUi

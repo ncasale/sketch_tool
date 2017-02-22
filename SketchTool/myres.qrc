@@ -2,5 +2,6 @@
     <qresource prefix="/Images">
         <file>toolbar_icons/save-icon.png</file>
         <file>toolbar_icons/folder-open-icon.png</file>
+        <file>toolbar_icons/save_as.png</file>
     </qresource>
 </RCC>

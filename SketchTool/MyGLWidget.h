@@ -45,6 +45,7 @@ class MyGLWidget : public QOpenGLWidget
 
         //Actions
         void saveFile();
+        void saveAs();
         void clearScene();
         void openFile();
 
@@ -110,6 +111,8 @@ private:
         bool node_selected = false;
         bool axis_selected = false;
         bool all_axes_selected = false;
+        string current_save_file = "";
+        string curr_axis_str = "";
 };
 
 
