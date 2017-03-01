@@ -14,7 +14,7 @@
    <enum>Qt::StrongFocus</enum>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Sketch Tool</string>
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QVBoxLayout" name="verticalLayout">
@@ -30,13 +30,19 @@
        <enum>Qt::Vertical</enum>
       </property>
       <widget class="QWidget" name="widget" native="true">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>20</verstretch>
+        </sizepolicy>
+       </property>
        <layout class="QHBoxLayout" name="horizontalLayout">
         <item>
          <widget class="QSplitter" name="splitter_2">
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
           </property>
-          <widget class="MyGLWidget" name="widget_2" native="true">
+          <widget class="MyGLWidget" name="gl_widget" native="true">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
              <horstretch>2</horstretch>
@@ -60,7 +66,7 @@
        <property name="sizePolicy">
         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
          <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
+         <verstretch>10</verstretch>
         </sizepolicy>
        </property>
        <property name="maximumSize">
@@ -68,6 +74,14 @@
          <width>16777215</width>
          <height>100</height>
         </size>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="lineEdit">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
        </property>
       </widget>
      </widget>

@@ -9,6 +9,7 @@
 #include <iostream>
 #include <QFileDialog>
 #include "customdialog.h"
+#include <QTabletEvent>
 
 #define Key_Translate Qt::Key_Shift
 #define Key_Scale  Qt::Key_U
@@ -122,8 +123,19 @@ void MyGLWidget::paintGL()
  */
 void MyGLWidget::mousePressEvent(QMouseEvent *e)
 {
-    isDragged = true;
-    view.mousePressed(e->x(),e->y());
+    //Only want to move trackball when ctrl key is pressed. This allows us
+    //to use a default drag and click to draw a shape
+    if(QApplication::keyboardModifiers() & Qt::ControlModifier)
+    {
+        isDragged = true;
+        view.mousePressed(e->x(),e->y());
+    }
+    else
+    {
+        //If control not pressed, want to begin our drawing detection
+        return;
+    }
+
 }
 
 /**
@@ -584,6 +596,97 @@ void MyGLWidget::keyPressEvent(QKeyEvent *e)
 
 
     }
+}
+
+void MyGLWidget::tabletEvent(QTabletEvent *e)
+{
+    //Switch to see what type of event we're dealing with
+    switch(e->type())
+    {
+    case QEvent::TabletPress:
+        //If control key pressed, want to move screen instead of drawing shape
+        if(QApplication::keyboardModifiers() & Qt::ControlModifier)
+        {
+            this->isDragged = true;
+            view.mousePressed(e->x(),e->y());
+            break;
+        }
+        else
+        {
+            //This is a draw event
+            draw_started = true;
+            mouse_path.push_back(e->posF());
+            break;
+        }
+
+    case QEvent::TabletMove:
+        //If we are currently drawing a path, add position to the path
+        if(draw_started)
+        {
+            mouse_path.push_back(e->posF());
+            break;
+        }
+
+    case QEvent::TabletRelease:
+        //Once stylus is released, stop tracking positions
+        draw_started = false;
+
+        //Do shape recognition
+        pair<DrawnShape,pair<float,float>> shape_pair = determineShape();
+
+        //Can implement determineShape so that it returns a pair denoting
+        //the shape and the center for drawing
+        if(shape_pair.first == DrawnShape::CIRCLE)
+        {
+
+            //TODO: Create/Call circle draw function
+            //Call function to draw a circle of the correct radius starting
+            //at the center returned
+
+
+        }
+
+        break;
+    }
+
+    e->accept();
+    this->update();
+
+}
+
+pair<DrawnShape,pair<float,float>>  MyGLWidget::determineShape()
+{
+    //Run list of mouse positions through each detect function, one with
+    //lowest error is the shape we choose (assuming it passes some minimum
+    //threshold)
+    pair<float,pair<float,float>> circle_error = detectCircle();
+
+    float error_thresh = 9999999999.0f;
+
+    if(circle_error.first < error_thresh)
+    {
+        pair<DrawnShape, pair<float,float>> p(DrawnShape::CIRCLE, circle_error.second);
+        return p;
+    }
+    else
+    {
+        pair<DrawnShape, pair<float,float>> p(DrawnShape::NO_SHAPE, circle_error.second);
+        return p;
+    }
+}
+
+pair<float,pair<float,float>> MyGLWidget::detectCircle()
+{
+    //Look at current mouse path and return the error as well as a pair of
+    //points denoting the center of the detected circle
+    float cumulative_error = 0.0f;
+
+    //TODO: Implement circle detection math
+    //Here we will implement the math to find the error and the center of the
+    //circle
+
+    pair<float,pair<float,float>> p (0.0f, pair<float,float>(0.0f, 0.0f));
+    return p;
 }
 
 

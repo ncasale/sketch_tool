@@ -15,6 +15,7 @@
 #include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QHeaderView>
+#include <QtWidgets/QLineEdit>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMenuBar>
@@ -42,9 +43,10 @@ public:
     QWidget *widget;
     QHBoxLayout *horizontalLayout;
     QSplitter *splitter_2;
-    MyGLWidget *widget_2;
+    MyGLWidget *gl_widget;
     QWidget *widget_3;
     QPlainTextEdit *plainTextEdit;
+    QLineEdit *lineEdit;
     QMenuBar *menuBar;
     QMenu *menuFile;
     QToolBar *mainToolBar;
@@ -93,6 +95,11 @@ public:
         splitter->setOrientation(Qt::Vertical);
         widget = new QWidget(splitter);
         widget->setObjectName(QStringLiteral("widget"));
+        QSizePolicy sizePolicy1(QSizePolicy::Preferred, QSizePolicy::Preferred);
+        sizePolicy1.setHorizontalStretch(0);
+        sizePolicy1.setVerticalStretch(20);
+        sizePolicy1.setHeightForWidth(widget->sizePolicy().hasHeightForWidth());
+        widget->setSizePolicy(sizePolicy1);
         horizontalLayout = new QHBoxLayout(widget);
         horizontalLayout->setSpacing(6);
         horizontalLayout->setContentsMargins(11, 11, 11, 11);
@@ -100,21 +107,21 @@ public:
         splitter_2 = new QSplitter(widget);
         splitter_2->setObjectName(QStringLiteral("splitter_2"));
         splitter_2->setOrientation(Qt::Horizontal);
-        widget_2 = new MyGLWidget(splitter_2);
-        widget_2->setObjectName(QStringLiteral("widget_2"));
-        QSizePolicy sizePolicy1(QSizePolicy::Preferred, QSizePolicy::Preferred);
-        sizePolicy1.setHorizontalStretch(2);
-        sizePolicy1.setVerticalStretch(0);
-        sizePolicy1.setHeightForWidth(widget_2->sizePolicy().hasHeightForWidth());
-        widget_2->setSizePolicy(sizePolicy1);
-        splitter_2->addWidget(widget_2);
+        gl_widget = new MyGLWidget(splitter_2);
+        gl_widget->setObjectName(QStringLiteral("gl_widget"));
+        QSizePolicy sizePolicy2(QSizePolicy::Preferred, QSizePolicy::Preferred);
+        sizePolicy2.setHorizontalStretch(2);
+        sizePolicy2.setVerticalStretch(0);
+        sizePolicy2.setHeightForWidth(gl_widget->sizePolicy().hasHeightForWidth());
+        gl_widget->setSizePolicy(sizePolicy2);
+        splitter_2->addWidget(gl_widget);
         widget_3 = new QWidget(splitter_2);
         widget_3->setObjectName(QStringLiteral("widget_3"));
-        QSizePolicy sizePolicy2(QSizePolicy::Preferred, QSizePolicy::Preferred);
-        sizePolicy2.setHorizontalStretch(1);
-        sizePolicy2.setVerticalStretch(0);
-        sizePolicy2.setHeightForWidth(widget_3->sizePolicy().hasHeightForWidth());
-        widget_3->setSizePolicy(sizePolicy2);
+        QSizePolicy sizePolicy3(QSizePolicy::Preferred, QSizePolicy::Preferred);
+        sizePolicy3.setHorizontalStretch(1);
+        sizePolicy3.setVerticalStretch(0);
+        sizePolicy3.setHeightForWidth(widget_3->sizePolicy().hasHeightForWidth());
+        widget_3->setSizePolicy(sizePolicy3);
         splitter_2->addWidget(widget_3);
 
         horizontalLayout->addWidget(splitter_2);
@@ -122,13 +129,21 @@ public:
         splitter->addWidget(widget);
         plainTextEdit = new QPlainTextEdit(splitter);
         plainTextEdit->setObjectName(QStringLiteral("plainTextEdit"));
-        QSizePolicy sizePolicy3(QSizePolicy::Preferred, QSizePolicy::Preferred);
-        sizePolicy3.setHorizontalStretch(0);
-        sizePolicy3.setVerticalStretch(0);
-        sizePolicy3.setHeightForWidth(plainTextEdit->sizePolicy().hasHeightForWidth());
-        plainTextEdit->setSizePolicy(sizePolicy3);
+        QSizePolicy sizePolicy4(QSizePolicy::Preferred, QSizePolicy::Preferred);
+        sizePolicy4.setHorizontalStretch(0);
+        sizePolicy4.setVerticalStretch(10);
+        sizePolicy4.setHeightForWidth(plainTextEdit->sizePolicy().hasHeightForWidth());
+        plainTextEdit->setSizePolicy(sizePolicy4);
         plainTextEdit->setMaximumSize(QSize(16777215, 100));
         splitter->addWidget(plainTextEdit);
+        lineEdit = new QLineEdit(splitter);
+        lineEdit->setObjectName(QStringLiteral("lineEdit"));
+        QSizePolicy sizePolicy5(QSizePolicy::Expanding, QSizePolicy::Fixed);
+        sizePolicy5.setHorizontalStretch(0);
+        sizePolicy5.setVerticalStretch(0);
+        sizePolicy5.setHeightForWidth(lineEdit->sizePolicy().hasHeightForWidth());
+        lineEdit->setSizePolicy(sizePolicy5);
+        splitter->addWidget(lineEdit);
 
         verticalLayout->addWidget(splitter);
 
@@ -170,7 +185,7 @@ public:
 
     void retranslateUi(QMainWindow *MainWindow)
     {
-        MainWindow->setWindowTitle(QApplication::translate("MainWindow", "MainWindow", 0));
+        MainWindow->setWindowTitle(QApplication::translate("MainWindow", "Sketch Tool", 0));
         actionClose->setText(QApplication::translate("MainWindow", "Close", 0));
         actionSave->setText(QApplication::translate("MainWindow", "Save", 0));
         actionClear->setText(QApplication::translate("MainWindow", "Clear", 0));

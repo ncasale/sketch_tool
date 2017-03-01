@@ -11,12 +11,15 @@
 #include <QKeyEvent>
 #include <QtCore>
 #include <QtGui>
+#include <QPointF>
 #include "View.h"
 #include "sgraph/Scenegraph.h"
 #include "sgraph/INode.h"
 #include "sgraph/TransformNode.h"
 #include "sgraph/LeafNode.h"
 #include "sgraph/GroupNode.h"
+#include <QTabletEvent>
+#include <vector>
 
 /*
  * This is the main OpenGL-based window in our application
@@ -28,6 +31,14 @@ enum SelectedAxis{
     X_AXIS,
     Y_AXIS,
     Z_AXIS
+};
+
+enum DrawnShape{
+    NO_SHAPE,
+    CIRCLE,
+    CUBE,
+    CYLINDER,
+    CONE
 };
 
 class MyGLWidget : public QOpenGLWidget
@@ -62,7 +73,10 @@ class MyGLWidget : public QOpenGLWidget
         void mouseReleaseEvent(QMouseEvent *);
         void keyPressEvent(QKeyEvent *);
 
-
+        //Tablet/Shape Detection Events
+        void tabletEvent(QTabletEvent *);
+        pair<DrawnShape,pair<float,float>> determineShape();
+        pair<float,pair<float,float>> detectCircle();
 
 
         /*
@@ -113,6 +127,10 @@ private:
         bool all_axes_selected = false;
         string current_save_file = "";
         string curr_axis_str = "";
+
+        //Used to track tablet movement
+        bool draw_started = false;
+        vector<QPointF> mouse_path;
 };
 
 
