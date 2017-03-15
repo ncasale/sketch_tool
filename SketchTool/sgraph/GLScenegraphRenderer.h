@@ -372,10 +372,12 @@ public:
             if (textures.count(textureName)>0)
               textures[textureName]->getTexture()->bind();
             else if (textures.count("checkerboard")>0 && textures.count("checkerboard-box")>0)
+            {
                 if(name != "box")
                     textures["checkerboard"]->getTexture()->bind();
                 else
                     textures["checkerboard-box"]->getTexture()->bind();
+            }
 
             meshRenderers[name]->draw(*glContext);
         }

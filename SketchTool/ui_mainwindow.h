@@ -15,7 +15,6 @@
 #include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QHeaderView>
-#include <QtWidgets/QLineEdit>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMenuBar>
@@ -25,6 +24,7 @@
 #include <QtWidgets/QToolBar>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
+#include <console_input.h>
 #include <myglwidget.h>
 
 QT_BEGIN_NAMESPACE
@@ -45,8 +45,8 @@ public:
     QSplitter *splitter_2;
     MyGLWidget *gl_widget;
     QWidget *widget_3;
-    QPlainTextEdit *plainTextEdit;
-    QLineEdit *lineEdit;
+    QPlainTextEdit *console_output;
+    ConsoleInput *console_input;
     QMenuBar *menuBar;
     QMenu *menuFile;
     QToolBar *mainToolBar;
@@ -127,23 +127,23 @@ public:
         horizontalLayout->addWidget(splitter_2);
 
         splitter->addWidget(widget);
-        plainTextEdit = new QPlainTextEdit(splitter);
-        plainTextEdit->setObjectName(QStringLiteral("plainTextEdit"));
+        console_output = new QPlainTextEdit(splitter);
+        console_output->setObjectName(QStringLiteral("console_output"));
         QSizePolicy sizePolicy4(QSizePolicy::Preferred, QSizePolicy::Preferred);
         sizePolicy4.setHorizontalStretch(0);
         sizePolicy4.setVerticalStretch(10);
-        sizePolicy4.setHeightForWidth(plainTextEdit->sizePolicy().hasHeightForWidth());
-        plainTextEdit->setSizePolicy(sizePolicy4);
-        plainTextEdit->setMaximumSize(QSize(16777215, 100));
-        splitter->addWidget(plainTextEdit);
-        lineEdit = new QLineEdit(splitter);
-        lineEdit->setObjectName(QStringLiteral("lineEdit"));
+        sizePolicy4.setHeightForWidth(console_output->sizePolicy().hasHeightForWidth());
+        console_output->setSizePolicy(sizePolicy4);
+        console_output->setMaximumSize(QSize(16777215, 100));
+        splitter->addWidget(console_output);
+        console_input = new ConsoleInput(splitter);
+        console_input->setObjectName(QStringLiteral("console_input"));
         QSizePolicy sizePolicy5(QSizePolicy::Expanding, QSizePolicy::Fixed);
         sizePolicy5.setHorizontalStretch(0);
         sizePolicy5.setVerticalStretch(0);
-        sizePolicy5.setHeightForWidth(lineEdit->sizePolicy().hasHeightForWidth());
-        lineEdit->setSizePolicy(sizePolicy5);
-        splitter->addWidget(lineEdit);
+        sizePolicy5.setHeightForWidth(console_input->sizePolicy().hasHeightForWidth());
+        console_input->setSizePolicy(sizePolicy5);
+        splitter->addWidget(console_input);
 
         verticalLayout->addWidget(splitter);
 

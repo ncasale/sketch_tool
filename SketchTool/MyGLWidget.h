@@ -60,6 +60,11 @@ class MyGLWidget : public QOpenGLWidget
         void clearScene();
         void openFile();
 
+        //Axis commands
+        void set_x_axis();
+        void set_y_axis();
+        void set_z_axis();
+
     protected:
         //OpenGL Functions
         void initializeGL();
@@ -75,8 +80,8 @@ class MyGLWidget : public QOpenGLWidget
 
         //Tablet/Shape Detection Events
         void tabletEvent(QTabletEvent *);
-        pair<DrawnShape,pair<float,float>> determineShape();
-        pair<float,pair<float,float>> detectCircle();
+        pair<DrawnShape,vector<float>> determineShape();
+        vector<float> detectCircle();
 
 
         /*

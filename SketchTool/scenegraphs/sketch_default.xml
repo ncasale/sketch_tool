@@ -8,6 +8,7 @@
 <image name="dice" path="textures/die.png" />
 <image name="checkerboard" path="textures/checkerboard.png" />
 <image name="checkerboard-box" path="textures/checkerboard-box.png" />
+<image name="ground_grid" path="textures/ground_grid.png" />
 
 
 <light>

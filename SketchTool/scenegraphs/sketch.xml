@@ -1,51 +1,51 @@
 <scene>
-<instance name="sphere" path="models/sphere"></instance>
-<instance name="box" path="models/box-outside"></instance>
-<instance name="cone" path="models/cone"></instance>
-<instance name="cylinder" path="models/cylinder"></instance>
-<image name="white" path="textures/white.png" />
-<image name="earth" path="textures/earthmap.png" />
-<image name="dice" path="textures/die.png" />
-<image name="checkerboard" path="textures/checkerboard.png" />
-<image name="checkerboard-box" path="textures/checkerboard-box.png" />
-
-
-<light>
-<ambient>0.8 0.8 0.8</ambient>
-<diffuse>0.8 0.8 0.8</diffuse>
-<specular>0.8 0.8 0.8</specular>
-<position>-60 10 0 </position>
-<spotangle>180</spotangle>
-<spotdirection>0 -1 0 </spotdirection>
-</light>
-
-<light>
-<ambient>0.8 0.8 0.8</ambient>
-<diffuse>0.8 0.8 0.8</diffuse>
-<specular>0.8 0.8 0.8</specular>
-<position>60 -10 0 </position>
-<spotangle>180</spotangle>
-<spotdirection>0 -1 0 </spotdirection>
-</light>
-
-<light>
-<ambient>0.8 0.8 0.8</ambient>
-<diffuse>0.8 0.8 0.8</diffuse>
-<specular>0.8 0.8 0.8</specular>
-<position>0 -100 0 </position>
-<spotangle>180</spotangle>
-<spotdirection>0 -1 0 </spotdirection>
-</light>
-
-<light>
-<ambient>0.8 0.8 0.8</ambient>
-<diffuse>0.8 0.8 0.8</diffuse>
-<specular>0.8 0.8 0.8</specular>
-<position>0 -00 0 </position>
-<spotangle>180</spotangle>
-<spotdirection>0 -1 0 </spotdirection>
-</light>
-
-
-<!-- append -->
+	<instance name="sphere" path="models/sphere"></instance>
+	<instance name="box" path="models/box-outside"></instance>
+	<instance name="cone" path="models/cone"></instance>
+	<instance name="cylinder" path="models/cylinder"></instance>
+	<image name="white" path="textures/white.png" />
+	<image name="earth" path="textures/earthmap.png" />
+	<image name="dice" path="textures/die.png" />
+	<image name="checkerboard" path="textures/checkerboard.png" />
+	<image name="checkerboard-box" path="textures/checkerboard-box.png" />
+	<image name="ground" path="textures/ground-grid.png" />
+	
+	<light>
+		<ambient>0.8 0.8 0.8</ambient>
+		<diffuse>0.8 0.8 0.8</diffuse>
+		<specular>0.8 0.8 0.8</specular>
+		<position>-60 10 0 </position>
+		<spotangle>180</spotangle>
+		<spotdirection>0 -1 0 </spotdirection>
+	</light>
+	
+	<light>
+		<ambient>0.8 0.8 0.8</ambient>
+		<diffuse>0.8 0.8 0.8</diffuse>
+		<specular>0.8 0.8 0.8</specular>
+		<position>60 -10 0 </position>
+		<spotangle>180</spotangle>
+		<spotdirection>0 -1 0 </spotdirection>
+	</light>
+	
+	<light>
+		<ambient>0.8 0.8 0.8</ambient>
+		<diffuse>0.8 0.8 0.8</diffuse>
+		<specular>0.8 0.8 0.8</specular>
+		<position>0 -100 0 </position>
+		<spotangle>180</spotangle>
+		<spotdirection>0 -1 0 </spotdirection>
+	</light>
+	
+	<light>
+		<ambient>0.8 0.8 0.8</ambient>
+		<diffuse>0.8 0.8 0.8</diffuse>
+		<specular>0.8 0.8 0.8</specular>
+		<position>0 -00 0 </position>
+		<spotangle>180</spotangle>
+		<spotdirection>0 -1 0 </spotdirection>
+	</light>
+	
+	
+	<!-- append -->
 </scene>

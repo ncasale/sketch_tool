@@ -6,14 +6,20 @@
 #include <QDebug>
 #include <QStaticText>
 #include <QInputDialog>
+#include <QPlainTextEdit>
 #include <iostream>
 #include <QFileDialog>
 #include "customdialog.h"
 #include <QTabletEvent>
+#include "glm/gtc/type_ptr.hpp"
 
 #define Key_Translate Qt::Key_Shift
 #define Key_Scale  Qt::Key_U
 #define Key_Rotate  Qt::Key_R
+#define ERROR 0
+#define CENTER_X 1
+#define CENTER_Y 2
+#define RADIUS 3
 
 MyGLWidget::MyGLWidget(QWidget *parent)
     :QOpenGLWidget(parent)
@@ -217,25 +223,14 @@ void MyGLWidget::keyPressEvent(QKeyEvent *e)
         view.printNodeNames();
         break;
     case Qt::Key_X:
-        //Used to select X-axis
-        setSelectedAxis(X_AXIS);
-        axis_selected = true;
-        all_axes_selected = false;
-        curr_axis_str = "X-Axis";
+        set_x_axis();
         break;
+
     case Qt::Key_Y:
-        //Used to select Y-axis
-        setSelectedAxis(Y_AXIS);
-        axis_selected = true;
-        all_axes_selected = false;
-        curr_axis_str = "Y-Axis";
+        set_y_axis();
         break;
     case Qt::Key_Z:
-        //Used to select Z-axis
-        setSelectedAxis(Z_AXIS);
-        axis_selected = true;
-        all_axes_selected = false;
-        curr_axis_str = "Z-Axis";
+        set_z_axis();
         break;
 
     case Qt::Key_A:
@@ -593,9 +588,7 @@ void MyGLWidget::keyPressEvent(QKeyEvent *e)
         }
         break;
     }
-
-
-    }
+   }
 }
 
 void MyGLWidget::tabletEvent(QTabletEvent *e)
@@ -632,7 +625,7 @@ void MyGLWidget::tabletEvent(QTabletEvent *e)
         draw_started = false;
 
         //Do shape recognition
-        pair<DrawnShape,pair<float,float>> shape_pair = determineShape();
+        pair<DrawnShape,vector<float>> shape_pair = determineShape();
 
         //Can implement determineShape so that it returns a pair denoting
         //the shape and the center for drawing
@@ -654,28 +647,40 @@ void MyGLWidget::tabletEvent(QTabletEvent *e)
 
 }
 
-pair<DrawnShape,pair<float,float>>  MyGLWidget::determineShape()
+pair<DrawnShape,vector<float>>  MyGLWidget::determineShape()
 {
     //Run list of mouse positions through each detect function, one with
     //lowest error is the shape we choose (assuming it passes some minimum
     //threshold)
-    pair<float,pair<float,float>> circle_error = detectCircle();
+    //First value of pair is error, second is the center coords
+    vector<float> circle_values = detectCircle();
 
     float error_thresh = 9999999999.0f;
 
-    if(circle_error.first < error_thresh)
+    if(circle_values[ERROR] < error_thresh)
     {
-        pair<DrawnShape, pair<float,float>> p(DrawnShape::CIRCLE, circle_error.second);
+
+        pair<DrawnShape, vector<float>> p(DrawnShape::CIRCLE, circle_values);
         return p;
     }
     else
     {
-        pair<DrawnShape, pair<float,float>> p(DrawnShape::NO_SHAPE, circle_error.second);
+        pair<DrawnShape, vector<float>> p(DrawnShape::NO_SHAPE, circle_values);
         return p;
     }
 }
 
-pair<float,pair<float,float>> MyGLWidget::detectCircle()
+/**
+ * @brief MyGLWidget::detectCircle
+ * This function uses the stored mouse_path coordinates to determine whether
+ * or not a circle lies upon the traced path.
+ *
+ * @return Returns a vector of floats. The first value in the vector is the
+ * error of the circle, the second value is the x-coord of the circle center,
+ * the third value is the y-coord of the circle center and the fourth value is
+ * the radius of the circle
+ */
+vector<float> MyGLWidget::detectCircle()
 {
     //Look at current mouse path and return the error as well as a pair of
     //points denoting the center of the detected circle
@@ -684,9 +689,70 @@ pair<float,pair<float,float>> MyGLWidget::detectCircle()
     //TODO: Implement circle detection math
     //Here we will implement the math to find the error and the center of the
     //circle
+    float sum_x = 0;
+    float sum_y = 0;
+    float sum_x_squared = 0;
+    float sum_y_squared = 0;
+    float sum_xy = 0;
+    float n = 0;
+    float sum_x_x2y2 = 0;
+    float sum_y_x2y2 = 0;
+    float sum_x2y2 = 0;
 
-    pair<float,pair<float,float>> p (0.0f, pair<float,float>(0.0f, 0.0f));
-    return p;
+    for(auto pos : mouse_path)
+    {
+        //Calculate required summations for matrices
+        sum_x += pos.x();
+        sum_y += pos.y();
+        sum_x_squared += pow(pos.x(), 2.0f);
+        sum_y_squared += pow(pos.y(), 2.0f);
+        sum_xy += pos.x() * pos.y();
+        n++;
+        sum_x_x2y2 += pos.x() * (pow(pos.x(), 2.0f) + pow(pos.y(), 2.0f));
+        sum_y_x2y2 += pos.y() * (pow(pos.x(), 2.0f) + pow(pos.y(), 2.0f));
+        sum_x2y2 += pow(pos.x(), 2.0f) + pow(pos.y(), 2.0f);
+
+
+    }
+
+    //Get determinant
+    float det_arr[9] = {sum_x_squared, sum_xy, sum_x, sum_xy, sum_y_squared, sum_y, sum_x, sum_y, n};
+    glm::mat3 det_mat = glm::make_mat3(det_arr);
+    float det = glm::determinant(det_mat);
+
+    //Get Da
+    float det_a_arr[9] = {sum_x_x2y2, sum_y_x2y2, sum_x2y2, sum_xy, sum_y_squared, sum_y, sum_x, sum_y, n};
+    glm::mat3 det_a_mat = glm::make_mat3(det_a_arr);
+    float det_a = glm::determinant(det_a_mat);
+
+    //Get Db
+    float det_b_arr[9] = {sum_x_squared, sum_xy, sum_x, sum_x_x2y2, sum_y_x2y2, sum_x2y2, sum_x, sum_y, n};
+    glm::mat3 det_b_mat = glm::make_mat3(det_b_arr);
+    float det_b = glm::determinant(det_b_mat);
+
+    //Get Dc
+    float det_c_arr[9] = {sum_x_squared, sum_xy, sum_x, sum_xy, sum_y_squared, sum_y, sum_x_x2y2, sum_y_x2y2, sum_x2y2};
+    glm::mat3 det_c_mat = glm::make_mat3(det_c_arr);
+    float det_c = glm::determinant(det_c_mat);
+
+    //Calculate A, B and C
+    float A = det_a / det;
+    float B = det_b / det;
+    float C = det_c / det;
+
+    float center_x = A / -2.0f;
+    float center_y = B / -2.0f;
+    float radius = sqrt(C + pow(center_x, 2.0f) + pow(center_y, 2.0f));
+
+    //Will now compute cumulative error
+    for(auto pos : mouse_path)
+    {
+        cumulative_error += pow((pow(pos.x(), 2.0f) + pow(pos.y(), 2.0f) - A*pos.x() - B*pos.y() - C),2.0f);
+    }
+
+    //Let's now return our error, the proposed center and the calculated radius of the circle
+    vector<float> ret_vec = {cumulative_error, center_x, center_y, radius};
+    return ret_vec;
 }
 
 
@@ -774,6 +840,7 @@ void MyGLWidget::clearScene()
     if(reply == QMessageBox::Yes)
     {
         view.clearScenegraph();
+        view.addToScenegraph("ground");
         selected_node_name = "";
         curr_axis_str = "";
         axis_selected = false;
@@ -818,6 +885,31 @@ void MyGLWidget::saveAs()
 }
 
 
+void MyGLWidget::set_x_axis()
+{
+    //Used to select X-axis
+    setSelectedAxis(X_AXIS);
+    axis_selected = true;
+    all_axes_selected = false;
+    curr_axis_str = "X-Axis";
+}
 
+void MyGLWidget::set_y_axis()
+{
+    //Used to select Y-axis
+    setSelectedAxis(Y_AXIS);
+    axis_selected = true;
+    all_axes_selected = false;
+    curr_axis_str = "Y-Axis";
+}
+
+void MyGLWidget::set_z_axis()
+{
+    //Used to select Z-axis
+    setSelectedAxis(Z_AXIS);
+    axis_selected = true;
+    all_axes_selected = false;
+    curr_axis_str = "Z-Axis";
+}
 
 

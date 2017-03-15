@@ -3,11 +3,11 @@ INPUT(
 ./debug\mainwindow.o
 ./debug\View.o
 ./debug\MyGLWidget.o
+./debug\customdialog.o
+./debug\console_input.o
+./debug\qrc_myres.o
 ./debug\moc_mainwindow.o
 ./debug\moc_MyGLWidget.o
-./debug\moc_OpenGLWindow.o
-./debug\OpenGLWindow.o
-./debug\moc_mainwindow.o
-./debug\moc_MyGLWidget.o
-./debug\moc_OpenGLWindow.o
+./debug\moc_customdialog.o
+./debug\moc_console_input.o
 );

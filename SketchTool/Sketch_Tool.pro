@@ -16,7 +16,8 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     View.cpp \
     MyGLWidget.cpp \
-    customdialog.cpp
+    customdialog.cpp \
+    console_input.cpp
 
 INCLUDEPATH += ../headers
 
@@ -35,7 +36,8 @@ HEADERS  += mainwindow.h \
     sgraph/Scenegraph.h \
     sgraph/TransformNode.h \
     ui_mainwindow.h \
-    customdialog.h
+    customdialog.h \
+    console_input.h
 
 FORMS    += mainwindow.ui
 

@@ -198,7 +198,7 @@ void View::initScenegraph(util::OpenGLFunctions &gl, const string& filename) thr
  *  - "cylinder"
  *  - "cone"
  */
-void View::addToScenegraph(string shape)
+void View::addToScenegraph(string shape, vector<float> shape_params)
 {
     //Start by creating a new group node
     sgraph::INode* group_node = new sgraph::GroupNode(scenegraph, "");
@@ -208,14 +208,42 @@ void View::addToScenegraph(string shape)
 
     //Now create a transform node
     sgraph::TransformNode* transform_node = new sgraph::TransformNode(scenegraph, "");
-    //Apply scale of 50 to all dimensions
-    //transform_node->addScale(50.0f, 50.0f, 50.0f);
+
+    //If we have passed a vector of shape parameters, use those to construct a shape
+    if(!shape_params.empty() && shape == "sphere")
+    {
+        //First value is center_x, second is center_y, third is radius (circle)
+        float radius = shape_params[2];
+        float center_x = shape_params[0];
+        float center_y = shape_params[1];
+        transform_node->addScale(radius, radius, radius);
+        transform_node->addTranslation(center_x, center_y, 0.0f);
+    }
+    else if(shape == "ground")
+    {
+        float ground_width = 1000.0f;
+        float ground_height = 0.1f;
+        float ground_depth = 1000.0f;
+        transform_node->addScale(ground_width, ground_height, ground_depth);
+        transform_node->addTranslation(0.0f, -5.0f, 0.0f);
+    }
 
     //Make transfrom node a child of group node
     group_node->addChild(transform_node);
 
     //Now let's create leaf (object) node
-    sgraph::LeafNode* leaf_node = new sgraph::LeafNode(shape, scenegraph, "");
+    //Want to check if we're trying to create our ground
+    sgraph::LeafNode* leaf_node;
+    if(shape == "ground")
+    {
+        leaf_node = new sgraph::LeafNode("box", scenegraph, "");
+        leaf_node->setTextureName("ground");
+    }
+    else
+    {
+        leaf_node = new sgraph::LeafNode(shape, scenegraph, "");
+    }
+
     //Material for leaf
     util::Material mat;
     mat.setAmbient(0.8f, 0.8f, 0.8f);
