@@ -5,6 +5,15 @@
 
 using namespace std;
 
+/**
+ * @brief ConsoleInput::keyPressEvent
+ * Processes Key Press Events that occur in the console input widget. This
+ * function adds aditional functionality to the QLineEdit::keyPressEvent
+ * function
+ *
+ * @param e
+ * The key press event we are processing
+ */
 void ConsoleInput::keyPressEvent(QKeyEvent* e)
 {
     switch(e->key())
@@ -51,10 +60,12 @@ string ConsoleInput::process_command(QString& command_qstring)
     //Let's find gl_widget in case we need it
     MyGLWidget* gl_widget = this->parent()->findChild<MyGLWidget*>("gl_widget");
 
-    string command = command_qstring.toStdString();
+    string command_string = command_qstring.toStdString();
+    string command = command_string.substr(0, command_string.find_first_of(' '));
+
     if(command == "test")
     {
-        return "Success!";
+        return "Success!\n";
     }
     else if(command == "set_x")
     {
@@ -71,4 +82,30 @@ string ConsoleInput::process_command(QString& command_qstring)
         gl_widget->set_z_axis();
         return "Selected Axis: Z\n";
     }
+    else if(command == "fps")
+    {
+        float fr = gl_widget->getFrameRate();
+        return "FrameRate: " + to_string(fr) + " FPS\n";
+    }
+    else if(command == "translate")
+    {
+        //Begin parsing for additional parameters
+        string params = command_string.substr(command_string.find_first_of(' ') + 1, command_string.npos);
+        //Get x-translation amount
+        float x = atof(params.substr(0, params.find_first_of(' ')).c_str());
+        params = params.substr(params.find_first_of(' ') + 1, params.npos);
+        //Get y-translation amount
+        float y = atof(params.substr(0, params.find_first_of(' ')).c_str());
+        params = params.substr(params.find_first_of(' ') + 1, params.npos);
+        //Get z-translation amount
+        float z = atof(params.substr(0, params.find_first_of(' ')).c_str());
+
+        std::cout << "X: " << std::to_string(x) << " Y: " << to_string(y) << " Z: " << to_string(z) << endl;
+
+        //Perform tranlsation
+        gl_widget->parametrizedTranslation(x, y, z);
+
+        return "Translation Successful";
+    }
+    else return "Invalid Command";
 }

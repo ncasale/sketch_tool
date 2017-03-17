@@ -26,7 +26,13 @@ View::~View()
     delete scenegraph;
 }
 
-
+/**
+ * @brief View::init
+ * Initializes our view by identifying shaders/shader variables
+ *
+ * @param gl
+ * A wrapper for OpenGL functionality
+ */
 void View::init(util::OpenGLFunctions& gl) throw(runtime_error)
 {
   //do this if your initialization throws an error (e.g. shader not found,
@@ -237,7 +243,7 @@ void View::addToScenegraph(string shape, vector<float> shape_params)
     if(shape == "ground")
     {
         leaf_node = new sgraph::LeafNode("box", scenegraph, "");
-        leaf_node->setTextureName("ground");
+        leaf_node->setTextureName("checkerboard-box");
     }
     else
     {
@@ -637,16 +643,45 @@ bool View::decrementTab(string line)
     return false;
 }
 
+/**
+ * @brief View::mousePressed
+ * Called from the MyGLWidget when a mouse press event occurs.
+ * @param x
+ * The x-coordinate of the mouse
+ *
+ * @param y
+ * The y-coordinate of the mouse
+ */
 void View::mousePressed(int x,int y)
 {
   mousePos = glm::vec2(x,y);
 }
 
+/**
+ * @brief View::mouseReleased
+ * Called from the MyGLWidget when the mouse is released
+ *
+ * @param x
+ * The x-coordinate of the mouse
+ *
+ * @param y
+ * The y-coordinate of the mouse
+ */
 void View::mouseReleased(int x,int y)
 {
 
 }
 
+/**
+ * @brief View::mouseDragged
+ * Called from the MyGLWidget when the mouse is pressed/dragged
+ *
+ * @param x
+ * The x-coordinate of the mouse after the drag
+ *
+ * @param y
+ * The y-coordinate of the mouse after the drag
+ */
 void View::mouseDragged(int x,int y)
 {
   glm::vec2 newM = glm::vec2((float)x,(float)y);

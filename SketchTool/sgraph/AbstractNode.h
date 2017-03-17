@@ -66,6 +66,13 @@ namespace sgraph
       return NULL;
     }
 
+    /**
+     * @brief getNodeType
+     * Function to get the NodeType of the node
+     *
+     * @return
+     * This node's NodeType
+     */
     NodeType getNodeType()
     {
         //Return group as default, although this will never be called

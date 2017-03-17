@@ -13,13 +13,36 @@
 #include <QTabletEvent>
 #include "glm/gtc/type_ptr.hpp"
 
-#define Key_Translate Qt::Key_Shift
-#define Key_Scale  Qt::Key_U
-#define Key_Rotate  Qt::Key_R
-#define ERROR 0
-#define CENTER_X 1
-#define CENTER_Y 2
-#define RADIUS 3
+//Key Press Event definitions
+#define KEY_TRANSLATE                   Qt::Key_Shift
+#define KEY_SCALE                       Qt::Key_U
+#define KEY_ROTATE                      Qt::Key_R
+#define KEY_X_AXIS_SELECTION            Qt::Key_X
+#define KEY_Y_AXIS_SELECTION            Qt::Key_Y
+#define KEY_Z_AXIS_SELECTION            Qt::Key_Z
+#define KEY_ALL_AXES_SELECTION          Qt::Key_A
+#define KEY_TABULATE_FILE               Qt::Key_T
+#define KEY_SAVE_FILE                   Qt::Key_S
+#define KEY_CLEAR                       Qt::Key_C
+#define KEY_ADD_CUBE                    Qt::Key_1
+#define KEY_ADD_SPHERE                  Qt::Key_2
+#define KEY_ADD_CYLINDER                Qt::Key_3
+#define KEY_ADD_CONE                    Qt::Key_4
+#define KEY_PRINT                       Qt::Key_P
+#define KEY_SELECT_OBJECT               Qt::Key_O
+#define KEY_POSITIVE_TRANSLATION        Qt::Key_Right
+#define KEY_NEGATIVE_TRANSLATION        Qt::Key_Left
+#define KEY_POSITIVE_SCALE              Qt::Key_Up
+#define KEY_NEGATIVE_SCALE              Qt::Key_Down
+#define KEY_POSITIVE_ROTATION           Qt::Key_Period
+#define KEY_NEGATIVE_ROTATION           Qt::Key_Comma
+
+
+//Detect shape vector locations
+#define ERROR                           0
+#define CENTER_X                        1
+#define CENTER_Y                        2
+#define RADIUS                          3
 
 MyGLWidget::MyGLWidget(QWidget *parent)
     :QOpenGLWidget(parent)
@@ -190,56 +213,56 @@ void MyGLWidget::keyPressEvent(QKeyEvent *e)
 {
     switch(e->key())
     {
-    case Qt::Key_1:
+    case KEY_ADD_CUBE:
         //Call Cube creation
         view.addToScenegraph("box");
         break;
-    case Qt::Key_2:
+    case KEY_ADD_SPHERE:
         //Call Sphere creation
         view.addToScenegraph("sphere");
         break;
-    case Qt::Key_3:
+    case KEY_ADD_CYLINDER:
         //Call Cylinder creation
         view.addToScenegraph("cylinder");
         break;
-    case Qt::Key_4:
+    case KEY_ADD_CONE:
         //Call cone creation
         view.addToScenegraph("cone");
         break;
-    case Qt::Key_C:
+    case KEY_CLEAR:
         //Clear the scenegraph -- ask user if they would like to.
         clearScene();
         break;
-    case Qt::Key_T:
+    case KEY_TABULATE_FILE:
         //Format XML file
         view.insertTabs(view.getSgraphFileLocation());
         break;
-    case Qt::Key_S:
+    case KEY_SAVE_FILE:
         //Save the XML File
         saveFile();
         break;
-    case Qt::Key_P:
+    case KEY_PRINT:
         //Used for debug printing
         view.printNodeNames();
         break;
-    case Qt::Key_X:
+    case KEY_X_AXIS_SELECTION:
         set_x_axis();
         break;
 
-    case Qt::Key_Y:
+    case KEY_Y_AXIS_SELECTION:
         set_y_axis();
         break;
-    case Qt::Key_Z:
+    case KEY_Z_AXIS_SELECTION:
         set_z_axis();
         break;
 
-    case Qt::Key_A:
+    case KEY_ALL_AXES_SELECTION:
         //Used to select all axes of object
         toggleAllAxesSelected();
         setSelectedAxis(NONE);
         curr_axis_str = "ALL";
         break;
-    case Qt::Key_O:
+    case KEY_SELECT_OBJECT:
     {
         //Used to select the current object to manipulate
         CustomDialog d("Select Node", this);
@@ -261,7 +284,8 @@ void MyGLWidget::keyPressEvent(QKeyEvent *e)
         if(!valid)
         {
             QString msg(selected_node_name.c_str());
-            QMessageBox::information(this, "Invalid Node Name", "Invalid node name: " + msg);
+            QMessageBox::information(this, "Invalid Node Name",
+                                     "Invalid node name: " + msg);
             node_selected = false;
             break;
         }
@@ -271,326 +295,168 @@ void MyGLWidget::keyPressEvent(QKeyEvent *e)
         }
     }
 
-    case Qt::Key_Right:
+    case KEY_POSITIVE_TRANSLATION:
     {
-        //Translates along positive axis if selected
-        if(!axis_selected)
-            break;
-        else
-        {
-            if(!node_selected)
-                break;
-
-            vector<float> data;
-            switch(selected_axis)
-            {
-            case X_AXIS:
-                data = {1.0f, 0.0f, 0.0f};
-                break;
-            case Y_AXIS:
-                data = {0.0f, 1.0f, 0.0f};
-                break;
-            case Z_AXIS:
-                data = {0.0f, 0.0f, 1.0f};
-                break;
-            default:
-                data = {0.0f, 0.0f, 0.0f};
-                break;
-            }
-
-            view.addTransformNode(selected_node_name, View::TRANSLATION, data);
-        }
-        break;
-    }
-
-    case Qt::Key_Left:
-    {
-        //Translates along negative axis if selected
-        if(!axis_selected)
-            break;
-        else
-        {
-            if(!node_selected)
-                break;
-
-            vector<float> data;
-            switch(selected_axis)
-            {
-            case X_AXIS:
-                data = {-1.0f, 0.0f, 0.0f};
-                break;
-            case Y_AXIS:
-                data = {0.0f, -1.0f, 0.0f};
-                break;
-            case Z_AXIS:
-                data = {0.0f, 0.0f, -1.0f};
-                break;
-            default:
-                data = {0.0f, 0.0f, 0.0f};
-                break;
-            }
-
-            view.addTransformNode(selected_node_name, View::TRANSLATION, data);
-        }
-        break;
-    }
-
-    case Qt::Key_Period:
-    {
-        if(!axis_selected || !node_selected)
-            break;
-        vector<float> data;
-
         switch(selected_axis)
         {
         case X_AXIS:
-            data = {5.0f, 1.0f, 0.0f, 0.0f};
+            parametrizedTranslation(1.0f, 0.0f, 0.0f);
             break;
         case Y_AXIS:
-            data = {5.0f, 0.0f, 1.0f, 0.0f};
+            parametrizedTranslation(0.0f, 1.0f, 0.0f);
             break;
         case Z_AXIS:
-            data = {5.0f, 0.0f, 0.0f, 1.0f};
+            parametrizedTranslation(0.0f, 0.0f, 1.0f);
             break;
         default:
-            data = {0.0f, 0.0f, 0.0f, 0.0f};
             break;
         }
 
-        view.addTransformNode(selected_node_name, View::ROTATION, data);
         break;
     }
 
-    case Qt::Key_Comma:
+    case KEY_NEGATIVE_TRANSLATION:
     {
-        if(!axis_selected || !node_selected)
-            break;
-        vector<float> data;
-
         switch(selected_axis)
         {
         case X_AXIS:
-            data = {-5.0f, 1.0f, 0.0f, 0.0f};
+            parametrizedTranslation(-1.0f, 0.0f, 0.0f);
             break;
         case Y_AXIS:
-            data = {-5.0f, 0.0f, 1.0f, 0.0f};
+            parametrizedTranslation(0.0f, -1.0f, 0.0f);
             break;
         case Z_AXIS:
-            data = {-5.0f, 0.0f, 0.0f, 1.0f};
+            parametrizedTranslation(0.0f, 0.0f, -1.0f);
             break;
         default:
-            data = {0.0f, 0.0f, 0.0f, 0.0f};
             break;
         }
 
-        view.addTransformNode(selected_node_name, View::ROTATION, data);
         break;
     }
 
-    case Qt::Key_Up:
+    case KEY_POSITIVE_ROTATION:
     {
-        vector<float> data;
-        if(!node_selected)
+        switch(selected_axis)
+        {
+        case X_AXIS:
+            parametrizedRotation(5.0f, true, false, false);
             break;
+        case Y_AXIS:
+            parametrizedRotation(5.0f, false, true, false);
+            break;
+        case Z_AXIS:
+            parametrizedRotation(5.0f, false, false, true);
+            break;
+        default:
+            break;
+        }
+
+        break;
+    }
+
+    case KEY_NEGATIVE_ROTATION:
+    {
+        switch(selected_axis)
+        {
+        case X_AXIS:
+            parametrizedRotation(-5.0f, true, false, false);
+            break;
+        case Y_AXIS:
+            parametrizedRotation(-5.0f, false, true, false);
+            break;
+        case Z_AXIS:
+            parametrizedRotation(-5.0f, false, false, true);
+            break;
+        default:
+            break;
+        }
+
+        break;
+    }
+
+    case KEY_POSITIVE_SCALE:
+    {
         if(all_axes_selected)
         {
-            data = {1.25f, 1.25f, 1.25f};
-            view.addTransformNode(selected_node_name, View::SCALE, data);
+            parametrizedScale(1.25f, 1.25f, 1.25f);
             break;
         }
-
-        if(!axis_selected)
-            break;
 
         switch(selected_axis)
         {
         case X_AXIS:
-            data = {1.25f, 1.0f, 1.0f};
+            parametrizedScale(1.25f, 1.0f, 1.0f);
             break;
         case Y_AXIS:
-            data = {1.0f, 1.25f, 1.0f};
+            parametrizedScale(1.0f, 1.25f, 1.0f);
             break;
         case Z_AXIS:
-            data = {1.0f, 1.0f, 1.25f};
+            parametrizedScale(1.0f, 1.0f, 1.25f);
             break;
         default:
-            data = {1.25f, 1.25f, 1.25f};
             break;
         }
 
-        view.addTransformNode(selected_node_name, View::SCALE, data);
         break;
     }
 
-    case Qt::Key_Down:
+    case KEY_NEGATIVE_SCALE:
     {
-        vector<float> data;
-        if(!node_selected)
-            break;
         if(all_axes_selected)
         {
-            data = {0.8f, 0.8f, 0.8f};
-            view.addTransformNode(selected_node_name, View::SCALE, data);
+            parametrizedScale(0.8f, 0.8f, 0.8f);
             break;
         }
 
-        if(!axis_selected)
-            break;
         switch(selected_axis)
         {
         case X_AXIS:
-            data = {0.8f, 1.0f, 1.0f};
+            parametrizedScale(0.8f, 1.0f, 1.0f);
             break;
         case Y_AXIS:
-            data = {1.0f, 0.8f, 1.0f};
+            parametrizedScale(1.0f, 0.8f, 1.0f);
             break;
         case Z_AXIS:
-            data = {1.0f, 1.0f, 0.8f};
+            parametrizedScale(1.0f, 1.0f, 0.8f);
             break;
         default:
-            data = {0.8f, 0.8f, 0.8f};
             break;
         }
 
-        view.addTransformNode(selected_node_name, View::SCALE, data);
         break;
     }
-    case Key_Translate:
+
+    case KEY_TRANSLATE:
     {
-        //Used for translation
-        //Use custom dialog to ask for translation
-        string node_name = "";
-        string x_trans = "";
-        string y_trans = "";
-        string z_trans = "";
-
-        CustomDialog d("Add Translation", this);
-        d.addLineEdit("Node Name: ", &node_name);
-        d.addLineEdit("X-axis Translation: ", &x_trans);
-        d.addLineEdit("Y-axis Translation: ", &y_trans);
-        d.addLineEdit("Z-axis Translation: ", &z_trans);
-
-        d.exec();
-
-        if(d.wasCancelled())
-            break;
-
-        //Grab our scenegraph
-        sgraph::Scenegraph* scenegraph = view.getScenegraph();
-        //Find node -- first check if passed name is valid
-        bool valid = scenegraph->isValidNodeName(node_name);
-
-        if(!valid)
-        {
-            QString msg(node_name.c_str());
-            QMessageBox::information(this, "Invalid Node Name", "Invalid node name: " + msg);
-            break;
-        }
-        else
-        {
-            //Convert translation values to floats
-            vector<float> data;
-            data.push_back(atof(x_trans.c_str()));
-            data.push_back(atof(y_trans.c_str()));
-            data.push_back(atof(z_trans.c_str()));
-
-            view.addTransformNode(node_name, View::TRANSLATION, data);
-        }
-
+        translationDialog();
         break;
     }
 
-    case Key_Scale:
+    case KEY_ROTATE:
     {
-        //Use custom dialog to ask for Scale
-        string node_name = "";
-        string x_scale = "";
-        string y_scale = "";
-        string z_scale = "";
-
-        CustomDialog d("Add Scale", this);
-        d.addLineEdit("Node Name: ", &node_name);
-        d.addLineEdit("X-axis Scale: ", &x_scale);
-        d.addLineEdit("Y-axis Scale: ", &y_scale);
-        d.addLineEdit("Z-axis Scale: ", &z_scale);
-
-        d.exec();
-
-        if(d.wasCancelled())
-            break;
-
-        //Grab our scenegraph
-        sgraph::Scenegraph* scenegraph = view.getScenegraph();
-        //Find node -- first check if passed name is valid
-        bool valid = scenegraph->isValidNodeName(node_name);
-
-        if(!valid)
-        {
-            QString msg(node_name.c_str());
-            QMessageBox::information(this, "Invalid Node Name", "Invalid node name: " + msg);
-            break;
-        }
-        else
-        {
-            //Convert scale values to floats
-            vector<float> data;
-            data.push_back(atof(x_scale.c_str()));
-            data.push_back(atof(y_scale.c_str()));
-            data.push_back(atof(z_scale.c_str()));
-
-            view.addTransformNode(node_name, View::SCALE, data);
-        }
-
+        rotationDialog();
         break;
     }
-    case Key_Rotate:
+
+    case KEY_SCALE:
     {
-        //Use custom dialog to ask for roatation
-        string node_name = "";
-        bool x_axis = false;
-        bool y_axis = false;
-        bool z_axis = false;
-        string angle = "";
-
-        CustomDialog d("Add Rotation", this);
-        d.addLineEdit("Node Name: ", &node_name);
-        d.addLineEdit("Rotation Angle: ", &angle, "In Degrees.");
-        d.addLabel("Select which axis/axes to rotate about:", true);
-        d.addCheckBox("X-Axis: ", &x_axis);
-        d.addCheckBox("Y-Axis: ", &y_axis);
-        d.addCheckBox("Z-Axis: ", &z_axis);
-
-        d.exec();
-
-        if(d.wasCancelled())
-            break;
-
-        //Grab our scenegraph
-        sgraph::Scenegraph* scenegraph = view.getScenegraph();
-        //Find node -- first check if passed name is valid
-        bool valid = scenegraph->isValidNodeName(node_name);
-
-        if(!valid)
-        {
-            QString msg(node_name.c_str());
-            QMessageBox::information(this, "Invalid Node Name", "Invalid node name: " + msg);
-            break;
-        }
-        else
-        {
-            //Convert rotation values to floats
-            vector<float> data;
-            data.push_back(atof(angle.c_str()));
-            data.push_back((float)x_axis);
-            data.push_back((float)y_axis);
-            data.push_back((float)z_axis);
-            view.addTransformNode(node_name, View::ROTATION, data);
-        }
+        scaleDialog();
         break;
     }
+
    }
 }
 
+/**
+ * @brief MyGLWidget::tabletEvent
+ * Called when any type of tablet related event occurs. These include a stylus
+ * coming near the screen, applying pressure to the screen, moving on the
+ * screen or releasing from the screen
+ *
+ * @param e
+ * The tablet event to be processed
+ */
 void MyGLWidget::tabletEvent(QTabletEvent *e)
 {
     //Switch to see what type of event we're dealing with
@@ -647,6 +513,20 @@ void MyGLWidget::tabletEvent(QTabletEvent *e)
 
 }
 
+/**
+ * @brief MyGLWidget::determineShape
+ * Called to determine what shape, if any, is traced by the mouse positions
+ * contained within MyGLWidget::mouse_path
+ *
+ * @return
+ * Returns a pair. First value is an ennumeration stating which type of shape
+ * the mouse_path traced (if any). The second value is a vector containing
+ * information about the shape. The vector values are as follows:
+ * [0]: Least-Squares Error
+ * [1]: Center X-Coordinate
+ * [2]: Center Y-Coordinate
+ * [3]: Radius
+ */
 pair<DrawnShape,vector<float>>  MyGLWidget::determineShape()
 {
     //Run list of mouse positions through each detect function, one with
@@ -686,7 +566,6 @@ vector<float> MyGLWidget::detectCircle()
     //points denoting the center of the detected circle
     float cumulative_error = 0.0f;
 
-    //TODO: Implement circle detection math
     //Here we will implement the math to find the error and the center of the
     //circle
     float sum_x = 0;
@@ -823,6 +702,24 @@ void MyGLWidget::saveFile()
 
 }
 
+
+/**
+ * @brief MyGLWidget::saveAs
+ * Implements save_as functionality for our program
+ */
+void MyGLWidget::saveAs()
+{
+    QString save_file_name = QFileDialog::getSaveFileName(this, "Save File", "scenegraphs/", tr("XML(*.xml)"));
+
+    if(save_file_name.isEmpty())
+        return;
+    else
+    {
+        current_save_file = save_file_name.toStdString();
+        saveFile();
+    }
+}
+
 /**
  * @brief MyGLWidget::clearScene
  * Clears the current scene -- Asks user permission beforehand.
@@ -871,20 +768,10 @@ void MyGLWidget::openFile()
 
 }
 
-void MyGLWidget::saveAs()
-{
-    QString save_file_name = QFileDialog::getSaveFileName(this, "Save File", "scenegraphs/", tr("XML(*.xml)"));
-
-    if(save_file_name.isEmpty())
-        return;
-    else
-    {
-        current_save_file = save_file_name.toStdString();
-        saveFile();
-    }
-}
-
-
+/**
+ * @brief MyGLWidget::set_x_axis
+ * Used to set the x-axis as the working axis for transformations
+ */
 void MyGLWidget::set_x_axis()
 {
     //Used to select X-axis
@@ -894,6 +781,10 @@ void MyGLWidget::set_x_axis()
     curr_axis_str = "X-Axis";
 }
 
+/**
+ * @brief MyGLWidget::set_y_axis
+ * Used to set the y-axis as the working axis for transformations
+*/
 void MyGLWidget::set_y_axis()
 {
     //Used to select Y-axis
@@ -903,6 +794,10 @@ void MyGLWidget::set_y_axis()
     curr_axis_str = "Y-Axis";
 }
 
+/**
+ * @brief MyGLWidget::set_z_axis
+ * Used to set the z-axis as the working axis for transformations
+ */
 void MyGLWidget::set_z_axis()
 {
     //Used to select Z-axis
@@ -912,4 +807,220 @@ void MyGLWidget::set_z_axis()
     curr_axis_str = "Z-Axis";
 }
 
+/**
+ * @brief MyGLWidget::translationDialog
+ * When called, a dialog box appears to specify the tranlation of a particular
+ * node.
+ */
+void MyGLWidget::translationDialog()
+{
+    //Used for translation
+    //Use custom dialog to ask for translation
+    string node_name = "";
+    string x_trans = "";
+    string y_trans = "";
+    string z_trans = "";
 
+    CustomDialog d("Add Translation", this);
+    d.addLineEdit("Node Name: ", &node_name);
+    d.addLineEdit("X-axis Translation: ", &x_trans);
+    d.addLineEdit("Y-axis Translation: ", &y_trans);
+    d.addLineEdit("Z-axis Translation: ", &z_trans);
+
+    d.exec();
+
+    if(d.wasCancelled())
+        return;
+
+    //Grab our scenegraph
+    sgraph::Scenegraph* scenegraph = view.getScenegraph();
+    //Find node -- first check if passed name is valid
+    bool valid = scenegraph->isValidNodeName(node_name);
+
+    if(!valid)
+    {
+        QString msg(node_name.c_str());
+        QMessageBox::information(this, "Invalid Node Name", "Invalid node name: " + msg);
+        return;
+    }
+    else
+    {
+        //Convert translation values to floats
+        vector<float> data;
+        data.push_back(atof(x_trans.c_str()));
+        data.push_back(atof(y_trans.c_str()));
+        data.push_back(atof(z_trans.c_str()));
+
+        view.addTransformNode(node_name, View::TRANSLATION, data);
+    }
+}
+
+/**
+ * @brief MyGLWidget::rotationDialog
+ * When called, a dialog box appears to specify the rotation of a particular
+ * node
+ */
+void MyGLWidget::rotationDialog()
+{
+    //Use custom dialog to ask for roatation
+    string node_name = "";
+    bool x_axis = false;
+    bool y_axis = false;
+    bool z_axis = false;
+    string angle = "";
+
+    CustomDialog d("Add Rotation", this);
+    d.addLineEdit("Node Name: ", &node_name);
+    d.addLineEdit("Rotation Angle: ", &angle, "In Degrees.");
+    d.addLabel("Select which axis/axes to rotate about:", true);
+    d.addCheckBox("X-Axis: ", &x_axis);
+    d.addCheckBox("Y-Axis: ", &y_axis);
+    d.addCheckBox("Z-Axis: ", &z_axis);
+
+    d.exec();
+
+    if(d.wasCancelled())
+        return;
+
+    //Grab our scenegraph
+    sgraph::Scenegraph* scenegraph = view.getScenegraph();
+    //Find node -- first check if passed name is valid
+    bool valid = scenegraph->isValidNodeName(node_name);
+
+    if(!valid)
+    {
+        QString msg(node_name.c_str());
+        QMessageBox::information(this, "Invalid Node Name", "Invalid node name: " + msg);
+        return;
+    }
+    else
+    {
+        //Convert rotation values to floats
+        vector<float> data;
+        data.push_back(atof(angle.c_str()));
+        data.push_back((float)x_axis);
+        data.push_back((float)y_axis);
+        data.push_back((float)z_axis);
+        view.addTransformNode(node_name, View::ROTATION, data);
+    }
+}
+
+/**
+ * @brief MyGLWidget::scaleDialog
+ * When called, a dialog box appears to specify the scale of a particular node
+ */
+void MyGLWidget::scaleDialog()
+{
+    //Use custom dialog to ask for Scale
+    string node_name = "";
+    string x_scale = "";
+    string y_scale = "";
+    string z_scale = "";
+
+    CustomDialog d("Add Scale", this);
+    d.addLineEdit("Node Name: ", &node_name);
+    d.addLineEdit("X-axis Scale: ", &x_scale);
+    d.addLineEdit("Y-axis Scale: ", &y_scale);
+    d.addLineEdit("Z-axis Scale: ", &z_scale);
+
+    d.exec();
+
+    if(d.wasCancelled())
+        return;
+
+    //Grab our scenegraph
+    sgraph::Scenegraph* scenegraph = view.getScenegraph();
+    //Find node -- first check if passed name is valid
+    bool valid = scenegraph->isValidNodeName(node_name);
+
+    if(!valid)
+    {
+        QString msg(node_name.c_str());
+        QMessageBox::information(this, "Invalid Node Name", "Invalid node name: " + msg);
+        return;
+    }
+    else
+    {
+        //Convert scale values to floats
+        vector<float> data;
+        data.push_back(atof(x_scale.c_str()));
+        data.push_back(atof(y_scale.c_str()));
+        data.push_back(atof(z_scale.c_str()));
+
+        view.addTransformNode(node_name, View::SCALE, data);
+    }
+}
+
+/**
+ * @brief MyGLWidget::parametrizedTranslation
+ * Translates the currently selected node by the amounts specified
+ *
+ * @param x
+ * Amount to translate node on x-axis
+ *
+ * @param y
+ * Amount to translate node on y-axis
+ *
+ * @param z
+ * Amount to translate node on z-axis
+ */
+void MyGLWidget::parametrizedTranslation(float x, float y, float z)
+{
+    //Translates along positive axis if selected
+    if(!node_selected)
+        return;
+
+    vector<float> data = {x, y, z};
+    view.addTransformNode(selected_node_name, View::TRANSLATION, data);
+
+
+}
+
+/**
+ * @brief MyGLWidget::parametrizedRotation
+ * Rotates the currently selected node by angle @param angle about any true axis
+ *
+ * @param angle
+ * The angle to roatate by (degrees)
+ *
+ * @param x
+ * True if rotation will occur about x-axis
+ *
+ * @param y
+ * True if rotation will occur about y-axis
+ *
+ * @param z
+ * True if rotation will occur about z-axis
+ */
+void MyGLWidget::parametrizedRotation(float angle, bool x, bool y, bool z)
+{
+    if(!node_selected)
+        return;
+
+    vector<float> data = {angle, (float)x, (float)y, (float)z};
+    view.addTransformNode(selected_node_name, View::ROTATION, data);
+
+}
+
+/**
+ * @brief MyGLWidget::parametrizedScale
+ * Scales the currently selected node by the amounts specified for each axis
+ *
+ * @param x
+ * Amount to scale by in x-axis
+ *
+ * @param y
+ * Amount to scale by in y-axis
+ *
+ * @param z
+ * Amount to scale by in z-axis
+ */
+void MyGLWidget::parametrizedScale(float x, float y, float z)
+{
+    if(!node_selected)
+        return;
+
+    vector<float> data = {x, y, z};
+    view.addTransformNode(selected_node_name, View::SCALE, data);
+
+}

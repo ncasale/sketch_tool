@@ -54,6 +54,9 @@ class MyGLWidget : public QOpenGLWidget
         void setSelectedNodeName(string name) {selected_node_name = name;}
         void toggleAllAxesSelected() {all_axes_selected = !all_axes_selected;}
 
+        //Getters
+        float getFrameRate() {return framerate;}
+
         //Actions
         void saveFile();
         void saveAs();
@@ -64,6 +67,18 @@ class MyGLWidget : public QOpenGLWidget
         void set_x_axis();
         void set_y_axis();
         void set_z_axis();
+
+        //Object selection
+        void selectObject();
+
+        //Transformations
+        void translationDialog();
+        void rotationDialog();
+        void scaleDialog();
+        void parametrizedTranslation(float, float, float);
+        void parametrizedRotation(float, bool, bool, bool);
+        void parametrizedScale(float, float, float);
+
 
     protected:
         //OpenGL Functions
