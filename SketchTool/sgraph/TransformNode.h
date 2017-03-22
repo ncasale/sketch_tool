@@ -47,7 +47,46 @@ enum transformation_type{
       */
     vector<pair<transformation_type,vector<float>>> transformation_order;
 
+    /**
+      * The translation data associated with this transform node
+      */
+    vector<float> translation_data = {0.0f, 0.0f, 0.0f};
+
+
+    /**
+      * The rotation data for the x axis
+      */
+    vector<float> x_rotation_data = {0.0f, 1.0f, 0.0f, 0.0f};
+
+
+    /**
+      * The rotation data for the y axis
+      */
+    vector<float> y_rotation_data = {0.0f, 0.0f, 1.0f, 0.0f};
+
+
+    /**
+      * The rotation data for the z axis
+      */
+    vector<float> z_rotation_data = {0.0f, 0.0f, 0.0f, 1.0f};
+
+
+    /**
+      * The scale data
+      */
+    vector<float> scale_data = {1.0f, 1.0f, 1.0f};
+
   public:
+    /**
+     * @brief TransformNode
+     * Default constructor. Sets transforms to default values and nulls out child.
+     *
+     * @param graph
+     * The scenegraph to which this node belongs.
+     *
+     * @param name
+     * The name of this node
+     */
     TransformNode(sgraph::Scenegraph *graph,const string& name)
       :AbstractNode(graph,name)
     {
@@ -190,41 +229,42 @@ enum transformation_type{
         output_file << "<set>" << endl;
         //Iterate through transformation_order and apply correct tags
         string xml_string = "";
-        vector<float> data;
-        for(auto entry : transformation_order)
-        {
-            data = entry.second;
 
-            //Apply scale
-            if(entry.first == SCALE)
-            {
-                xml_string = "<scale> " + to_string(data[0]) + " " +
-                        to_string(data[1]) + " " + to_string(data[2]) +
-                        "</scale>";
-                output_file << xml_string << endl;
-            }
+        //Apply translate first
+        xml_string = "<translate> " + to_string(translation_data[0]) + " " +
+                to_string(translation_data[1]) + " " + to_string(translation_data[2]) +
+                "</translate>";
+        output_file << xml_string << endl;
 
-            //Apply Rotation
-            else if(entry.first == ROTATE)
-            {
-                xml_string = "<rotate> " + to_string(data[0]) + " " +
-                        to_string(data[1]) + " " + to_string(data[2]) + " "
-                        + to_string(data[3]) + "</rotate";
-                output_file << xml_string << endl;
-            }
+        //Apply rotation second -- start with x, then y, then z
+        xml_string = "<rotate> " + to_string(x_rotation_data[0]) + " " +
+                to_string(x_rotation_data[1]) + " " + to_string(x_rotation_data[2]) + " "
+                + to_string(x_rotation_data[3]) + "</rotate>";
+        output_file << xml_string << endl;
 
-            //Apply translation
-            else if(entry.first == TRANSLATE)
-            {
-                xml_string = "<translate> " + to_string(data[0]) + " " +
-                        to_string(data[1]) + " " + to_string(data[2]) +
-                        "</translate>";
-                output_file << xml_string << endl;
-            }
-        }
+        xml_string = "<rotate> " + to_string(y_rotation_data[0]) + " " +
+                to_string(y_rotation_data[1]) + " " + to_string(y_rotation_data[2]) + " "
+                + to_string(y_rotation_data[3]) + "</rotate>";
+        output_file << xml_string << endl;
+
+        xml_string = "<rotate> " + to_string(z_rotation_data[0]) + " " +
+                to_string(z_rotation_data[1]) + " " + to_string(z_rotation_data[2]) + " "
+                + to_string(z_rotation_data[3]) + "</rotate>";
+        output_file << xml_string << endl;
+
+        //Apply scale last
+        xml_string = "<scale> " + to_string(scale_data[0]) + " " +
+                to_string(scale_data[1]) + " " + to_string(scale_data[2]) +
+                "</scale>";
+        output_file << xml_string << endl;
+
+        //Close set tag
         output_file << "</set>" << endl;
+
+        //Recurse to saving children
         if(child != NULL)
             child->saveToXML(output_file);
+
         //Add ending transform tag
         output_file << "</transform>" << endl;
     }
@@ -335,8 +375,7 @@ enum transformation_type{
 
     /**
      * @brief addScale
-     * Used to add a scale transformation to our node's list of applied
-     * transformations as well as apply this scale to the node's transform
+     * Used to apply this scale to the node's transform
      *
      * @param x_scale
      * The scaling factor in the x direction
@@ -349,11 +388,10 @@ enum transformation_type{
      */
     void addScale(float x_scale, float y_scale, float z_scale)
     {
-        //Add a scale entry to the transformation_order vector
-        vector<float> data = {x_scale, y_scale, z_scale};
-        transformation_type t = SCALE;
-        pair<transformation_type, vector<float>> new_entry(t, data);
-        transformation_order.push_back(new_entry);
+        //Multiply scale into existing scale
+        scale_data[0] *= x_scale;
+        scale_data[1] *= y_scale;
+        scale_data[2] *= z_scale;
 
         //Apply scale to node's transform
         transform *= glm::scale(glm::mat4(1.0f), glm::vec3(x_scale, y_scale, z_scale));
@@ -361,8 +399,7 @@ enum transformation_type{
 
     /**
      * @brief addRotation
-     * Used to add a rotate transformation to node's list of applied
-     * transformations as well as apply this rotation to node's transform.
+     * Used to apply this rotation to node's transform.
      *
      * @param angle
      * The angle of the rotation in degrees
@@ -378,11 +415,19 @@ enum transformation_type{
      */
     void addRotation(float angle, float x_axis, float y_axis, float z_axis)
     {
-        //Add a roatation entry to the transformation_order vector
-        vector<float> data = {angle, x_axis, y_axis, z_axis};
-        transformation_type t = ROTATE;
-        pair<transformation_type, vector<float>> new_entry(t, data);
-        transformation_order.push_back(new_entry);
+        //Apply rotation to each axis
+        if(x_axis == 1.0f)
+        {
+            x_rotation_data[0] += angle;
+        }
+        if(y_axis == 1.0f)
+        {
+            y_rotation_data[0] += angle;
+        }
+        if(z_axis == 1.0f)
+        {
+            z_rotation_data[0] += angle;
+        }
 
         //Apply rotation to node's transformation
         transform *= glm::rotate(glm::mat4(1.0f), glm::radians(angle), glm::vec3(x_axis, y_axis, z_axis));
@@ -391,8 +436,7 @@ enum transformation_type{
 
     /**
      * @brief addTranslation
-     * Used to add a translate transformation to a node's list of applied
-     * transformations as well as apply this translation to node's transform.
+     * Used to apply this translation to node's transform.
      *
      * @param x_trans
      * Amount to translate along the x-axis
@@ -405,11 +449,10 @@ enum transformation_type{
      */
     void addTranslation(float x_trans, float y_trans, float z_trans)
     {
-        //Add a translation entry to the transformation_order vector
-        vector<float> data = {x_trans, y_trans, z_trans};
-        transformation_type t = TRANSLATE;
-        pair<transformation_type, vector<float>> new_entry(t, data);
-        transformation_order.push_back(new_entry);
+        //Apply translation to existing translation data
+        translation_data[0] += x_trans;
+        translation_data[1] += y_trans;
+        translation_data[2] += z_trans;
 
         //Apply translation to transformation member
         transform *= glm::translate(glm::mat4(1.0f), glm::vec3(x_trans, y_trans, z_trans));

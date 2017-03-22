@@ -38,6 +38,12 @@ protected:
      */
     string textureName;
 
+    /**
+     * @brief texture_matrix
+     * The texture matrix associated with this leaf node -- scale for large objects.
+     */
+    glm::mat4 texture_matrix = glm::mat4(1.0f);
+
 public:
     LeafNode(const string& instanceOf,sgraph::Scenegraph *graph,const string& name)
         :AbstractNode(graph,name)
@@ -69,6 +75,30 @@ public:
     void setTextureName(const string& name) throw(runtime_error)
     {
         textureName = name;
+    }
+
+    /**
+     * @brief setTextureMatrix
+     * Sets the texture matrix of this leaf node
+     *
+     * @param mat
+     * The matrix to which we will set the texture_matrix equal to
+     */
+    void setTextureMatrix(const glm::mat4 mat) throw(runtime_error)
+    {
+        texture_matrix = mat;
+    }
+
+    /**
+     * @brief getTextureMatrix
+     * Gets this leaf's texture matrix
+     *
+     * @return
+     * The texture_matrix member of this leaf node.
+     */
+    glm::mat4 getTextureMatrix()
+    {
+        return texture_matrix;
     }
 
     /**
@@ -114,7 +144,7 @@ public:
     {
         if (objInstanceName.length()>0)
         {
-            context.drawMesh(objInstanceName,material,textureName,modelView.top());
+            context.drawMesh(objInstanceName,material,textureName,texture_matrix,modelView.top());
         }
     }
 

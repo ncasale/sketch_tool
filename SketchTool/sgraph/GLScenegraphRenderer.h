@@ -304,12 +304,16 @@ public:
      * @param textureName
      * The name of the texture to be applied to the mesh during rendering
      *
+     * @param textureMatrix
+     * The texture matrix associated with this leaf node
+     *
      * @param transformation
      * The current transformation applied to this mesh (from modelview)
      */
     void drawMesh(const string& name,
                   const util::Material& material,
                   const string& textureName,
+                  const glm::mat4& textureMatrix,
                   const glm::mat4& transformation)
     {
         if (meshRenderers.count(name)==1)
@@ -363,10 +367,9 @@ public:
             loc = shaderLocations.getLocation("texturematrix");
             if (loc<0)
                 throw runtime_error("No shader variable for \" texturematrix \"");
-            glm::mat4 texturematrix = glm::mat4(1.0);
             glContext->glUniformMatrix4fv(loc,
                                   1,
-                                  false,glm::value_ptr(texturematrix));
+                                  false,glm::value_ptr(textureMatrix));
 
 
             if (textures.count(textureName)>0)

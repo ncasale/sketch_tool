@@ -11,6 +11,11 @@
 #include <cstdio>
 using namespace std;
 
+/**
+ * @brief View::View
+ * Default constructor. Sets window height and width, establishes trackball
+ * starting parameters and resets relevant members.
+ */
 View::View()
 {   
   WINDOW_WIDTH = WINDOW_HEIGHT = 0;
@@ -20,6 +25,10 @@ View::View()
   scenegraph = NULL;
 }
 
+/**
+ * @brief View::~View
+ * View destructor. Deletes scenegraph when view is destroyed.
+ */
 View::~View()
 {
   if (scenegraph!=NULL)
@@ -216,6 +225,10 @@ void View::addToScenegraph(string shape, vector<float> shape_params)
     sgraph::TransformNode* transform_node = new sgraph::TransformNode(scenegraph, "");
 
     //If we have passed a vector of shape parameters, use those to construct a shape
+    float ground_width = 1000.0f;
+    float ground_height = 1.0f;
+    float ground_depth = 1000.0f;
+
     if(!shape_params.empty() && shape == "sphere")
     {
         //First value is center_x, second is center_y, third is radius (circle)
@@ -227,9 +240,7 @@ void View::addToScenegraph(string shape, vector<float> shape_params)
     }
     else if(shape == "ground")
     {
-        float ground_width = 1000.0f;
-        float ground_height = 0.1f;
-        float ground_depth = 1000.0f;
+
         transform_node->addScale(ground_width, ground_height, ground_depth);
         transform_node->addTranslation(0.0f, -5.0f, 0.0f);
     }
@@ -244,6 +255,9 @@ void View::addToScenegraph(string shape, vector<float> shape_params)
     {
         leaf_node = new sgraph::LeafNode("box", scenegraph, "");
         leaf_node->setTextureName("checkerboard-box");
+        glm::mat4 tex_mat = glm::mat4(1.0f);
+        tex_mat = glm::scale(glm::mat4(1.0f), glm::vec3(ground_width, ground_height, ground_depth));
+        leaf_node->setTextureMatrix(tex_mat);
     }
     else
     {
@@ -255,7 +269,7 @@ void View::addToScenegraph(string shape, vector<float> shape_params)
     mat.setAmbient(0.8f, 0.8f, 0.8f);
     mat.setDiffuse(0.8f, 0.8f, 0.8f);
     mat.setSpecular(0.8f, 0.8f, 0.8f);
-    mat.setShininess(100.0f);
+    mat.setShininess(10.0f);
     //Apply material
     leaf_node->setMaterial(mat);
     //Make leaf node child of transform node

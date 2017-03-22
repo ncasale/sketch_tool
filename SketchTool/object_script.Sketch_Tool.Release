@@ -5,6 +5,8 @@ INPUT(
 ./release\MyGLWidget.o
 ./release\customdialog.o
 ./release\console_input.o
+./release\shape.o
+./release\circle.o
 ./release\qrc_myres.o
 ./release\moc_mainwindow.o
 ./release\moc_MyGLWidget.o

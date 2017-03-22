@@ -20,6 +20,8 @@
 #include "sgraph/GroupNode.h"
 #include <QTabletEvent>
 #include <vector>
+#include "shape.h"
+#include "circle.h"
 
 /*
  * This is the main OpenGL-based window in our application
@@ -38,7 +40,8 @@ enum DrawnShape{
     CIRCLE,
     CUBE,
     CYLINDER,
-    CONE
+    CONE,
+    LINE
 };
 
 class MyGLWidget : public QOpenGLWidget
@@ -53,6 +56,7 @@ class MyGLWidget : public QOpenGLWidget
         void setSelectedAxis(SelectedAxis val) {selected_axis = val;}
         void setSelectedNodeName(string name) {selected_node_name = name;}
         void toggleAllAxesSelected() {all_axes_selected = !all_axes_selected;}
+        void setMousePath(vector<QPointF> p) {mouse_path = p;}
 
         //Getters
         float getFrameRate() {return framerate;}
@@ -79,6 +83,10 @@ class MyGLWidget : public QOpenGLWidget
         void parametrizedRotation(float, bool, bool, bool);
         void parametrizedScale(float, float, float);
 
+        //Shape detection functions
+        DrawnShape determineShape(float, float);
+        Circle detectCircle();
+
 
     protected:
         //OpenGL Functions
@@ -95,8 +103,8 @@ class MyGLWidget : public QOpenGLWidget
 
         //Tablet/Shape Detection Events
         void tabletEvent(QTabletEvent *);
-        pair<DrawnShape,vector<float>> determineShape();
-        vector<float> detectCircle();
+
+
 
 
         /*

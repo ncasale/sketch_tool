@@ -107,5 +107,84 @@ string ConsoleInput::process_command(QString& command_qstring)
 
         return "Translation Successful";
     }
+    else if(command == "rotate")
+    {
+        //Begin parsing for additional parameters
+        string params = command_string.substr(command_string.find_first_of(' ') + 1, command_string.npos);
+        //Get the angle of rotation
+        float angle = atof(params.substr(0, params.find_first_of(' ')).c_str());
+        params = params.substr(params.find_first_of(' ') + 1, params.npos);
+        //Rotating about X?
+        float x = atof(params.substr(0, params.find_first_of(' ')).c_str());
+        params = params.substr(params.find_first_of(' ') + 1, params.npos);
+        //Rotating about Y?
+        float y = atof(params.substr(0, params.find_first_of(' ')).c_str());
+        params = params.substr(params.find_first_of(' ') + 1, params.npos);
+        //Rotating about Z?
+        float z = atof(params.substr(0, params.find_first_of(' ')).c_str());
+
+        //Value check
+        if(x != 1.0f && x != 0.0f)
+            return "Invalid parameter: x";
+        else
+        {
+            //
+        }
+
+
+        //Perform rotation
+        gl_widget->parametrizedRotation(angle,x, y, z);
+        return "Rotation Successful!";
+
+
+    }
+    else if(command == "scale")
+    {
+        //Begin parsing for additional parameters
+        string params = command_string.substr(command_string.find_first_of(' ') + 1, command_string.npos);
+        //X Scale
+        float x = atof(params.substr(0, params.find_first_of(' ')).c_str());
+        params = params.substr(params.find_first_of(' ') + 1, params.npos);
+        //Y Scale
+        float y = atof(params.substr(0, params.find_first_of(' ')).c_str());
+        params = params.substr(params.find_first_of(' ') + 1, params.npos);
+        //Z Scale
+        float z = atof(params.substr(0, params.find_first_of(' ')).c_str());
+
+        //Perform rotation
+        gl_widget->parametrizedScale(x, y, z);
+        return "Scale Successful!";
+
+    }
+    else if(command == "test_circle")
+    {
+        //Use to test the circle tracing functionality -- unit circle values
+        QPointF p1;
+        p1.setX(1.0);
+        p1.setY(0.0);
+        QPointF p2;
+        p2.setX(sqrt(3.0)/2.0);
+        p2.setY(0.5);
+        QPointF p3;
+        p3.setX(sqrt(2.0)/2.0);
+        p3.setY(sqrt(2.0)/2.0);
+        QPointF p4;
+        p4.setX(0.5);
+        p4.setY(sqrt(3.0)/2.0);
+        QPointF p5;
+        p5.setX(0.0);
+        p5.setY(1.0);
+
+
+        //Add all points to mouse_path
+        vector<QPointF> path = {p1,p2, p3, p4};
+        gl_widget->setMousePath(path);
+
+        Circle c = gl_widget->detectCircle();
+
+        return to_string(c.get_error());
+
+
+    }
     else return "Invalid Command";
 }

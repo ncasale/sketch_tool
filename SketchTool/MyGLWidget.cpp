@@ -491,11 +491,13 @@ void MyGLWidget::tabletEvent(QTabletEvent *e)
         draw_started = false;
 
         //Do shape recognition
-        pair<DrawnShape,vector<float>> shape_pair = determineShape();
+        Circle circle = detectCircle();
+        DrawnShape shape_to_draw = determineShape(circle.get_error(), 9999999999.0f);
+
 
         //Can implement determineShape so that it returns a pair denoting
         //the shape and the center for drawing
-        if(shape_pair.first == DrawnShape::CIRCLE)
+        if(shape_to_draw == CIRCLE)
         {
 
             //TODO: Create/Call circle draw function
@@ -504,6 +506,11 @@ void MyGLWidget::tabletEvent(QTabletEvent *e)
 
 
         }
+        else if(shape_to_draw == LINE)
+        {
+            //TODO: Create/Call line drawing function
+        }
+
 
         break;
     }
@@ -519,35 +526,29 @@ void MyGLWidget::tabletEvent(QTabletEvent *e)
  * contained within MyGLWidget::mouse_path
  *
  * @return
- * Returns a pair. First value is an ennumeration stating which type of shape
- * the mouse_path traced (if any). The second value is a vector containing
- * information about the shape. The vector values are as follows:
- * [0]: Least-Squares Error
- * [1]: Center X-Coordinate
- * [2]: Center Y-Coordinate
- * [3]: Radius
+ * Returns a DrawnShape indicating which of the shapes passed (if any) has
+ * been drawn by the mouse path. If no shape sufficiently matches the mouse
+ * path, then this returns NO_SHAPE
  */
-pair<DrawnShape,vector<float>>  MyGLWidget::determineShape()
+DrawnShape MyGLWidget::determineShape(float circle_error, float line_error)
 {
-    //Run list of mouse positions through each detect function, one with
-    //lowest error is the shape we choose (assuming it passes some minimum
-    //threshold)
-    //First value of pair is error, second is the center coords
-    vector<float> circle_values = detectCircle();
-
+    float lowest_error = 9999999999.0f;
     float error_thresh = 9999999999.0f;
+    DrawnShape ret_shape = NO_SHAPE;
 
-    if(circle_values[ERROR] < error_thresh)
+    if(circle_error < error_thresh && circle_error < lowest_error)
     {
+        ret_shape = CIRCLE;
+        lowest_error = circle_error;
+    }
 
-        pair<DrawnShape, vector<float>> p(DrawnShape::CIRCLE, circle_values);
-        return p;
-    }
-    else
+    if(line_error < error_thresh && line_error < lowest_error)
     {
-        pair<DrawnShape, vector<float>> p(DrawnShape::NO_SHAPE, circle_values);
-        return p;
+        ret_shape = LINE;
+        lowest_error = line_error;
     }
+
+    return ret_shape;
 }
 
 /**
@@ -555,12 +556,10 @@ pair<DrawnShape,vector<float>>  MyGLWidget::determineShape()
  * This function uses the stored mouse_path coordinates to determine whether
  * or not a circle lies upon the traced path.
  *
- * @return Returns a vector of floats. The first value in the vector is the
- * error of the circle, the second value is the x-coord of the circle center,
- * the third value is the y-coord of the circle center and the fourth value is
- * the radius of the circle
+ * @return
+ * Returns a circle object containing the error, center x/y coordinates and radius
  */
-vector<float> MyGLWidget::detectCircle()
+Circle MyGLWidget::detectCircle()
 {
     //Look at current mouse path and return the error as well as a pair of
     //points denoting the center of the detected circle
@@ -630,8 +629,8 @@ vector<float> MyGLWidget::detectCircle()
     }
 
     //Let's now return our error, the proposed center and the calculated radius of the circle
-    vector<float> ret_vec = {cumulative_error, center_x, center_y, radius};
-    return ret_vec;
+    Circle ret_circle(cumulative_error, center_x, center_y, radius);
+    return ret_circle;
 }
 
 
