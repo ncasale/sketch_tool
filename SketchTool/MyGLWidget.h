@@ -22,6 +22,7 @@
 #include <vector>
 #include "shape.h"
 #include "circle.h"
+#include "line.h"
 
 /*
  * This is the main OpenGL-based window in our application
@@ -86,6 +87,7 @@ class MyGLWidget : public QOpenGLWidget
         //Shape detection functions
         DrawnShape determineShape(float, float);
         Circle detectCircle();
+        Line detectLine();
 
         //Draw a line while tracing shape
         void drawLineTo(QPainter *);

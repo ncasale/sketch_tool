@@ -254,7 +254,7 @@ void View::addToScenegraph(string shape, vector<float> shape_params)
     if(shape == "ground")
     {
         leaf_node = new sgraph::LeafNode("box", scenegraph, "");
-        leaf_node->setTextureName("checkerboard");
+        leaf_node->setTextureName("ground");
         glm::mat4 tex_mat = glm::mat4(1.0f);
         tex_mat *= glm::scale(glm::mat4(1.0f), glm::vec3(ground_width/8.0f, ground_depth/8.0f, ground_height));
         leaf_node->setTextureMatrix(tex_mat);

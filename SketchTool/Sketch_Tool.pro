@@ -19,7 +19,8 @@ SOURCES += main.cpp\
     customdialog.cpp \
     console_input.cpp \
     shape.cpp \
-    circle.cpp
+    circle.cpp \
+    line.cpp
 
 INCLUDEPATH += ../headers
 
@@ -41,7 +42,8 @@ HEADERS  += mainwindow.h \
     customdialog.h \
     console_input.h \
     shape.h \
-    circle.h
+    circle.h \
+    line.h
 
 FORMS    += mainwindow.ui
 

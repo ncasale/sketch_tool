@@ -240,7 +240,8 @@ void MyGLWidget::mouseReleaseEvent(QMouseEvent *e)
         drawing_line = false;
         //Do shape recognition
         Circle circle = detectCircle();
-        DrawnShape shape_to_draw = determineShape(circle.get_error(), 9999999999.0f);
+        Line line = detectLine();
+        DrawnShape shape_to_draw = determineShape(circle.get_error(), line.get_error());
 
 
         //Can implement determineShape so that it returns a pair denoting
@@ -571,7 +572,8 @@ void MyGLWidget::tabletEvent(QTabletEvent *e)
 
         //Do shape recognition
         Circle circle = detectCircle();
-        DrawnShape shape_to_draw = determineShape(circle.get_error(), 9999999999.0f);
+        Line line = detectLine();
+        DrawnShape shape_to_draw = determineShape(circle.get_error(), line.get_error());
 
 
         //Can implement determineShape so that it returns a pair denoting
@@ -720,6 +722,54 @@ Circle MyGLWidget::detectCircle()
     return ret_circle;
 }
 
+
+/**
+ * @brief MyGLWidget::detectLine
+ * Iterates through mouse_path and determines a line of best fit for the
+ * provided points
+ *
+ * @return
+ * The line determined from the points
+ */
+Line MyGLWidget::detectLine()
+{
+    float sum_x = 0;
+    float sum_y = 0;
+    float sum_x_squared = 0;
+    float sum_y_squared = 0;
+    float sum_xy = 0;
+
+    for(auto pos : mouse_path)
+    {
+        //Calculate required summations for matrices
+        sum_x += pos.x();
+        sum_y += pos.y();
+        sum_x_squared += pow(pos.x(), 2.0f);
+        sum_y_squared += pow(pos.y(), 2.0f);
+        sum_xy += pos.x() * pos.y();
+
+    }
+
+    //Get determinant
+    float det_arr[4] = {sum_x_squared, sum_xy, sum_xy, sum_y_squared};
+    glm::mat2 det_mat = glm::make_mat2(det_arr);
+    float det = glm::determinant(det_mat);
+
+    //Get Da
+    float det_a_arr[4] = {-sum_x, -sum_y, sum_xy, sum_y_squared};
+    glm::mat2 det_a_mat = glm::make_mat2(det_a_arr);
+    float det_a = glm::determinant(det_a_mat);
+
+    //Get Db
+    float det_b_arr[4] = {sum_x_squared, sum_xy, -sum_x, -sum_y};
+    glm::mat2 det_b_mat = glm::make_mat2(det_b_arr);
+    float det_b = glm::determinant(det_b_mat);
+
+    Line l;
+
+    return l;
+
+}
 
 /**
  * @brief MyGLWidget::resizeGL
@@ -1111,6 +1161,13 @@ void MyGLWidget::parametrizedScale(float x, float y, float z)
 
 }
 
+/**
+ * @brief MyGLWidget::drawLineTo
+ * Draws the current mouse path taken while tracing a shape to draw
+ *
+ * @param painter
+ * The painter used to draw the line
+ */
 void MyGLWidget::drawLineTo(QPainter *painter)
 {
     //Iterate through tracked mouse positions and draw line between them

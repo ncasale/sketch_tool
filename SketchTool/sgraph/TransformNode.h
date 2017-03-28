@@ -173,6 +173,17 @@ enum transformation_type{
       return NULL;
     }
 
+    glm::mat4& getTextureMatrix() throw(runtime_error)
+    {
+        throw(runtime_error("Not a leaf node -- cannot get texture matrix"));
+    }
+
+    void setTextureMatrix(const glm::mat4 &mat) throw(runtime_error)
+    {
+        throw(runtime_error("Not a leaf node -- cannot set texture matix"));
+
+    }
+
     /**
      * @brief addChild
      * Set the child of this node. This function will throw a runtime error if

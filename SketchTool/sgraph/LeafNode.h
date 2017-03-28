@@ -84,7 +84,7 @@ public:
      * @param mat
      * The matrix to which we will set the texture_matrix equal to
      */
-    void setTextureMatrix(const glm::mat4 mat) throw(runtime_error)
+    void setTextureMatrix(const glm::mat4& mat) throw(runtime_error)
     {
         texture_matrix = mat;
     }
@@ -96,7 +96,7 @@ public:
      * @return
      * The texture_matrix member of this leaf node.
      */
-    glm::mat4 getTextureMatrix()
+    glm::mat4& getTextureMatrix() throw(runtime_error)
     {
         return texture_matrix;
     }
@@ -177,13 +177,20 @@ public:
             float shininess = material.getShininess();
 
             //Add object tag
-            if(name == "")
+            if(name == "" && textureName == "")
                 output_file << "<object instanceof =\"" << objInstanceName << "\">" << endl;
-            else
+            else if(name != "" && textureName == "")
             {
                 string tag_string = "<object instanceof=\"" + objInstanceName +
                         "\" name=\"" + name + "\">";
                 output_file << tag_string << endl;
+            }
+            else if(name != "" && textureName != "")
+            {
+                string tag_string = "<object instanceof=\"" + objInstanceName +
+                        "\" name=\"" + name + "\" texture= \"" + textureName + "\">";
+                output_file << tag_string << endl;
+
             }
             //Add material tag
             output_file << "<material>" << endl;

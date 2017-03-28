@@ -251,6 +251,13 @@ namespace sgraph
               node = new sgraph::LeafNode(objectname, scenegraph, name);
               node->setTextureName(textureName);
 
+              if(textureName == "ground")
+              {
+                  glm::mat4 tex_mat = node->getTextureMatrix();
+                  tex_mat *= glm::scale(glm::mat4(1.0f), glm::vec3(125.0f, 125.0f, 1.0f));
+                  node->setTextureMatrix(tex_mat);
+              }
+
               stackNodes.top()->addChild(node);
 
               stackNodes.push(node);

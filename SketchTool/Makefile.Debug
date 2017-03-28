@@ -50,7 +50,8 @@ SOURCES       = main.cpp \
 		customdialog.cpp \
 		console_input.cpp \
 		shape.cpp \
-		circle.cpp debug\qrc_myres.cpp \
+		circle.cpp \
+		line.cpp debug\qrc_myres.cpp \
 		debug\moc_mainwindow.cpp \
 		debug\moc_MyGLWidget.cpp \
 		debug\moc_customdialog.cpp \
@@ -63,6 +64,7 @@ OBJECTS       = debug/main.o \
 		debug/console_input.o \
 		debug/shape.o \
 		debug/circle.o \
+		debug/line.o \
 		debug/qrc_myres.o \
 		debug/moc_mainwindow.o \
 		debug/moc_MyGLWidget.o \
@@ -88,14 +90,16 @@ DIST          = shaders/phong-multiple.frag \
 		customdialog.h \
 		console_input.h \
 		shape.h \
-		circle.h main.cpp \
+		circle.h \
+		line.h main.cpp \
 		mainwindow.cpp \
 		View.cpp \
 		MyGLWidget.cpp \
 		customdialog.cpp \
 		console_input.cpp \
 		shape.cpp \
-		circle.cpp
+		circle.cpp \
+		line.cpp
 QMAKE_TARGET  = Sketch_Tool
 DESTDIR        = debug\ #avoid trailing-slash linebreak
 TARGET         = Sketch_Tool.exe
@@ -118,7 +122,7 @@ dist:
 	$(ZIP) Sketch_Tool.zip $(SOURCES) $(DIST) Sketch_Tool.pro C:\Qt\5.6\mingw49_32\mkspecs\features\spec_pre.prf C:\Qt\5.6\mingw49_32\mkspecs\qdevice.pri C:\Qt\5.6\mingw49_32\mkspecs\features\device_config.prf C:\Qt\5.6\mingw49_32\mkspecs\common\angle.conf C:\Qt\5.6\mingw49_32\mkspecs\qconfig.pri C:\Qt\5.6\mingw49_32\mkspecs\modules\qt_lib_axbase.pri C:\Qt\5.6\mingw49_32\mkspecs\modules\qt_lib_axbase_private.pri C:\Qt\5.6\mingw49_32\mkspecs\modules\qt_lib_axcontainer.pri C:\Qt\5.6\mingw49_32\mkspecs\modules\qt_lib_axcontainer_private.pri C:\Qt\5.6\mingw49_32\mkspecs\modules\qt_lib_axserver.pri C:\Qt\5.6\mingw49_32\mkspecs\modules\qt_lib_axserver_private.pri C:\Qt\5.6\mingw49_32\mkspecs\modules\qt_lib_bluetooth.pri C:\Qt\5.6\mingw49_32\mkspecs\modules\qt_lib_bluetooth_private.pri C:\Qt\5.6\mingw49_32\mkspecs\modules\qt_lib_bootstrap_private.pri C:\Qt\5.6\mingw49_32\mkspecs\modules\qt_lib_clucene_private.pri C:\Qt\5.6\mingw49_32\mkspecs\modules\qt_lib_concurrent.pri C:\Qt\5.6\mingw49_32\mkspecs\modules\qt_lib_concurrent_private.pri C:\Qt\5.6\mingw49_32\mkspecs\modules\qt_lib_core.pri C:\Qt\5.6\mingw49_32\mkspecs\modules\qt_lib_core_private.pri C:\Qt\5.6\mingw49_32\mkspecs\modules\qt_lib_dbus.pri C:\Qt\5.6\mingw49_32\mkspecs\modules\qt_lib_dbus_private.pri C:\Qt\5.6\mingw49_32\mkspecs\modules\qt_lib_designer.pri C:\Qt\5.6\mingw49_32\mkspecs\modules\qt_lib_designer_private.pri C:\Qt\5.6\mingw49_32\mkspecs\modules\qt_lib_designercomponents_private.pri C:\Qt\5.6\mingw49_32\mkspecs\modules\qt_lib_gui.pri C:\Qt\5.6\mingw49_32\mkspecs\modules\qt_lib_gui_private.pri C:\Qt\5.6\mingw49_32\mkspecs\modules\qt_lib_help.pri C:\Qt\5.6\mingw49_32\mkspecs\modules\qt_lib_help_private.pri C:\Qt\5.6\mingw49_32\mkspecs\modules\qt_lib_multimedia.pri C:\Qt\5.6\mingw49_32\mkspecs\modules\qt_lib_multimedia_private.pri C:\Qt\5.6\mingw49_32\mkspecs\modules\qt_lib_multimediawidgets.pri C:\Qt\5.6\mingw49_32\mkspecs\modules\qt_lib_multimediawidgets_private.pri C:\Qt\5.6\mingw49_32\mkspecs\modules\qt_lib_network.pri C:\Qt\5.6\mingw49_32\mkspecs\modules\qt_lib_network_private.pri C:\Qt\5.6\mingw49_32\mkspecs\modules\qt_lib_nfc.pri C:\Qt\5.6\mingw49_32\mkspecs\modules\qt_lib_nfc_private.pri C:\Qt\5.6\mingw49_32\mkspecs\modules\qt_lib_opengl.pri C:\Qt\5.6\mingw49_32\mkspecs\modules\qt_lib_opengl_private.pri C:\Qt\5.6\mingw49_32\mkspecs\modules\qt_lib_openglextensions.pri C:\Qt\5.6\mingw49_32\mkspecs\modules\qt_lib_openglextensions_private.pri C:\Qt\5.6\mingw49_32\mkspecs\modules\qt_lib_platformsupport_private.pri C:\Qt\5.6\mingw49_32\mkspecs\modules\qt_lib_positioning.pri C:\Qt\5.6\mingw49_32\mkspecs\modules\qt_lib_positioning_private.pri C:\Qt\5.6\mingw49_32\mkspecs\modules\qt_lib_printsupport.pri C:\Qt\5.6\mingw49_32\mkspecs\modules\qt_lib_printsupport_private.pri C:\Qt\5.6\mingw49_32\mkspecs\modules\qt_lib_qml.pri C:\Qt\5.6\mingw49_32\mkspecs\modules\qt_lib_qml_private.pri C:\Qt\5.6\mingw49_32\mkspecs\modules\qt_lib_qmldevtools_private.pri C:\Qt\5.6\mingw49_32\mkspecs\modules\qt_lib_qmltest.pri C:\Qt\5.6\mingw49_32\mkspecs\modules\qt_lib_qmltest_private.pri C:\Qt\5.6\mingw49_32\mkspecs\modules\qt_lib_qtmultimediaquicktools_private.pri C:\Qt\5.6\mingw49_32\mkspecs\modules\qt_lib_quick.pri C:\Qt\5.6\mingw49_32\mkspecs\modules\qt_lib_quick_private.pri C:\Qt\5.6\mingw49_32\mkspecs\modules\qt_lib_quickparticles_private.pri C:\Qt\5.6\mingw49_32\mkspecs\modules\qt_lib_quickwidgets.pri C:\Qt\5.6\mingw49_32\mkspecs\modules\qt_lib_quickwidgets_private.pri C:\Qt\5.6\mingw49_32\mkspecs\modules\qt_lib_sensors.pri C:\Qt\5.6\mingw49_32\mkspecs\modules\qt_lib_sensors_private.pri C:\Qt\5.6\mingw49_32\mkspecs\modules\qt_lib_serialport.pri C:\Qt\5.6\mingw49_32\mkspecs\modules\qt_lib_serialport_private.pri C:\Qt\5.6\mingw49_32\mkspecs\modules\qt_lib_sql.pri C:\Qt\5.6\mingw49_32\mkspecs\modules\qt_lib_sql_private.pri C:\Qt\5.6\mingw49_32\mkspecs\modules\qt_lib_svg.pri C:\Qt\5.6\mingw49_32\mkspecs\modules\qt_lib_svg_private.pri C:\Qt\5.6\mingw49_32\mkspecs\modules\qt_lib_testlib.pri C:\Qt\5.6\mingw49_32\mkspecs\modules\qt_lib_testlib_private.pri C:\Qt\5.6\mingw49_32\mkspecs\modules\qt_lib_uiplugin.pri C:\Qt\5.6\mingw49_32\mkspecs\modules\qt_lib_uitools.pri C:\Qt\5.6\mingw49_32\mkspecs\modules\qt_lib_uitools_private.pri C:\Qt\5.6\mingw49_32\mkspecs\modules\qt_lib_webchannel.pri C:\Qt\5.6\mingw49_32\mkspecs\modules\qt_lib_webchannel_private.pri C:\Qt\5.6\mingw49_32\mkspecs\modules\qt_lib_websockets.pri C:\Qt\5.6\mingw49_32\mkspecs\modules\qt_lib_websockets_private.pri C:\Qt\5.6\mingw49_32\mkspecs\modules\qt_lib_widgets.pri C:\Qt\5.6\mingw49_32\mkspecs\modules\qt_lib_widgets_private.pri C:\Qt\5.6\mingw49_32\mkspecs\modules\qt_lib_winextras.pri C:\Qt\5.6\mingw49_32\mkspecs\modules\qt_lib_winextras_private.pri C:\Qt\5.6\mingw49_32\mkspecs\modules\qt_lib_xml.pri C:\Qt\5.6\mingw49_32\mkspecs\modules\qt_lib_xml_private.pri C:\Qt\5.6\mingw49_32\mkspecs\modules\qt_lib_xmlpatterns.pri C:\Qt\5.6\mingw49_32\mkspecs\modules\qt_lib_xmlpatterns_private.pri C:\Qt\5.6\mingw49_32\mkspecs\features\qt_functions.prf C:\Qt\5.6\mingw49_32\mkspecs\features\qt_config.prf C:\Qt\5.6\mingw49_32\mkspecs\features\win32\qt_config.prf C:\Qt\5.6\mingw49_32\mkspecs\win32-g++\qmake.conf C:\Qt\5.6\mingw49_32\mkspecs\features\spec_post.prf C:\Qt\5.6\mingw49_32\mkspecs\features\exclusive_builds.prf C:\Qt\5.6\mingw49_32\mkspecs\features\default_pre.prf C:\Qt\5.6\mingw49_32\mkspecs\features\win32\default_pre.prf C:\Qt\5.6\mingw49_32\mkspecs\features\resolve_config.prf C:\Qt\5.6\mingw49_32\mkspecs\features\exclusive_builds_post.prf C:\Qt\5.6\mingw49_32\mkspecs\features\default_post.prf C:\Qt\5.6\mingw49_32\mkspecs\features\build_pass.prf C:\Qt\5.6\mingw49_32\mkspecs\features\qml_debug.prf C:\Qt\5.6\mingw49_32\mkspecs\features\win32\rtti.prf C:\Qt\5.6\mingw49_32\mkspecs\features\precompile_header.prf C:\Qt\5.6\mingw49_32\mkspecs\features\warn_on.prf C:\Qt\5.6\mingw49_32\mkspecs\features\qt.prf C:\Qt\5.6\mingw49_32\mkspecs\features\resources.prf C:\Qt\5.6\mingw49_32\mkspecs\features\moc.prf C:\Qt\5.6\mingw49_32\mkspecs\features\win32\opengl.prf C:\Qt\5.6\mingw49_32\mkspecs\features\uic.prf C:\Qt\5.6\mingw49_32\mkspecs\features\file_copies.prf C:\Qt\5.6\mingw49_32\mkspecs\features\win32\windows.prf C:\Qt\5.6\mingw49_32\mkspecs\features\testcase_targets.prf C:\Qt\5.6\mingw49_32\mkspecs\features\exceptions.prf C:\Qt\5.6\mingw49_32\mkspecs\features\yacc.prf C:\Qt\5.6\mingw49_32\mkspecs\features\lex.prf Sketch_Tool.pro myres.qrc C:\Qt\5.6\mingw49_32\lib\qtmaind.prl C:\Qt\5.6\mingw49_32\lib\Qt5Widgetsd.prl C:\Qt\5.6\mingw49_32\lib\Qt5Guid.prl C:\Qt\5.6\mingw49_32\lib\Qt5Xmld.prl C:\Qt\5.6\mingw49_32\lib\Qt5Cored.prl  NO_PCH_SOURCES RESOURCES HEADERS SOURCES OBJECTIVE_SOURCES FORMS YACCSOURCES YACCSOURCES LEXSOURCES 
 
 clean: compiler_clean 
-	-$(DEL_FILE) debug\main.o debug\mainwindow.o debug\View.o debug\MyGLWidget.o debug\customdialog.o debug\console_input.o debug\shape.o debug\circle.o debug\qrc_myres.o debug\moc_mainwindow.o debug\moc_MyGLWidget.o debug\moc_customdialog.o debug\moc_console_input.o
+	-$(DEL_FILE) debug\main.o debug\mainwindow.o debug\View.o debug\MyGLWidget.o debug\customdialog.o debug\console_input.o debug\shape.o debug\circle.o debug\line.o debug\qrc_myres.o debug\moc_mainwindow.o debug\moc_MyGLWidget.o debug\moc_customdialog.o debug\moc_console_input.o
 
 distclean: clean 
 	-$(DEL_FILE) $(DESTDIR_TARGET)
@@ -684,15 +688,17 @@ debug/moc_MyGLWidget.cpp: C:/Qt/5.6/mingw49_32/include/QtWidgets/QOpenGLWidget \
 		../headers/glm/gtc/type_ptr.inl \
 		../headers/TextureImage.h \
 		C:/Qt/5.6/mingw49_32/include/QtGui/QOpenGLTexture \
-		sgraph/TransformNode.h \
-		sgraph/AbstractNode.h \
 		../headers/glm/gtc/matrix_transform.hpp \
 		../headers/glm/gtc/matrix_transform.inl \
+		sgraph/TransformNode.h \
+		sgraph/AbstractNode.h \
 		sgraph/LeafNode.h \
 		sgraph/GroupNode.h \
 		C:/Qt/5.6/mingw49_32/include/QtGui/QTabletEvent \
 		shape.h \
 		circle.h \
+		line.h \
+		C:/Qt/5.6/mingw49_32/include/QtCore/QPoint \
 		MyGLWidget.h
 	C:\Qt\5.6\mingw49_32\bin\moc.exe $(DEFINES) -D__GNUC__ -DWIN32 -IC:/Qt/5.6/mingw49_32/mkspecs/win32-g++ -I"C:/Users/Nate/Desktop/Sketch Tool/sketch_tool/SketchTool" -I"C:/Users/Nate/Desktop/Sketch Tool/sketch_tool/headers" -IC:/Qt/5.6/mingw49_32/include -IC:/Qt/5.6/mingw49_32/include/QtWidgets -IC:/Qt/5.6/mingw49_32/include/QtGui -IC:/Qt/5.6/mingw49_32/include/QtANGLE -IC:/Qt/5.6/mingw49_32/include/QtXml -IC:/Qt/5.6/mingw49_32/include/QtCore MyGLWidget.h -o debug\moc_MyGLWidget.cpp
 
@@ -1412,15 +1418,17 @@ ui_mainwindow.h: mainwindow.ui \
 		../headers/glm/gtc/type_ptr.inl \
 		../headers/TextureImage.h \
 		C:/Qt/5.6/mingw49_32/include/QtGui/QOpenGLTexture \
-		sgraph/TransformNode.h \
-		sgraph/AbstractNode.h \
 		../headers/glm/gtc/matrix_transform.hpp \
 		../headers/glm/gtc/matrix_transform.inl \
+		sgraph/TransformNode.h \
+		sgraph/AbstractNode.h \
 		sgraph/LeafNode.h \
 		sgraph/GroupNode.h \
 		C:/Qt/5.6/mingw49_32/include/QtGui/QTabletEvent \
 		shape.h \
 		circle.h \
+		line.h \
+		C:/Qt/5.6/mingw49_32/include/QtCore/QPoint \
 		C:/Qt/5.6/mingw49_32/include/QtCore/QObject \
 		C:/Qt/5.6/mingw49_32/include/QtCore/qobject.h \
 		C:/Qt/5.6/mingw49_32/include/QtCore/qobjectdefs.h \
@@ -2142,15 +2150,17 @@ debug/mainwindow.o: mainwindow.cpp mainwindow.h \
 		../headers/glm/gtc/type_ptr.inl \
 		../headers/TextureImage.h \
 		C:/Qt/5.6/mingw49_32/include/QtGui/QOpenGLTexture \
-		sgraph/TransformNode.h \
-		sgraph/AbstractNode.h \
 		../headers/glm/gtc/matrix_transform.hpp \
 		../headers/glm/gtc/matrix_transform.inl \
+		sgraph/TransformNode.h \
+		sgraph/AbstractNode.h \
 		sgraph/LeafNode.h \
 		sgraph/GroupNode.h \
 		C:/Qt/5.6/mingw49_32/include/QtGui/QTabletEvent \
 		shape.h \
 		circle.h \
+		line.h \
+		C:/Qt/5.6/mingw49_32/include/QtCore/QPoint \
 		MyGLWidget.h \
 		C:/Qt/5.6/mingw49_32/include/QtWidgets/QTextEdit \
 		C:/Qt/5.6/mingw49_32/include/QtWidgets/QMessageBox \
@@ -2363,10 +2373,10 @@ debug/View.o: View.cpp View.h \
 		C:/Qt/5.6/mingw49_32/include/QtGui/qpainterpath.h \
 		C:/Qt/5.6/mingw49_32/include/QtGui/QOpenGLTexture \
 		C:/Qt/5.6/mingw49_32/include/QtGui/qopengltexture.h \
-		sgraph/ScenegraphInfo.h \
-		sgraph/SceneXMLReader.h \
 		../headers/glm/gtc/matrix_transform.hpp \
 		../headers/glm/gtc/matrix_transform.inl \
+		sgraph/ScenegraphInfo.h \
+		sgraph/SceneXMLReader.h \
 		C:/Qt/5.6/mingw49_32/include/QtXml/QXmlDefaultHandler \
 		C:/Qt/5.6/mingw49_32/include/QtXml/qxml.h \
 		C:/Qt/5.6/mingw49_32/include/QtXml/qtxmlglobal.h \
@@ -2808,15 +2818,17 @@ debug/MyGLWidget.o: MyGLWidget.cpp MyGLWidget.h \
 		../headers/glm/gtc/type_ptr.inl \
 		../headers/TextureImage.h \
 		C:/Qt/5.6/mingw49_32/include/QtGui/QOpenGLTexture \
-		sgraph/TransformNode.h \
-		sgraph/AbstractNode.h \
 		../headers/glm/gtc/matrix_transform.hpp \
 		../headers/glm/gtc/matrix_transform.inl \
+		sgraph/TransformNode.h \
+		sgraph/AbstractNode.h \
 		sgraph/LeafNode.h \
 		sgraph/GroupNode.h \
 		C:/Qt/5.6/mingw49_32/include/QtGui/QTabletEvent \
 		shape.h \
 		circle.h \
+		line.h \
+		C:/Qt/5.6/mingw49_32/include/QtCore/QPoint \
 		C:/Qt/5.6/mingw49_32/include/QtGui/QScreen \
 		C:/Qt/5.6/mingw49_32/include/QtWidgets/QMessageBox \
 		C:/Qt/5.6/mingw49_32/include/QtWidgets/qmessagebox.h \
@@ -3475,15 +3487,17 @@ debug/console_input.o: console_input.cpp console_input.h \
 		../headers/glm/gtc/type_ptr.inl \
 		../headers/TextureImage.h \
 		C:/Qt/5.6/mingw49_32/include/QtGui/QOpenGLTexture \
-		sgraph/TransformNode.h \
-		sgraph/AbstractNode.h \
 		../headers/glm/gtc/matrix_transform.hpp \
 		../headers/glm/gtc/matrix_transform.inl \
+		sgraph/TransformNode.h \
+		sgraph/AbstractNode.h \
 		sgraph/LeafNode.h \
 		sgraph/GroupNode.h \
 		C:/Qt/5.6/mingw49_32/include/QtGui/QTabletEvent \
 		shape.h \
-		circle.h
+		circle.h \
+		line.h \
+		C:/Qt/5.6/mingw49_32/include/QtCore/QPoint
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\console_input.o console_input.cpp
 
 debug/shape.o: shape.cpp shape.h
@@ -3492,6 +3506,42 @@ debug/shape.o: shape.cpp shape.h
 debug/circle.o: circle.cpp circle.h \
 		shape.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\circle.o circle.cpp
+
+debug/line.o: line.cpp line.h \
+		C:/Qt/5.6/mingw49_32/include/QtCore/QPoint \
+		C:/Qt/5.6/mingw49_32/include/QtCore/qpoint.h \
+		C:/Qt/5.6/mingw49_32/include/QtCore/qnamespace.h \
+		C:/Qt/5.6/mingw49_32/include/QtCore/qglobal.h \
+		C:/Qt/5.6/mingw49_32/include/QtCore/qconfig.h \
+		C:/Qt/5.6/mingw49_32/include/QtCore/qfeatures.h \
+		C:/Qt/5.6/mingw49_32/include/QtCore/qsystemdetection.h \
+		C:/Qt/5.6/mingw49_32/include/QtCore/qprocessordetection.h \
+		C:/Qt/5.6/mingw49_32/include/QtCore/qcompilerdetection.h \
+		C:/Qt/5.6/mingw49_32/include/QtCore/qtypeinfo.h \
+		C:/Qt/5.6/mingw49_32/include/QtCore/qtypetraits.h \
+		C:/Qt/5.6/mingw49_32/include/QtCore/qisenum.h \
+		C:/Qt/5.6/mingw49_32/include/QtCore/qsysinfo.h \
+		C:/Qt/5.6/mingw49_32/include/QtCore/qlogging.h \
+		C:/Qt/5.6/mingw49_32/include/QtCore/qflags.h \
+		C:/Qt/5.6/mingw49_32/include/QtCore/qatomic.h \
+		C:/Qt/5.6/mingw49_32/include/QtCore/qbasicatomic.h \
+		C:/Qt/5.6/mingw49_32/include/QtCore/qatomic_bootstrap.h \
+		C:/Qt/5.6/mingw49_32/include/QtCore/qgenericatomic.h \
+		C:/Qt/5.6/mingw49_32/include/QtCore/qatomic_cxx11.h \
+		C:/Qt/5.6/mingw49_32/include/QtCore/qatomic_gcc.h \
+		C:/Qt/5.6/mingw49_32/include/QtCore/qatomic_msvc.h \
+		C:/Qt/5.6/mingw49_32/include/QtCore/qatomic_armv7.h \
+		C:/Qt/5.6/mingw49_32/include/QtCore/qatomic_armv6.h \
+		C:/Qt/5.6/mingw49_32/include/QtCore/qatomic_armv5.h \
+		C:/Qt/5.6/mingw49_32/include/QtCore/qatomic_ia64.h \
+		C:/Qt/5.6/mingw49_32/include/QtCore/qatomic_x86.h \
+		C:/Qt/5.6/mingw49_32/include/QtCore/qatomic_unix.h \
+		C:/Qt/5.6/mingw49_32/include/QtCore/qglobalstatic.h \
+		C:/Qt/5.6/mingw49_32/include/QtCore/qmutex.h \
+		C:/Qt/5.6/mingw49_32/include/QtCore/qnumeric.h \
+		C:/Qt/5.6/mingw49_32/include/QtCore/qversiontagging.h \
+		shape.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\line.o line.cpp
 
 debug/qrc_myres.o: debug/qrc_myres.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\qrc_myres.o debug\qrc_myres.cpp

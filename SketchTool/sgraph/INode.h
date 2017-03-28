@@ -205,10 +205,34 @@ namespace sgraph
      */
     virtual vector<util::Light> getLightsInView(stack<glm::mat4>& modelview)=0;
 
-    //Used to save each node to the passed XML file
+    /**
+     * @brief saveToXML
+     * Saves node to the output file
+     *
+     * @param output_file
+     * The output file to which this function saves the node
+     */
     virtual void saveToXML(fstream& output_file) = 0;
 
+    /**
+     * @brief getNodeType
+     * Used to get the node type of this particular node
+     *
+     * @return
+     * Returns the node type (Leaf, Transform, Group, etc) of this node
+     */
     virtual NodeType getNodeType() = 0;
+
+    /**
+     * @brief getTextureMatrix
+     * Returns the texture matrix of this node (if it has one)
+     *
+     * @return
+     * The texture matrix (if it exists) of this node
+     */
+    virtual glm::mat4& getTextureMatrix() = 0;
+
+    virtual void setTextureMatrix(const glm::mat4&) = 0;
   };
 }
 

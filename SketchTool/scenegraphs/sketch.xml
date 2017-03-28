@@ -1,78 +1,66 @@
 <scene>
-		<instance name="sphere" path="models/sphere"></instance>
-		<instance name="box" path="models/box-outside"></instance>
-		<instance name="cone" path="models/cone"></instance>
-		<instance name="cylinder" path="models/cylinder"></instance>
-		<image name="white" path="textures/white.png" />
-		<image name="earth" path="textures/earthmap.png" />
-		<image name="dice" path="textures/die.png" />
-		<image name="checkerboard" path="textures/checkerboard.png" />
-		<image name="checkerboard-box" path="textures/checkerboard-box.png" />
-		<image name="ground" path="textures/ground-grid.png" />
-		<image name="red" path="textures/new_tex.png" />
-		
-		<light>
-				<ambient>0.5 0.5 0.5</ambient>
-				<diffuse>0.8 0.8 0.8</diffuse>
-				<specular>0.5 0.5 0.5</specular>
-				<direction>1 0 0 </direction>
-				<spotangle>180</spotangle>
-				<spotdirection>1 0 0 </spotdirection>
-		</light>
-		
-		<light>
-				<ambient>0.5 0.5 0.5</ambient>
-				<diffuse>0.8 0.8 0.8</diffuse>
-				<specular>0.5 0.5 0.5</specular>
-				<direction>-1 0 0 </direction>
-				<spotangle>180</spotangle>
-				<spotdirection>-1 0 0 </spotdirection>
-		</light>
-		
-		<light>
-				<ambient>0.1 0.1 0.1</ambient>
-				<diffuse>0.8 0.8 0.8</diffuse>
-				<specular>0.5 0.5 0.5</specular>
-				<position>0 10 -60 </position>
-				<spotangle>180</spotangle>
-				<spotdirection>0 0 1 </spotdirection>
-		</light>
-		
-		<light>
-				<ambient>0.1 0.1 0.1</ambient>
-				<diffuse>0.8 0.8 0.8</diffuse>
-				<specular>0.5 0.5 0.5</specular>
-				<position>0 10 60 </position>
-				<spotangle>180</spotangle>
-				<spotdirection>0 0 -1 </spotdirection>
-		</light>
-
-		<!--<light>
-				<ambient>0.1 0.1 0.1</ambient>
-				<diffuse>0.8 0.8 0.8</diffuse>
-				<specular>0.5 0.5 0.5</specular>
-				<position>0 10 60 </position>
-				<spotangle>180</spotangle>
-				<spotdirection>0 -1 0 </spotdirection>
-		</light>
-
-		<light>
-				<ambient>0.1 0.1 0.1</ambient>
-				<diffuse>0.8 0.8 0.8</diffuse>
-				<specular>0.5 0.5 0.5</specular>
-				<position>0 60 0 </position>
-				<spotangle>180</spotangle>
-				<spotdirection>0 -1 0 </spotdirection>
-		</light>
-		
-		<light>
-				<ambient>0.1 0.1 0.1</ambient>
-				<diffuse>0.8 0.8 0.8</diffuse>
-				<specular>0.5 0.5 0.5</specular>
-				<position>0 1 0 </position>
-				<spotangle>180</spotangle>
-				<spotdirection>0 -1 0 </spotdirection>
-		</light> -->
-		
-		<!-- append -->
+	<instance name="box" path="models/box-outside" ></instance>
+	<instance name="cone" path="models/cone" ></instance>
+	<instance name="cylinder" path="models/cylinder" ></instance>
+	<instance name="sphere" path="models/sphere" ></instance>
+	<image name="checkerboard" path="textures/checkerboard.png" />
+	<image name="checkerboard-box" path="textures/checkerboard-box.png" />
+	<image name="dice" path="textures/die.png" />
+	<image name="earth" path="textures/earthmap.png" />
+	<image name="ground" path="textures/ground.png" />
+	<image name="red" path="textures/new_tex.png" />
+	<image name="white" path="textures/white.png" />
+	<light>
+		<ambient> 0.500000 0.500000 0.500000 </ambient>
+		<diffuse> 0.800000 0.800000 0.800000 </diffuse>
+		<specular> 0.500000 0.500000 0.500000 </specular>
+		<position> 0.768515 0.122332 0.628029 </position>
+		<spotangle> 180.000000 </spotangle>
+		<spotdirection> 1.000000 0.000000 0.000000 </spotdirection>
+	</light>
+	<light>
+		<ambient> 0.500000 0.500000 0.500000 </ambient>
+		<diffuse> 0.800000 0.800000 0.800000 </diffuse>
+		<specular> 0.500000 0.500000 0.500000 </specular>
+		<position> -0.768515 -0.122332 -0.628029 </position>
+		<spotangle> 180.000000 </spotangle>
+		<spotdirection> -1.000000 0.000000 0.000000 </spotdirection>
+	</light>
+	<light>
+		<ambient> 0.100000 0.100000 0.100000 </ambient>
+		<diffuse> 0.800000 0.800000 0.800000 </diffuse>
+		<specular> 0.500000 0.500000 0.500000 </specular>
+		<position> 36.379982 -6.625374 -43.227406 </position>
+		<spotangle> 180.000000 </spotangle>
+		<spotdirection> 0.000000 0.000000 1.000000 </spotdirection>
+	</light>
+	<light>
+		<ambient> 0.100000 0.100000 0.100000 </ambient>
+		<diffuse> 0.800000 0.800000 0.800000 </diffuse>
+		<specular> 0.500000 0.500000 0.500000 </specular>
+		<position> -39.586048 27.924908 43.001781 </position>
+		<spotangle> 180.000000 </spotangle>
+		<spotdirection> 0.000000 0.000000 -1.000000 </spotdirection>
+	</light>
+	<group name="Root of scene graph">
+		<group name="group_7">
+			<transform name="transform_7">
+				<set>
+				<translate> 0.000000 -5.000000 0.000000</translate>
+				<rotate> 0.000000 1.000000 0.000000 0.000000</rotate>
+				<rotate> 0.000000 0.000000 1.000000 0.000000</rotate>
+				<rotate> 0.000000 0.000000 0.000000 1.000000</rotate>
+				<scale> 1000.000000 1.000000 1000.000000</scale>
+				</set>
+				<object instanceof="box" name="leaf_7" texture= "ground">
+					<material>
+						<ambient>0.400000 0.400000 0.4</ambient>
+						<diffuse>0.800000 0.800000 0.8</diffuse>
+						<specular>0.800000 0.800000 0.8</specular>
+						<shininess>1.000000</shininess>
+					</material>
+				</object>
+			</transform>
+		</group>
+	</group>
 </scene>

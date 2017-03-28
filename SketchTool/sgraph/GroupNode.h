@@ -84,6 +84,17 @@ namespace sgraph
       return answer;
     }
 
+    glm::mat4& getTextureMatrix() throw(runtime_error)
+    {
+        throw(runtime_error("Not a leaf node -- cannot get texture matrix"));
+    }
+
+    void setTextureMatrix(const glm::mat4 &mat) throw(runtime_error)
+    {
+        throw(runtime_error("Not a leaf node -- cannot set texture matix"));
+
+    }
+
     /**
      * @brief setScenegraph
      * Sets the reference to the scenegraph object for this node, and then
