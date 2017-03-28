@@ -8,6 +8,7 @@ INPUT(
 ./debug\shape.o
 ./debug\circle.o
 ./debug\line.o
+./debug\mygraphicsviewwidget.o
 ./debug\qrc_myres.o
 ./debug\moc_mainwindow.o
 ./debug\moc_MyGLWidget.o

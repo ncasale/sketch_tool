@@ -20,7 +20,8 @@ SOURCES += main.cpp\
     console_input.cpp \
     shape.cpp \
     circle.cpp \
-    line.cpp
+    line.cpp \
+    mygraphicsviewwidget.cpp
 
 INCLUDEPATH += ../headers
 
@@ -43,7 +44,9 @@ HEADERS  += mainwindow.h \
     console_input.h \
     shape.h \
     circle.h \
-    line.h
+    line.h \
+    node_item.h \
+    mygraphicsviewwidget.h
 
 FORMS    += mainwindow.ui
 

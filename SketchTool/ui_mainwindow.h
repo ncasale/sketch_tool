@@ -26,6 +26,7 @@
 #include <QtWidgets/QWidget>
 #include <console_input.h>
 #include <myglwidget.h>
+#include <mygraphicsviewwidget.h>
 
 QT_BEGIN_NAMESPACE
 
@@ -44,7 +45,7 @@ public:
     QHBoxLayout *horizontalLayout;
     QSplitter *splitter_2;
     MyGLWidget *gl_widget;
-    QWidget *widget_3;
+    MyGraphicsViewWidget *widget_3;
     QPlainTextEdit *console_output;
     ConsoleInput *console_input;
     QMenuBar *menuBar;
@@ -115,7 +116,7 @@ public:
         sizePolicy2.setHeightForWidth(gl_widget->sizePolicy().hasHeightForWidth());
         gl_widget->setSizePolicy(sizePolicy2);
         splitter_2->addWidget(gl_widget);
-        widget_3 = new QWidget(splitter_2);
+        widget_3 = new MyGraphicsViewWidget(splitter_2);
         widget_3->setObjectName(QStringLiteral("widget_3"));
         QSizePolicy sizePolicy3(QSizePolicy::Preferred, QSizePolicy::Preferred);
         sizePolicy3.setHorizontalStretch(1);

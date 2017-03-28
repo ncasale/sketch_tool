@@ -8,6 +8,7 @@ INPUT(
 ./release\shape.o
 ./release\circle.o
 ./release\line.o
+./release\mygraphicsviewwidget.o
 ./release\qrc_myres.o
 ./release\moc_mainwindow.o
 ./release\moc_MyGLWidget.o
