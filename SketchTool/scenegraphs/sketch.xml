@@ -9,43 +9,70 @@
 		<image name="checkerboard" path="textures/checkerboard.png" />
 		<image name="checkerboard-box" path="textures/checkerboard-box.png" />
 		<image name="ground" path="textures/ground-grid.png" />
+		<image name="red" path="textures/new_tex.png" />
 		
 		<light>
-				<ambient>0.8 0.8 0.8</ambient>
+				<ambient>0.5 0.5 0.5</ambient>
 				<diffuse>0.8 0.8 0.8</diffuse>
-				<specular>0.8 0.8 0.8</specular>
-				<position>-60 10 0 </position>
+				<specular>0.5 0.5 0.5</specular>
+				<direction>1 0 0 </direction>
+				<spotangle>180</spotangle>
+				<spotdirection>1 0 0 </spotdirection>
+		</light>
+		
+		<light>
+				<ambient>0.5 0.5 0.5</ambient>
+				<diffuse>0.8 0.8 0.8</diffuse>
+				<specular>0.5 0.5 0.5</specular>
+				<direction>-1 0 0 </direction>
+				<spotangle>180</spotangle>
+				<spotdirection>-1 0 0 </spotdirection>
+		</light>
+		
+		<light>
+				<ambient>0.1 0.1 0.1</ambient>
+				<diffuse>0.8 0.8 0.8</diffuse>
+				<specular>0.5 0.5 0.5</specular>
+				<position>0 10 -60 </position>
+				<spotangle>180</spotangle>
+				<spotdirection>0 0 1 </spotdirection>
+		</light>
+		
+		<light>
+				<ambient>0.1 0.1 0.1</ambient>
+				<diffuse>0.8 0.8 0.8</diffuse>
+				<specular>0.5 0.5 0.5</specular>
+				<position>0 10 60 </position>
+				<spotangle>180</spotangle>
+				<spotdirection>0 0 -1 </spotdirection>
+		</light>
+
+		<!--<light>
+				<ambient>0.1 0.1 0.1</ambient>
+				<diffuse>0.8 0.8 0.8</diffuse>
+				<specular>0.5 0.5 0.5</specular>
+				<position>0 10 60 </position>
+				<spotangle>180</spotangle>
+				<spotdirection>0 -1 0 </spotdirection>
+		</light>
+
+		<light>
+				<ambient>0.1 0.1 0.1</ambient>
+				<diffuse>0.8 0.8 0.8</diffuse>
+				<specular>0.5 0.5 0.5</specular>
+				<position>0 60 0 </position>
 				<spotangle>180</spotangle>
 				<spotdirection>0 -1 0 </spotdirection>
 		</light>
 		
 		<light>
-				<ambient>0.8 0.8 0.8</ambient>
+				<ambient>0.1 0.1 0.1</ambient>
 				<diffuse>0.8 0.8 0.8</diffuse>
-				<specular>0.8 0.8 0.8</specular>
-				<position>60 -10 0 </position>
+				<specular>0.5 0.5 0.5</specular>
+				<position>0 1 0 </position>
 				<spotangle>180</spotangle>
 				<spotdirection>0 -1 0 </spotdirection>
-		</light>
-		
-		<light>
-				<ambient>0.8 0.8 0.8</ambient>
-				<diffuse>0.8 0.8 0.8</diffuse>
-				<specular>0.8 0.8 0.8</specular>
-				<position>0 -100 0 </position>
-				<spotangle>180</spotangle>
-				<spotdirection>0 -1 0 </spotdirection>
-		</light>
-		
-		<light>
-				<ambient>0.8 0.8 0.8</ambient>
-				<diffuse>0.8 0.8 0.8</diffuse>
-				<specular>0.8 0.8 0.8</specular>
-				<position>0 -00 0 </position>
-				<spotangle>180</spotangle>
-				<spotdirection>0 -1 0 </spotdirection>
-		</light>
-		
+		</light> -->
 		
 		<!-- append -->
 </scene>

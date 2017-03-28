@@ -69,7 +69,7 @@ void View::init(util::OpenGLFunctions& gl) throw(runtime_error)
  */
 void View::draw(util::OpenGLFunctions& gl)
 {
-  gl.glClearColor(0,1,0,1);
+  gl.glClearColor(1,1,1,1);
   gl.glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   gl.glEnable(GL_DEPTH_TEST);
 
@@ -254,9 +254,9 @@ void View::addToScenegraph(string shape, vector<float> shape_params)
     if(shape == "ground")
     {
         leaf_node = new sgraph::LeafNode("box", scenegraph, "");
-        leaf_node->setTextureName("checkerboard-box");
+        leaf_node->setTextureName("checkerboard");
         glm::mat4 tex_mat = glm::mat4(1.0f);
-        tex_mat = glm::scale(glm::mat4(1.0f), glm::vec3(ground_width, ground_height, ground_depth));
+        tex_mat *= glm::scale(glm::mat4(1.0f), glm::vec3(ground_width/8.0f, ground_depth/8.0f, ground_height));
         leaf_node->setTextureMatrix(tex_mat);
     }
     else
@@ -266,10 +266,10 @@ void View::addToScenegraph(string shape, vector<float> shape_params)
 
     //Material for leaf
     util::Material mat;
-    mat.setAmbient(0.8f, 0.8f, 0.8f);
+    mat.setAmbient(0.4f, 0.4f, 0.4f);
     mat.setDiffuse(0.8f, 0.8f, 0.8f);
     mat.setSpecular(0.8f, 0.8f, 0.8f);
-    mat.setShininess(10.0f);
+    mat.setShininess(1.0f);
     //Apply material
     leaf_node->setMaterial(mat);
     //Make leaf node child of transform node

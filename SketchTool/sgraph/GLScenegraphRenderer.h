@@ -16,6 +16,7 @@
 #include <stack>
 #include <cmath>
 #include <fstream>
+#include "glm/gtc/matrix_transform.hpp"
 using namespace std;
 
 namespace sgraph
@@ -218,7 +219,7 @@ public:
 
         loc = shaderLocations.getLocation("numLights");
         if (loc >= 0) {
-          gl->glUniform1i(loc, lights.size());
+          gl->glUniform1i(loc, 2);//lights.size());
         } else {
           throw runtime_error("No shader variable for \" numLights \"");
         }
@@ -364,6 +365,8 @@ public:
                                   1,
                                   false,glm::value_ptr(normalmatrix));
 
+            //glm::mat4 t = glm::mat4(1.0f);
+            //t *= glm::scale(glm::mat4(1.0f), glm::vec3(1.1f, 1.1f, 1.1f));
             loc = shaderLocations.getLocation("texturematrix");
             if (loc<0)
                 throw runtime_error("No shader variable for \" texturematrix \"");
@@ -377,9 +380,9 @@ public:
             else if (textures.count("checkerboard")>0 && textures.count("checkerboard-box")>0)
             {
                 if(name != "box")
-                    textures["checkerboard"]->getTexture()->bind();
+                    textures["red"]->getTexture()->bind();
                 else
-                    textures["checkerboard-box"]->getTexture()->bind();
+                    textures["red"]->getTexture()->bind();
             }
 
             meshRenderers[name]->draw(*glContext);

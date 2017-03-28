@@ -75,7 +75,8 @@ void main()
             specular = material.specular * light[i].specular * pow(rDotV,material.shininess);
         else
             specular = vec3(0,0,0);
-        fColor = fColor + vec4(ambient+diffuse+specular,1.0);
+        fColor = fColor + vec4(ambient+diffuse+0*specular,1.0);
+        //fColor = fColor + vec4(0*ambient+0*diffuse+0*specular,1.0) + vec4(0.5*(normalView.xyz+1),0);
     }
     fColor = fColor * texture(image,fTexCoord.st);
     fColor = clamp(fColor, 0, 1);

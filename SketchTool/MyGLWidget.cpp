@@ -162,6 +162,12 @@ void MyGLWidget::mousePressEvent(QMouseEvent *e)
     else
     {
         //If control not pressed, want to begin our drawing detection
+        //This is a draw event
+        draw_started = true;
+        QPointF mouse_pos;
+        mouse_pos.setX(e->x());
+        mouse_pos.setY(e->y());
+        mouse_path.push_back(mouse_pos);
         return;
     }
 
@@ -184,6 +190,14 @@ void MyGLWidget::mouseMoveEvent(QMouseEvent *e)
         this->update();
     }
 
+    if(draw_started)
+    {
+        QPointF mouse_pos;
+        mouse_pos.setX(e->x());
+        mouse_pos.setY(e->y());
+        mouse_path.push_back(mouse_pos);
+    }
+
 }
 
 /**
@@ -196,8 +210,53 @@ void MyGLWidget::mouseMoveEvent(QMouseEvent *e)
  */
 void MyGLWidget::mouseReleaseEvent(QMouseEvent *e)
 {
-    isDragged = false;
-    view.mouseReleased(e->x(),e->y());
+    if(isDragged)
+    {
+        isDragged = false;
+        view.mouseReleased(e->x(),e->y());
+    }
+    else
+    {
+        draw_started = false;
+        //Do shape recognition
+        Circle circle = detectCircle();
+        DrawnShape shape_to_draw = determineShape(circle.get_error(), 9999999999.0f);
+
+
+        //Can implement determineShape so that it returns a pair denoting
+        //the shape and the center for drawing
+        if(shape_to_draw == CIRCLE)
+        {
+
+            //TODO: Create/Call circle draw function
+            //Call function to draw a circle of the correct radius starting
+            //at the center returned
+            float radius_scaling = 100.0f;
+            //Do some math to figure out where to place sphere on screen
+            QPoint gl_geo = this->geometry().center();
+            int geo_center_x = gl_geo.x();
+            int geo_center_y = gl_geo.y();
+            float horiz_unit = (float)geo_center_x / -8.0f;
+            float vert_unit = (float)geo_center_y / -6.0f;
+
+            float circle_center_x = (circle.get_center_x() - (float)geo_center_x) / horiz_unit;
+            float circle_center_y = (circle.get_center_y() - (float)geo_center_y) / vert_unit;
+            float circle_rad = circle.get_radius() / radius_scaling;
+            if(circle.get_radius() > 0.1f)
+            {
+                vector<float> params = {circle_center_x, circle_center_y, circle_rad};
+                view.addToScenegraph("sphere", params);
+            }
+
+
+        }
+        else if(shape_to_draw == LINE)
+        {
+            //TODO: Create/Call line drawing function
+        }
+    }
+
+
 }
 
 /**
@@ -503,6 +562,11 @@ void MyGLWidget::tabletEvent(QTabletEvent *e)
             //TODO: Create/Call circle draw function
             //Call function to draw a circle of the correct radius starting
             //at the center returned
+            if(circle.get_radius() > 0.1f)
+            {
+                vector<float> params = {circle.get_center_x(), circle.get_center_y(), circle.get_radius()};
+                view.addToScenegraph("sphere", params);
+            }
 
 
         }
@@ -547,6 +611,9 @@ DrawnShape MyGLWidget::determineShape(float circle_error, float line_error)
         ret_shape = LINE;
         lowest_error = line_error;
     }
+
+    //Clear mouse path
+    mouse_path.clear();
 
     return ret_shape;
 }
@@ -618,8 +685,8 @@ Circle MyGLWidget::detectCircle()
     float B = det_b / det;
     float C = det_c / det;
 
-    float center_x = A / -2.0f;
-    float center_y = B / -2.0f;
+    float center_x = A / 2.0f;
+    float center_y = B / 2.0f;
     float radius = sqrt(C + pow(center_x, 2.0f) + pow(center_y, 2.0f));
 
     //Will now compute cumulative error

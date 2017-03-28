@@ -160,19 +160,19 @@ string ConsoleInput::process_command(QString& command_qstring)
     {
         //Use to test the circle tracing functionality -- unit circle values
         QPointF p1;
-        p1.setX(1.0);
+        p1.setX(1.0+1.0);
         p1.setY(0.0);
         QPointF p2;
-        p2.setX(sqrt(3.0)/2.0);
+        p2.setX(sqrt(3.0)/2.0 + 1.0);
         p2.setY(0.5);
         QPointF p3;
-        p3.setX(sqrt(2.0)/2.0);
+        p3.setX(sqrt(2.0)/2.0 + 1.0);
         p3.setY(sqrt(2.0)/2.0);
         QPointF p4;
-        p4.setX(0.5);
+        p4.setX(0.5 + 1.0);
         p4.setY(sqrt(3.0)/2.0);
         QPointF p5;
-        p5.setX(0.0);
+        p5.setX(0.0 + 1.0);
         p5.setY(1.0);
 
 
