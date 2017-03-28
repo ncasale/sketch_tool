@@ -87,12 +87,14 @@ class MyGLWidget : public QOpenGLWidget
         DrawnShape determineShape(float, float);
         Circle detectCircle();
 
+        //Draw a line while tracing shape
+        void drawLineTo(QPainter *);
+
 
     protected:
         //OpenGL Functions
         void initializeGL();
         void paintGL();
-        //void paintOverGL();
         void resizeGL(int w,int h);
 
         //Mouse/Keyboard Events
@@ -159,6 +161,17 @@ private:
         //Used to track tablet movement
         bool draw_started = false;
         vector<QPointF> mouse_path;
+
+        //Pen parameters for drawing
+        bool drawing_line = false;
+        int pen_width = 1;
+        QColor pen_color = Qt::red;
+        QPointF last_pen_point;
+        QPointF curr_pen_point;
+        QPoint line_start;
+        QImage pen_image;
+
+
 };
 
 

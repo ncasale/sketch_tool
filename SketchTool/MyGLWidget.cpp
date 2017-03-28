@@ -127,7 +127,7 @@ void MyGLWidget::paintGL()
 
     //display frame rate as text
     QPainter painter(this);
-   // painter.fillRect(0, 0, width(), height(), Qt::white);
+    //painter.fillRect(0, 0, width(), height(), Qt::white);
     painter.setPen(QColor(255, 0, 0));
     painter.setFont(QFont("Sans", 12));
     QStaticText text(QString("Frame rate: %1 fps").arg(framerate));
@@ -140,7 +140,16 @@ void MyGLWidget::paintGL()
     painter.drawStaticText(5,80,obj_text);
 
 
+    //Draw line if needed
+    if(drawing_line)
+    {
+
+        drawLineTo(&painter);
+
+    }
 }
+
+
 
 /**
  * @brief MyGLWidget::mousePressEvent
@@ -168,6 +177,10 @@ void MyGLWidget::mousePressEvent(QMouseEvent *e)
         mouse_pos.setX(e->x());
         mouse_pos.setY(e->y());
         mouse_path.push_back(mouse_pos);
+
+        //Want to draw a line starting at this point
+        drawing_line = true;
+        last_pen_point = e->pos();
         return;
     }
 
@@ -192,10 +205,15 @@ void MyGLWidget::mouseMoveEvent(QMouseEvent *e)
 
     if(draw_started)
     {
+        //Get mouse position for mouse_path
         QPointF mouse_pos;
         mouse_pos.setX(e->x());
         mouse_pos.setY(e->y());
         mouse_path.push_back(mouse_pos);
+
+        //Draw line
+        drawing_line = true;
+        curr_pen_point = e->pos();
     }
 
 }
@@ -218,6 +236,8 @@ void MyGLWidget::mouseReleaseEvent(QMouseEvent *e)
     else
     {
         draw_started = false;
+        curr_pen_point = e->pos();
+        drawing_line = false;
         //Do shape recognition
         Circle circle = detectCircle();
         DrawnShape shape_to_draw = determineShape(circle.get_error(), 9999999999.0f);
@@ -1088,5 +1108,28 @@ void MyGLWidget::parametrizedScale(float x, float y, float z)
 
     vector<float> data = {x, y, z};
     view.addTransformNode(selected_node_name, View::SCALE, data);
+
+}
+
+void MyGLWidget::drawLineTo(QPainter *painter)
+{
+    //Iterate through tracked mouse positions and draw line between them
+
+    painter->setPen(QPen(pen_color, pen_width, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
+    //Draw line on image
+    for(int i = 0; i < mouse_path.size(); i++)
+    {
+        if(i < mouse_path.size() - 1)
+        {
+
+            last_pen_point = mouse_path[i];
+            curr_pen_point = mouse_path[i+1];
+            painter->drawLine(last_pen_point, curr_pen_point);
+            //Only update area around line
+            //int rad = (pen_width/2) + 2;
+            //update(QRect(last_pen_point, curr_pen_point).normalized().adjusted(-rad, -rad, +rad, +rad));
+        }
+
+    }
 
 }
