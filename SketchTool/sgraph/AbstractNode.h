@@ -40,6 +40,12 @@ namespace sgraph
        */
     vector<util::Light> lights;
 
+    //Used for drawing scenegraph pane
+    float sgraph_pane_x = 0.0f;
+    float sgraph_pane_y = 0.0f;
+    float sgraph_pane_x_increment = 40.0f;
+    float sgraph_pane_y_increment = 40.0f;
+
     AbstractNode(sgraph::Scenegraph *graph,const string& name)
     {
       this->parent = NULL;
@@ -260,6 +266,25 @@ namespace sgraph
           listLights.push_back(lnew);
         }
       return listLights;
+    }
+
+    /**
+     * @brief drawScenegraphPane
+     * @param items
+     */
+    void drawScenegraphPane(vector<SGraphItemInfo> &items) throw(runtime_error)
+    {
+        throw runtime_error("Can't draw an abstract node in pane.");
+    }
+
+    void changeNodeTexture(const string& texture_name) throw(runtime_error)
+    {
+        throw runtime_error("Abstract node has no texture to change.");
+    }
+
+    void revertNodeTexture() throw(runtime_error)
+    {
+        throw runtime_error("Abstract node has no texture to revert.");
     }
   };
 }

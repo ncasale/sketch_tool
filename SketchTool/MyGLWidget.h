@@ -61,6 +61,8 @@ class MyGLWidget : public QOpenGLWidget
 
         //Getters
         float getFrameRate() {return framerate;}
+        sgraph::Scenegraph* getScenegraph();
+        bool isNodeSelected(){return node_selected;}
 
         //Actions
         void saveFile();
@@ -74,7 +76,7 @@ class MyGLWidget : public QOpenGLWidget
         void set_z_axis();
 
         //Object selection
-        void selectObject();
+        void selectNode(string node);
 
         //Transformations
         void translationDialog();
@@ -92,6 +94,15 @@ class MyGLWidget : public QOpenGLWidget
         //Draw a line while tracing shape
         void drawLineTo(QPainter *);
 
+        //Camera adjustment
+        void adjustCameraToSelectedNode();
+        void revertCamera();
+
+        //Transformation States
+        void setTranslationState();
+        void setRotationState();
+        void setScaleState();
+        void setNoTransformationState();
 
     protected:
         //OpenGL Functions
@@ -172,6 +183,11 @@ private:
         QPointF curr_pen_point;
         QPoint line_start;
         QImage pen_image;
+
+        //Transformation states
+        bool translate_state = false;
+        bool rotate_state = false;
+        bool scale_state = false;
 
 
 };

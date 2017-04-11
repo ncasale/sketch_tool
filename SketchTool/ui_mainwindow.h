@@ -13,6 +13,7 @@
 #include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QButtonGroup>
+#include <QtWidgets/QGraphicsView>
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QMainWindow>
@@ -38,6 +39,7 @@ public:
     QAction *actionClear;
     QAction *actionOpen;
     QAction *actionSave_As;
+    QAction *actionGenerate_Scenegraph;
     QWidget *centralWidget;
     QVBoxLayout *verticalLayout;
     QSplitter *splitter;
@@ -45,15 +47,17 @@ public:
     QHBoxLayout *horizontalLayout;
     QSplitter *splitter_2;
     MyGLWidget *gl_widget;
-    MyGraphicsViewWidget *widget_3;
+    MyGraphicsViewWidget *scenegraphWidget;
+    QHBoxLayout *horizontalLayout_2;
+    QGraphicsView *scenegraphView;
     QPlainTextEdit *console_output;
     ConsoleInput *console_input;
     QMenuBar *menuBar;
     QMenu *menuFile;
+    QMenu *menuScenegraph;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
     QToolBar *toolBar;
-    QToolBar *toolBar_2;
 
     void setupUi(QMainWindow *MainWindow)
     {
@@ -80,6 +84,11 @@ public:
         QIcon icon2;
         icon2.addFile(QStringLiteral(":/Images/toolbar_icons/save_as.png"), QSize(), QIcon::Normal, QIcon::Off);
         actionSave_As->setIcon(icon2);
+        actionGenerate_Scenegraph = new QAction(MainWindow);
+        actionGenerate_Scenegraph->setObjectName(QStringLiteral("actionGenerate_Scenegraph"));
+        QIcon icon3;
+        icon3.addFile(QStringLiteral(":/Images/toolbar_icons/graph.png"), QSize(), QIcon::Normal, QIcon::Off);
+        actionGenerate_Scenegraph->setIcon(icon3);
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         verticalLayout = new QVBoxLayout(centralWidget);
@@ -111,19 +120,29 @@ public:
         gl_widget = new MyGLWidget(splitter_2);
         gl_widget->setObjectName(QStringLiteral("gl_widget"));
         QSizePolicy sizePolicy2(QSizePolicy::Preferred, QSizePolicy::Preferred);
-        sizePolicy2.setHorizontalStretch(2);
+        sizePolicy2.setHorizontalStretch(4);
         sizePolicy2.setVerticalStretch(0);
         sizePolicy2.setHeightForWidth(gl_widget->sizePolicy().hasHeightForWidth());
         gl_widget->setSizePolicy(sizePolicy2);
         splitter_2->addWidget(gl_widget);
-        widget_3 = new MyGraphicsViewWidget(splitter_2);
-        widget_3->setObjectName(QStringLiteral("widget_3"));
-        QSizePolicy sizePolicy3(QSizePolicy::Preferred, QSizePolicy::Preferred);
+        scenegraphWidget = new MyGraphicsViewWidget(splitter_2);
+        scenegraphWidget->setObjectName(QStringLiteral("scenegraphWidget"));
+        QSizePolicy sizePolicy3(QSizePolicy::Expanding, QSizePolicy::Expanding);
         sizePolicy3.setHorizontalStretch(1);
         sizePolicy3.setVerticalStretch(0);
-        sizePolicy3.setHeightForWidth(widget_3->sizePolicy().hasHeightForWidth());
-        widget_3->setSizePolicy(sizePolicy3);
-        splitter_2->addWidget(widget_3);
+        sizePolicy3.setHeightForWidth(scenegraphWidget->sizePolicy().hasHeightForWidth());
+        scenegraphWidget->setSizePolicy(sizePolicy3);
+        horizontalLayout_2 = new QHBoxLayout(scenegraphWidget);
+        horizontalLayout_2->setSpacing(6);
+        horizontalLayout_2->setContentsMargins(11, 11, 11, 11);
+        horizontalLayout_2->setObjectName(QStringLiteral("horizontalLayout_2"));
+        scenegraphView = new QGraphicsView(scenegraphWidget);
+        scenegraphView->setObjectName(QStringLiteral("scenegraphView"));
+        scenegraphView->setSizeAdjustPolicy(QAbstractScrollArea::AdjustIgnored);
+
+        horizontalLayout_2->addWidget(scenegraphView);
+
+        splitter_2->addWidget(scenegraphWidget);
 
         horizontalLayout->addWidget(splitter_2);
 
@@ -155,6 +174,8 @@ public:
         menuFile = new QMenu(menuBar);
         menuFile->setObjectName(QStringLiteral("menuFile"));
         menuFile->setFocusPolicy(Qt::StrongFocus);
+        menuScenegraph = new QMenu(menuBar);
+        menuScenegraph->setObjectName(QStringLiteral("menuScenegraph"));
         MainWindow->setMenuBar(menuBar);
         mainToolBar = new QToolBar(MainWindow);
         mainToolBar->setObjectName(QStringLiteral("mainToolBar"));
@@ -165,19 +186,20 @@ public:
         toolBar = new QToolBar(MainWindow);
         toolBar->setObjectName(QStringLiteral("toolBar"));
         MainWindow->addToolBar(Qt::TopToolBarArea, toolBar);
-        toolBar_2 = new QToolBar(MainWindow);
-        toolBar_2->setObjectName(QStringLiteral("toolBar_2"));
-        MainWindow->addToolBar(Qt::TopToolBarArea, toolBar_2);
 
         menuBar->addAction(menuFile->menuAction());
+        menuBar->addAction(menuScenegraph->menuAction());
         menuFile->addAction(actionSave);
         menuFile->addAction(actionSave_As);
         menuFile->addAction(actionOpen);
         menuFile->addSeparator();
         menuFile->addAction(actionClear);
+        menuScenegraph->addAction(actionGenerate_Scenegraph);
         mainToolBar->addAction(actionSave);
         mainToolBar->addAction(actionSave_As);
         mainToolBar->addAction(actionOpen);
+        mainToolBar->addAction(actionGenerate_Scenegraph);
+        mainToolBar->addSeparator();
 
         retranslateUi(MainWindow);
 
@@ -192,9 +214,10 @@ public:
         actionClear->setText(QApplication::translate("MainWindow", "Clear", 0));
         actionOpen->setText(QApplication::translate("MainWindow", "Open", 0));
         actionSave_As->setText(QApplication::translate("MainWindow", "Save As", 0));
+        actionGenerate_Scenegraph->setText(QApplication::translate("MainWindow", "Generate Scenegraph", 0));
         menuFile->setTitle(QApplication::translate("MainWindow", "File", 0));
+        menuScenegraph->setTitle(QApplication::translate("MainWindow", "Scenegraph", 0));
         toolBar->setWindowTitle(QApplication::translate("MainWindow", "toolBar", 0));
-        toolBar_2->setWindowTitle(QApplication::translate("MainWindow", "toolBar_2", 0));
     } // retranslateUi
 
 };

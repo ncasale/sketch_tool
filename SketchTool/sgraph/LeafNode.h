@@ -38,17 +38,22 @@ protected:
      */
     string textureName;
 
+    string previous_tex_name;
+
     /**
      * @brief texture_matrix
      * The texture matrix associated with this leaf node -- scale for large objects.
      */
     glm::mat4 texture_matrix = glm::mat4(1.0f);
 
+    glm::mat4 modelview_for_drawing = glm::mat4(1.0f);
+
 public:
     LeafNode(const string& instanceOf,sgraph::Scenegraph *graph,const string& name)
         :AbstractNode(graph,name)
     {
         this->objInstanceName = instanceOf;
+        scenegraph->addNode(name, this);
     }
 	
 	~LeafNode(){}
@@ -148,6 +153,15 @@ public:
         }
     }
 
+    void drawScenegraphPane(vector<SGraphItemInfo> &items) throw(runtime_error)
+    {
+        //Create new item
+        SGraphItemInfo info("leaf", sgraph_pane_x, sgraph_pane_y, name);
+        items.push_back(info);
+
+        return;
+    }
+
     /**
      * @brief clearChildren
      * Throws a runetime error since leaf nodes cannot have children
@@ -212,6 +226,19 @@ public:
     NodeType getNodeType()
     {
         return LEAF;
+    }
+
+    void changeNodeTexture(const string& texture_name) throw(runtime_error)
+    {
+        previous_tex_name = textureName;
+        textureName = texture_name;
+    }
+
+    void revertNodeTexture() throw(runtime_error)
+    {
+        string temp = previous_tex_name;
+        previous_tex_name = textureName;
+        textureName = temp;
     }
 };
 }

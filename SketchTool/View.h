@@ -36,6 +36,11 @@ public:
     View();
     ~View();
 
+    //Setters
+    void setLookAtUp(glm::vec3 v){look_at_up = v;}
+    void setLookAtCenter(glm::vec3 v) {look_at_center = v;}
+    void setLookAtEye(glm::vec3 v) {look_at_eye = v;}
+
     //Getters
     string getSgraphFileLocation(){return sgraph_file_location;}
     int getGroupNodeCount(){return group_node_count;}
@@ -106,6 +111,12 @@ private:
     int group_node_count = 0;
     int transform_node_count = 0;
     int leaf_node_count = 0;
+
+    //Look at vectors
+    glm::vec3 look_at_center = glm::vec3(0.0f, 0.0f, 0.0f);
+    glm::vec3 look_at_up = glm::vec3(0.0f, 1.0f, 0.0f);
+    glm::vec3 look_at_eye = glm::vec3(0.0f, 0.0f, -4.0f);
+
 };
 
 #endif // VIEW_H

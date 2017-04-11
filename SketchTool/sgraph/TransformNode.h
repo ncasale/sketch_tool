@@ -92,6 +92,7 @@ enum transformation_type{
     {
       this->transform = glm::mat4(1.0);
       animation_transform = glm::mat4(1.0);
+      scenegraph->addNode(name, this);
       child = NULL;
     }
 
@@ -223,6 +224,28 @@ enum transformation_type{
       if (child!=NULL)
         child->draw(context,modelView);
       modelView.pop();
+    }
+
+    void drawScenegraphPane(vector<SGraphItemInfo> &items) throw(runtime_error)
+    {
+        //Create new item
+        SGraphItemInfo info("transform", sgraph_pane_x, sgraph_pane_y, name);
+        items.push_back(info);
+
+        //Increment x and y
+        //sgraph_pane_x += sgraph_pane_x_increment;
+        sgraph_pane_y += sgraph_pane_y_increment;
+
+        //Recurse through children
+        if(child != NULL)
+        {
+            child->drawScenegraphPane(items);
+        }
+
+        //Decrement Y before coming back through recursion
+        sgraph_pane_y -= sgraph_pane_y_increment;
+
+        return;
     }
 
     void saveToXML(fstream& output_file)
@@ -472,6 +495,16 @@ enum transformation_type{
     NodeType getNodeType()
     {
         return TRANSFORM;
+    }
+
+    void changeNodeTexture(const string& texture_name) throw(runtime_error)
+    {
+        throw runtime_error("Transform Node has no texture to change.");
+    }
+
+    void revertNodeTexture() throw(runtime_error)
+    {
+        throw runtime_error("Transform Node has no texture to revert.");
     }
   };
 }

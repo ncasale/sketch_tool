@@ -26,6 +26,8 @@ private slots:
 
     void on_actionSave_As_triggered();
 
+    void on_actionGenerate_Scenegraph_triggered();
+
 private:
     Ui::MainWindow *ui;
 };

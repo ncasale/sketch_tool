@@ -30,6 +30,7 @@ namespace sgraph
     GroupNode(sgraph::Scenegraph *graph,const string& name)
       :AbstractNode(graph,name)
     {
+        scenegraph->addNode(name, this);
     }
 
     ~GroupNode()
@@ -128,6 +129,39 @@ namespace sgraph
         {
           children[i]->draw(context,modelView);
         }
+    }
+
+    void drawScenegraphPane(vector<SGraphItemInfo> &items) throw(runtime_error)
+    {
+        float starting_x = sgraph_pane_x;
+
+        //Don't want to make a node for the root
+        if(parent != NULL)
+        {
+        //Create new draw item and add to vector
+        SGraphItemInfo info("group", sgraph_pane_x, sgraph_pane_y, name);
+        items.push_back(info);
+        }
+        //Increment Y
+        sgraph_pane_y += sgraph_pane_y_increment;
+
+        //Recurse through children
+        if(!children.empty())
+        {
+            for(auto child : children)
+            {
+                child->drawScenegraphPane(items);
+                sgraph_pane_x += sgraph_pane_x_increment;
+            }
+        }
+
+        //Reset x value after drawing children
+        sgraph_pane_x = starting_x;
+
+        //Decrement Y, increment X
+        sgraph_pane_y -= sgraph_pane_y_increment;
+
+        return;
     }
 
     /**
@@ -250,6 +284,17 @@ namespace sgraph
     {
         return GROUP;
     }
+
+    void changeNodeTexture(const string& texture_name) throw(runtime_error)
+    {
+        throw runtime_error("Group Node has no texture to change.");
+    }
+
+    void revertNodeTexture() throw(runtime_error)
+    {
+        throw runtime_error("Group Node has no texture to revert.");
+    }
+
   };
 }
 

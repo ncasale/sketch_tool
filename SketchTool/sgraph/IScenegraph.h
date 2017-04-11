@@ -8,6 +8,8 @@
 #include "GLScenegraphRenderer.h"
 #include "INode.h"
 #include "ShaderProgram.h"
+#include "SGraphItemInfo.h"
+#include <vector>
 using namespace util;
 
 #include <map>
@@ -157,6 +159,8 @@ namespace sgraph
          * Called whenever the scenegraph is destroyed
          */
         virtual void dispose()=0;
+
+        virtual vector<SGraphItemInfo>& drawScenegraphPane() = 0;
     };
 }
 

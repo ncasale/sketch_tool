@@ -60,6 +60,9 @@ namespace sgraph
      */
     vector<string> node_names;
 
+    //Object selection texture
+    string object_select_tex = "selected_object";
+
 
   public:
     Scenegraph()
@@ -84,6 +87,13 @@ namespace sgraph
           delete root;
           root = NULL;
         }
+    }
+
+    vector<SGraphItemInfo> drawScenegraphPane()
+    {
+        vector<SGraphItemInfo> items;
+        root->drawScenegraphPane(items);
+        return items;
     }
 
     /**
@@ -318,6 +328,37 @@ namespace sgraph
         }
 
         return false;
+    }
+
+    void changeNodeTexture(const string& node_name, const string& texture_name)
+    {
+        //Find node by name
+        if(isValidNodeName(node_name))
+        {
+            if(nodes[node_name]->getNodeType() == LEAF)
+                nodes[node_name]->changeNodeTexture(texture_name);
+
+        }
+        else
+        {
+            return;
+        }
+    }
+
+    void selectNode(const string& node_name)
+    {
+        changeNodeTexture(node_name, object_select_tex);
+    }
+
+    void revertNodeTexture(const string& node_name)
+    {
+        if(isValidNodeName(node_name))
+        {
+            if(nodes[node_name]->getNodeType() == LEAF)
+                nodes[node_name]->revertNodeTexture();
+        }
+        else
+            return;
     }
 
 

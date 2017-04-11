@@ -88,9 +88,9 @@ void View::draw(util::OpenGLFunctions& gl)
          */
   modelview.push(glm::mat4(1.0));
   modelview.top() = modelview.top() *
-      glm::lookAt(glm::vec3(0.0f,0.0f,-4.0f),
-                  glm::vec3(0.0f,0.0f,0.0f),
-                  glm::vec3(0.0f,1.0f,0.0f)) *
+      glm::lookAt(look_at_eye,
+                  look_at_center,
+                  look_at_up) *
       trackballTransform;
 
 
@@ -215,14 +215,24 @@ void View::initScenegraph(util::OpenGLFunctions &gl, const string& filename) thr
  */
 void View::addToScenegraph(string shape, vector<float> shape_params)
 {
+    //Name each node according to respective counts
+    string group_node_name = "group_" + to_string(group_node_count);
+    string transform_node_name = "transform_" + to_string(transform_node_count);
+    string leaf_node_name = "leaf_" + to_string(leaf_node_count);
+
+    //Add these new names to the node_names member of the scenegraph
+    scenegraph->addNodeName(group_node_name);
+    scenegraph->addNodeName(transform_node_name);
+    scenegraph->addNodeName(leaf_node_name);
+
     //Start by creating a new group node
-    sgraph::INode* group_node = new sgraph::GroupNode(scenegraph, "");
+    sgraph::INode* group_node = new sgraph::GroupNode(scenegraph, group_node_name);
     //Make group node child of root to start
     scenegraph->getRoot()->addChild(group_node);
 
 
     //Now create a transform node
-    sgraph::TransformNode* transform_node = new sgraph::TransformNode(scenegraph, "");
+    sgraph::TransformNode* transform_node = new sgraph::TransformNode(scenegraph, transform_node_name);
 
     //If we have passed a vector of shape parameters, use those to construct a shape
     float ground_width = 1000.0f;
@@ -253,7 +263,7 @@ void View::addToScenegraph(string shape, vector<float> shape_params)
     sgraph::LeafNode* leaf_node;
     if(shape == "ground")
     {
-        leaf_node = new sgraph::LeafNode("box", scenegraph, "");
+        leaf_node = new sgraph::LeafNode("box", scenegraph, "ground");
         leaf_node->setTextureName("ground");
         glm::mat4 tex_mat = glm::mat4(1.0f);
         tex_mat *= glm::scale(glm::mat4(1.0f), glm::vec3(ground_width/8.0f, ground_depth/8.0f, ground_height));
@@ -261,7 +271,7 @@ void View::addToScenegraph(string shape, vector<float> shape_params)
     }
     else
     {
-        leaf_node = new sgraph::LeafNode(shape, scenegraph, "");
+        leaf_node = new sgraph::LeafNode(shape, scenegraph, leaf_node_name);
     }
 
     //Material for leaf
@@ -275,10 +285,6 @@ void View::addToScenegraph(string shape, vector<float> shape_params)
     //Make leaf node child of transform node
     transform_node->addChild(leaf_node);
 
-    //Name each node according to respective counts
-    string group_node_name = "group_" + to_string(group_node_count);
-    string transform_node_name = "transform_" + to_string(transform_node_count);
-    string leaf_node_name = "leaf_" + to_string(leaf_node_count);
 
     if(group_node->getName() == "")
         group_node->setName(group_node_name);
@@ -287,10 +293,7 @@ void View::addToScenegraph(string shape, vector<float> shape_params)
     if(leaf_node->getName() == "")
         leaf_node->setName(leaf_node_name);
 
-    //Add these new names to the node_names member of the scenegraph
-    scenegraph->addNodeName(group_node_name);
-    scenegraph->addNodeName(transform_node_name);
-    scenegraph->addNodeName(leaf_node_name);
+
 
     //Increment node counts
     group_node_count++;

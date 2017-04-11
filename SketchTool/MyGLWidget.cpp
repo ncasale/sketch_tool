@@ -36,6 +36,8 @@
 #define KEY_NEGATIVE_SCALE              Qt::Key_Down
 #define KEY_POSITIVE_ROTATION           Qt::Key_Period
 #define KEY_NEGATIVE_ROTATION           Qt::Key_Comma
+#define KEY_INCREMENT_TRANSFORMATION    Qt::Key_Up
+#define KEY_DECREMENT_TRANSFORMATION    Qt::Key_Down
 
 
 //Detect shape vector locations
@@ -344,6 +346,8 @@ void MyGLWidget::keyPressEvent(QKeyEvent *e)
         break;
     case KEY_SELECT_OBJECT:
     {
+        string previously_selected_obj = selected_node_name;
+
         //Used to select the current object to manipulate
         CustomDialog d("Select Node", this);
         axis_selected = false;
@@ -361,17 +365,162 @@ void MyGLWidget::keyPressEvent(QKeyEvent *e)
         //Ensure node is valid
         bool valid = scenegraph->isValidNodeName(selected_node_name);
 
+
         if(!valid)
         {
             QString msg(selected_node_name.c_str());
             QMessageBox::information(this, "Invalid Node Name",
                                      "Invalid node name: " + msg);
             node_selected = false;
+            selected_node_name = "";
             break;
         }
         else
         {
             node_selected = true;
+            scenegraph->selectNode(selected_node_name);
+
+            if(scenegraph->isValidNodeName(previously_selected_obj))
+                scenegraph->revertNodeTexture(previously_selected_obj);
+        }
+    }
+
+    case KEY_INCREMENT_TRANSFORMATION:
+    {
+        //Check to see if we have a transformation selected
+        if(axis_selected)
+        {
+            if(translate_state)
+            {
+                //If we are translating, simply parametrize a translation along
+                //the selected axis
+                switch(selected_axis)
+                {
+                case X_AXIS:
+                    parametrizedTranslation(1.0f, 0.0f, 0.0f);
+                    break;
+                case Y_AXIS:
+                    parametrizedTranslation(0.0f, 1.0f, 0.0f);
+                    break;
+                case Z_AXIS:
+                    parametrizedTranslation(0.0f, 0.0f, 1.0f);
+                    break;
+                }
+
+                break;
+            }
+            else if(rotate_state)
+            {
+                switch(selected_axis)
+                {
+                case X_AXIS:
+                    parametrizedRotation(5.0f, true, false, false);
+                    break;
+                case Y_AXIS:
+                    parametrizedRotation(5.0f, false, true, false);
+                    break;
+                case Z_AXIS:
+                    parametrizedRotation(5.0f, false, false, true);
+                    break;
+                }
+
+                break;
+            }
+            else if(scale_state)
+            {
+                switch(selected_axis)
+                {
+                case X_AXIS:
+                    parametrizedScale(1.25f, 1.0f, 1.0f);
+                    break;
+                case Y_AXIS:
+                    parametrizedScale(1.0f, 1.25f, 1.0f);
+                    break;
+                case Z_AXIS:
+                    parametrizedScale(1.0f, 1.0f, 1.25f);
+                    break;
+                }
+
+                break;
+            }
+            else
+            {
+                break;
+            }
+        }
+        else
+        {
+            break;
+        }
+
+    }
+
+    case KEY_DECREMENT_TRANSFORMATION:
+    {
+        //Check to see if we have a transformation selected
+        if(axis_selected)
+        {
+            if(translate_state)
+            {
+                //If we are translating, simply parametrize a translation along
+                //the selected axis
+                switch(selected_axis)
+                {
+                case X_AXIS:
+                    parametrizedTranslation(-1.0f, 0.0f, 0.0f);
+                    break;
+                case Y_AXIS:
+                    parametrizedTranslation(0.0f, -1.0f, 0.0f);
+                    break;
+                case Z_AXIS:
+                    parametrizedTranslation(0.0f, 0.0f, -1.0f);
+                    break;
+                }
+
+                break;
+            }
+            else if(rotate_state)
+            {
+                switch(selected_axis)
+                {
+                case X_AXIS:
+                    parametrizedRotation(-5.0f, true, false, false);
+                    break;
+                case Y_AXIS:
+                    parametrizedRotation(-5.0f, false, true, false);
+                    break;
+                case Z_AXIS:
+                    parametrizedRotation(-5.0f, false, false, true);
+                    break;
+                }
+
+                break;
+            }
+            else if(scale_state)
+            {
+                switch(selected_axis)
+                {
+                case X_AXIS:
+                    parametrizedScale(0.8f, 1.0f, 1.0f);
+                    break;
+                case Y_AXIS:
+                    parametrizedScale(1.0f, 0.8f, 1.0f);
+                    break;
+                case Z_AXIS:
+                    parametrizedScale(1.0f, 1.0f, 0.8f);
+                    break;
+                }
+
+                break;
+            }
+            else
+            {
+                break;
+            }
+        }
+        else
+        {
+            break;
         }
     }
 
@@ -447,58 +596,6 @@ void MyGLWidget::keyPressEvent(QKeyEvent *e)
             break;
         case Z_AXIS:
             parametrizedRotation(-5.0f, false, false, true);
-            break;
-        default:
-            break;
-        }
-
-        break;
-    }
-
-    case KEY_POSITIVE_SCALE:
-    {
-        if(all_axes_selected)
-        {
-            parametrizedScale(1.25f, 1.25f, 1.25f);
-            break;
-        }
-
-        switch(selected_axis)
-        {
-        case X_AXIS:
-            parametrizedScale(1.25f, 1.0f, 1.0f);
-            break;
-        case Y_AXIS:
-            parametrizedScale(1.0f, 1.25f, 1.0f);
-            break;
-        case Z_AXIS:
-            parametrizedScale(1.0f, 1.0f, 1.25f);
-            break;
-        default:
-            break;
-        }
-
-        break;
-    }
-
-    case KEY_NEGATIVE_SCALE:
-    {
-        if(all_axes_selected)
-        {
-            parametrizedScale(0.8f, 0.8f, 0.8f);
-            break;
-        }
-
-        switch(selected_axis)
-        {
-        case X_AXIS:
-            parametrizedScale(0.8f, 1.0f, 1.0f);
-            break;
-        case Y_AXIS:
-            parametrizedScale(1.0f, 0.8f, 1.0f);
-            break;
-        case Z_AXIS:
-            parametrizedScale(1.0f, 1.0f, 0.8f);
             break;
         default:
             break;
@@ -1187,6 +1284,89 @@ void MyGLWidget::drawLineTo(QPainter *painter)
             //update(QRect(last_pen_point, curr_pen_point).normalized().adjusted(-rad, -rad, +rad, +rad));
         }
 
+    }
+
+}
+
+sgraph::Scenegraph* MyGLWidget::getScenegraph()
+{
+    return view.getScenegraph();
+}
+
+void MyGLWidget::adjustCameraToSelectedNode()
+{
+    //Find selected node position --  for now, just going to elevate and look at from angle
+    view.setLookAtEye(glm::vec3(-10.0f, 10.0f, -10.0f));
+}
+
+void MyGLWidget::setTranslationState()
+{
+
+    translate_state = true;
+    rotate_state = false;
+    scale_state = false;
+
+}
+
+void MyGLWidget::setRotationState()
+{
+
+    translate_state = false;
+    rotate_state = true;
+    scale_state = false;
+
+}
+
+void MyGLWidget::setScaleState()
+{
+
+    translate_state = false;
+    rotate_state = false;
+    scale_state = true;
+
+}
+
+void MyGLWidget::setNoTransformationState()
+{
+    translate_state = false;
+    rotate_state = false;
+    scale_state = false;
+}
+
+void MyGLWidget::revertCamera()
+{
+    setNoTransformationState();
+    view.setLookAtEye(glm::vec3(0.0f, 0.0f, -4.0f));
+}
+
+void MyGLWidget::selectNode(string node)
+{
+    string previously_selected_obj = selected_node_name;
+
+    //Grab our scenegraph
+    sgraph::Scenegraph* scenegraph = view.getScenegraph();
+    //Ensure node is valid
+    bool valid = scenegraph->isValidNodeName(node);
+
+
+    if(!valid)
+    {
+        QString msg(selected_node_name.c_str());
+        QMessageBox::information(this, "Invalid Node Name",
+                                 "Invalid node name: " + msg);
+        node_selected = false;
+        selected_node_name = "";
+
+        return;
+    }
+    else
+    {
+        node_selected = true;
+        selected_node_name = node;
+        scenegraph->selectNode(selected_node_name);
+
+        if(scenegraph->isValidNodeName(previously_selected_obj))
+            scenegraph->revertNodeTexture(previously_selected_obj);
     }
 
 }

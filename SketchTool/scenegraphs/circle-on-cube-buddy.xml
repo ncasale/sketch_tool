@@ -1,0 +1,107 @@
+<scene>
+	<instance name="box" path="models/box-outside" ></instance>
+	<instance name="cone" path="models/cone" ></instance>
+	<instance name="cylinder" path="models/cylinder" ></instance>
+	<instance name="sphere" path="models/sphere" ></instance>
+	<image name="checkerboard" path="textures/checkerboard.png" />
+	<image name="checkerboard-box" path="textures/checkerboard-box.png" />
+	<image name="dice" path="textures/die.png" />
+	<image name="earth" path="textures/earthmap.png" />
+	<image name="ground" path="textures/ground.png" />
+	<image name="red" path="textures/new_tex.png" />
+	<image name="selected_object" path="textures/selected_object.png" />
+	<image name="white" path="textures/white.png" />
+	<light>
+		<ambient> 0.500000 0.500000 0.500000 </ambient>
+		<diffuse> 0.800000 0.800000 0.800000 </diffuse>
+		<specular> 0.500000 0.500000 0.500000 </specular>
+		<position> -0.677008 0.174547 -4.714981 </position>
+		<spotangle> 180.000000 </spotangle>
+		<spotdirection> 1.000000 0.000000 0.000000 </spotdirection>
+	</light>
+	<light>
+		<ambient> 0.500000 0.500000 0.500000 </ambient>
+		<diffuse> 0.800000 0.800000 0.800000 </diffuse>
+		<specular> 0.500000 0.500000 0.500000 </specular>
+		<position> 0.677008 -0.174547 -3.285019 </position>
+		<spotangle> 180.000000 </spotangle>
+		<spotdirection> -1.000000 0.000000 0.000000 </spotdirection>
+	</light>
+	<light>
+		<ambient> 0.100000 0.100000 0.100000 </ambient>
+		<diffuse> 0.800000 0.800000 0.800000 </diffuse>
+		<specular> 0.500000 0.500000 0.500000 </specular>
+		<position> -41.828423 -6.761270 33.956337 </position>
+		<spotangle> 180.000000 </spotangle>
+		<spotdirection> 0.000000 0.000000 1.000000 </spotdirection>
+	</light>
+	<light>
+		<ambient> 0.100000 0.100000 0.100000 </ambient>
+		<diffuse> 0.800000 0.800000 0.800000 </diffuse>
+		<specular> 0.500000 0.500000 0.500000 </specular>
+		<position> 45.698196 27.898642 -40.460373 </position>
+		<spotangle> 180.000000 </spotangle>
+		<spotdirection> 0.000000 0.000000 -1.000000 </spotdirection>
+	</light>
+	<group name="Root of scene graph">
+		<group name="Root of scene graph">
+			<group name="group_7">
+				<transform name="transform_7">
+					<set>
+					<translate> 0.000000 0.000000 0.000000</translate>
+					<rotate> 0.000000 1.000000 0.000000 0.000000</rotate>
+					<rotate> 0.000000 0.000000 1.000000 0.000000</rotate>
+					<rotate> 0.000000 0.000000 0.000000 1.000000</rotate>
+					<scale> 1.000000 1.000000 1.000000</scale>
+					</set>
+					<object instanceof="box" name="leaf_7" texture= "ground">
+						<material>
+							<ambient>0.400000 0.400000 0.4</ambient>
+							<diffuse>0.800000 0.800000 0.8</diffuse>
+							<specular>0.800000 0.800000 0.8</specular>
+							<shininess>1.000000</shininess>
+						</material>
+					</object>
+				</transform>
+			</group>
+		</group>
+		<group name="group_0">
+			<transform name="transform_0">
+				<set>
+				<translate> -1.000000 0.000000 0.000000</translate>
+				<rotate> 0.000000 1.000000 0.000000 0.000000</rotate>
+				<rotate> 0.000000 0.000000 1.000000 0.000000</rotate>
+				<rotate> 0.000000 0.000000 0.000000 1.000000</rotate>
+				<scale> 4.768372 4.768372 3.814697</scale>
+				</set>
+				<object instanceof="box" name="leaf_0">
+					<material>
+						<ambient>0.400000 0.400000 0.4</ambient>
+						<diffuse>0.800000 0.800000 0.8</diffuse>
+						<specular>0.800000 0.800000 0.8</specular>
+						<shininess>1.000000</shininess>
+					</material>
+				</object>
+			</transform>
+		</group>
+		<group name="group_1">
+			<transform name="transform_1">
+				<set>
+				<translate> -0.708793 3.355899 0.000000</translate>
+				<rotate> 0.000000 1.000000 0.000000 0.000000</rotate>
+				<rotate> 0.000000 0.000000 1.000000 0.000000</rotate>
+				<rotate> 0.000000 0.000000 0.000000 1.000000</rotate>
+				<scale> 1.173811 1.173811 1.173811</scale>
+				</set>
+				<object instanceof="sphere" name="leaf_1" texture= "selected_object">
+					<material>
+						<ambient>0.400000 0.400000 0.4</ambient>
+						<diffuse>0.800000 0.800000 0.8</diffuse>
+						<specular>0.800000 0.800000 0.8</specular>
+						<shininess>1.000000</shininess>
+					</material>
+				</object>
+			</transform>
+		</group>
+	</group>
+</scene>

@@ -21,7 +21,8 @@ SOURCES += main.cpp\
     shape.cpp \
     circle.cpp \
     line.cpp \
-    mygraphicsviewwidget.cpp
+    MyGraphicsViewWidget.cpp \
+    SGraphItemInfo.cpp
 
 INCLUDEPATH += ../headers
 
@@ -45,8 +46,9 @@ HEADERS  += mainwindow.h \
     shape.h \
     circle.h \
     line.h \
-    node_item.h \
-    mygraphicsviewwidget.h
+    MyGraphicsViewWidget.h \
+    SGraphItemInfo.h \
+    NodeItem.h
 
 FORMS    += mainwindow.ui
 

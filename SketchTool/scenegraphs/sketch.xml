@@ -10,6 +10,8 @@
 	<image name="ground" path="textures/ground.png" />
 	<image name="red" path="textures/new_tex.png" />
 	<image name="white" path="textures/white.png" />
+	<image name="selected_object" path="textures/selected_object.png" />
+	
 	<light>
 		<ambient> 0.500000 0.500000 0.500000 </ambient>
 		<diffuse> 0.800000 0.800000 0.800000 </diffuse>

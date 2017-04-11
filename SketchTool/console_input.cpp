@@ -89,52 +89,123 @@ string ConsoleInput::process_command(QString& command_qstring)
     }
     else if(command == "translate")
     {
-        //Begin parsing for additional parameters
-        string params = command_string.substr(command_string.find_first_of(' ') + 1, command_string.npos);
-        //Get x-translation amount
-        float x = atof(params.substr(0, params.find_first_of(' ')).c_str());
-        params = params.substr(params.find_first_of(' ') + 1, params.npos);
-        //Get y-translation amount
-        float y = atof(params.substr(0, params.find_first_of(' ')).c_str());
-        params = params.substr(params.find_first_of(' ') + 1, params.npos);
-        //Get z-translation amount
-        float z = atof(params.substr(0, params.find_first_of(' ')).c_str());
+        if(gl_widget->isNodeSelected())
+        {
+            //Begin parsing for additional parameters
+            string params = command_string.substr(command_string.find_first_of(' ') + 1, command_string.npos);
+            //Get x-translation amount
+            string first_param = params.substr(0, params.find_first_of(' '));
 
-        std::cout << "X: " << std::to_string(x) << " Y: " << to_string(y) << " Z: " << to_string(z) << endl;
 
-        //Perform tranlsation
-        gl_widget->parametrizedTranslation(x, y, z);
+            if(first_param[0] == 'x' || first_param[0] == 'X')
+            {
+                //Adjust camera - select axis
+                gl_widget->adjustCameraToSelectedNode();
+                gl_widget->set_x_axis();
+                gl_widget->setTranslationState();
 
-        return "Translation Successful";
+            }
+            else if(first_param[0] == 'y' || first_param[0] == 'Y')
+            {
+                //Adjust camera - select axis
+                gl_widget->adjustCameraToSelectedNode();
+                gl_widget->set_y_axis();
+                gl_widget->setTranslationState();
+
+            }
+            else if(first_param[0] == 'z' || first_param[0] == 'Z')
+            {
+                //Adjust camera - select axis
+                gl_widget->adjustCameraToSelectedNode();
+                gl_widget->set_z_axis();
+                gl_widget->setTranslationState();
+
+            }
+            else
+            {
+                float x = atof(params.substr(0, params.find_first_of(' ')).c_str());
+                params = params.substr(params.find_first_of(' ') + 1, params.npos);
+                //Get y-translation amount
+                float y = atof(params.substr(0, params.find_first_of(' ')).c_str());
+                params = params.substr(params.find_first_of(' ') + 1, params.npos);
+                //Get z-translation amount
+                float z = atof(params.substr(0, params.find_first_of(' ')).c_str());
+
+                std::cout << "X: " << std::to_string(x) << " Y: " << to_string(y) << " Z: " << to_string(z) << endl;
+
+                //Perform tranlsation
+                gl_widget->parametrizedTranslation(x, y, z);
+            }
+
+            gl_widget->setFocus();
+            return "Translation Successful\n";
+        }
+        else
+            return "No Node Selected for Translation!\n";
+
     }
     else if(command == "rotate")
     {
         //Begin parsing for additional parameters
         string params = command_string.substr(command_string.find_first_of(' ') + 1, command_string.npos);
-        //Get the angle of rotation
-        float angle = atof(params.substr(0, params.find_first_of(' ')).c_str());
-        params = params.substr(params.find_first_of(' ') + 1, params.npos);
-        //Rotating about X?
-        float x = atof(params.substr(0, params.find_first_of(' ')).c_str());
-        params = params.substr(params.find_first_of(' ') + 1, params.npos);
-        //Rotating about Y?
-        float y = atof(params.substr(0, params.find_first_of(' ')).c_str());
-        params = params.substr(params.find_first_of(' ') + 1, params.npos);
-        //Rotating about Z?
-        float z = atof(params.substr(0, params.find_first_of(' ')).c_str());
 
-        //Value check
-        if(x != 1.0f && x != 0.0f)
-            return "Invalid parameter: x";
+        //Get x-translation amount
+        string first_param = params.substr(0, params.find_first_of(' '));
+
+
+        if(first_param[0] == 'x' || first_param[0] == 'X')
+        {
+            //Adjust camera - select axis
+            gl_widget->adjustCameraToSelectedNode();
+            gl_widget->set_x_axis();
+            gl_widget->setRotationState();
+
+        }
+        else if(first_param[0] == 'y' || first_param[0] == 'Y')
+        {
+            //Adjust camera - select axis
+            gl_widget->adjustCameraToSelectedNode();
+            gl_widget->set_y_axis();
+            gl_widget->setRotationState();
+
+        }
+        else if(first_param[0] == 'z' || first_param[0] == 'Z')
+        {
+            //Adjust camera - select axis
+            gl_widget->adjustCameraToSelectedNode();
+            gl_widget->set_z_axis();
+            gl_widget->setRotationState();
+
+        }
         else
         {
-            //
+            //Get the angle of rotation
+            float angle = atof(params.substr(0, params.find_first_of(' ')).c_str());
+            params = params.substr(params.find_first_of(' ') + 1, params.npos);
+            //Rotating about X?
+            float x = atof(params.substr(0, params.find_first_of(' ')).c_str());
+            params = params.substr(params.find_first_of(' ') + 1, params.npos);
+            //Rotating about Y?
+            float y = atof(params.substr(0, params.find_first_of(' ')).c_str());
+            params = params.substr(params.find_first_of(' ') + 1, params.npos);
+            //Rotating about Z?
+            float z = atof(params.substr(0, params.find_first_of(' ')).c_str());
+
+            //Value check
+            if(x != 1.0f && x != 0.0f)
+                return "Invalid parameter: x";
+            else
+            {
+                //
+            }
+
+
+            //Perform rotation
+            gl_widget->parametrizedRotation(angle,x, y, z);
         }
 
-
-        //Perform rotation
-        gl_widget->parametrizedRotation(angle,x, y, z);
-        return "Rotation Successful!";
+        gl_widget->setFocus();
+        return "Rotation Successful!\n";
 
 
     }
@@ -142,17 +213,51 @@ string ConsoleInput::process_command(QString& command_qstring)
     {
         //Begin parsing for additional parameters
         string params = command_string.substr(command_string.find_first_of(' ') + 1, command_string.npos);
-        //X Scale
-        float x = atof(params.substr(0, params.find_first_of(' ')).c_str());
-        params = params.substr(params.find_first_of(' ') + 1, params.npos);
-        //Y Scale
-        float y = atof(params.substr(0, params.find_first_of(' ')).c_str());
-        params = params.substr(params.find_first_of(' ') + 1, params.npos);
-        //Z Scale
-        float z = atof(params.substr(0, params.find_first_of(' ')).c_str());
 
-        //Perform rotation
-        gl_widget->parametrizedScale(x, y, z);
+        string first_param = params.substr(0, params.find_first_of(' '));
+
+
+        if(first_param[0] == 'x' || first_param[0] == 'X')
+        {
+            //Adjust camera - select axis
+            gl_widget->adjustCameraToSelectedNode();
+            gl_widget->set_x_axis();
+            gl_widget->setScaleState();
+
+        }
+        else if(first_param[0] == 'y' || first_param[0] == 'Y')
+        {
+            //Adjust camera - select axis
+            gl_widget->adjustCameraToSelectedNode();
+            gl_widget->set_y_axis();
+            gl_widget->setScaleState();
+
+        }
+        else if(first_param[0] == 'z' || first_param[0] == 'Z')
+        {
+            //Adjust camera - select axis
+            gl_widget->adjustCameraToSelectedNode();
+            gl_widget->set_z_axis();
+            gl_widget->setScaleState();
+
+        }
+        else
+        {
+
+            //X Scale
+            float x = atof(params.substr(0, params.find_first_of(' ')).c_str());
+            params = params.substr(params.find_first_of(' ') + 1, params.npos);
+            //Y Scale
+            float y = atof(params.substr(0, params.find_first_of(' ')).c_str());
+            params = params.substr(params.find_first_of(' ') + 1, params.npos);
+            //Z Scale
+            float z = atof(params.substr(0, params.find_first_of(' ')).c_str());
+
+            //Perform rotation
+            gl_widget->parametrizedScale(x, y, z);
+        }
+
+        gl_widget->setFocus();
         return "Scale Successful!";
 
     }
@@ -184,6 +289,21 @@ string ConsoleInput::process_command(QString& command_qstring)
 
         return to_string(c.get_error());
 
+
+    }
+    else if(command == "revert_camera")
+    {
+        gl_widget->revertCamera();
+    }
+    else if(command == "select")
+    {
+        string params = command_string.substr(command_string.find_first_of(' ') + 1, command_string.npos);
+
+        string first_param = params.substr(0, params.find_first_of(' '));
+
+        gl_widget->selectNode(first_param);
+
+        return "\n";
 
     }
     else return "Invalid Command";
