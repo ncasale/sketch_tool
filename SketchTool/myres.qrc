@@ -4,5 +4,6 @@
         <file>toolbar_icons/folder-open-icon.png</file>
         <file>toolbar_icons/save_as.png</file>
         <file>toolbar_icons/graph.png</file>
+        <file>toolbar_icons/reset_camera.png</file>
     </qresource>
 </RCC>

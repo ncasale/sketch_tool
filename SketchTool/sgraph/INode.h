@@ -5,10 +5,10 @@
 #include <glm/glm.hpp>
 #include "Light.h"
 #include "Material.h"
-#include "View.h"
 #include <vector>
 #include <stack>
 #include <string>
+
 using namespace std;
 
 
@@ -36,6 +36,14 @@ namespace sgraph
   {
 
   public:
+
+      //Structure used to hold MyTreeWidgetItem data
+      struct GeneratedItem
+      {
+          INode* node;
+          NodeType type;
+          INode* parent;
+      };
 
      /**
      * @brief getNode
@@ -237,6 +245,9 @@ namespace sgraph
     virtual void changeNodeTexture(const string& texture_name) throw(runtime_error) = 0;
 
     virtual void revertNodeTexture() throw(runtime_error) = 0;
+
+    virtual void generateScenegraphTreeView(vector<GeneratedItem>& ret_vec) throw(runtime_error) = 0;
+
   };
 }
 

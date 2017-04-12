@@ -241,6 +241,18 @@ public:
         previous_tex_name = textureName;
         textureName = temp;
     }
+
+    void generateScenegraphTreeView(vector<GeneratedItem>& ret_vec) throw(runtime_error)
+    {
+        //Generate item
+        GeneratedItem item;
+        item.node = this;
+        item.parent = parent;
+        item.type = NodeType::LEAF;
+
+        //Add to list
+        ret_vec.push_back(item);
+    }
 };
 }
 #endif

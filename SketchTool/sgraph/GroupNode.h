@@ -263,6 +263,27 @@ namespace sgraph
         throw runtime_error("Group Node has no texture to revert.");
     }
 
+    void generateScenegraphTreeView(vector<GeneratedItem>& ret_vec) throw(runtime_error)
+    {
+        //Create this item
+        GeneratedItem item;
+        item.node = this;
+        item.parent = this->parent;
+        item.type = NodeType::GROUP;
+
+        //Add item to list
+        ret_vec.push_back(item);
+
+        //Recurse to children
+        if(!children.empty())
+        {
+            for(auto child : children)
+            {
+                child->generateScenegraphTreeView(ret_vec);
+            }
+        }
+    }
+
   };
 }
 

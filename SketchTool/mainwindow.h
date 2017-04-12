@@ -18,8 +18,6 @@ public:
 private slots:
     void on_actionSave_triggered();
 
-    void on_actionSave2_triggered();
-
     void on_actionClear_triggered();
 
     void on_actionOpen_triggered();
@@ -27,6 +25,8 @@ private slots:
     void on_actionSave_As_triggered();
 
     void on_actionGenerate_Scenegraph_triggered();
+
+    void on_actionResetCamera_triggered();
 
 private:
     Ui::MainWindow *ui;

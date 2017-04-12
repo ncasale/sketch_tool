@@ -1777,29 +1777,7 @@ ui_mainwindow.h: mainwindow.ui \
 		../headers/glm/detail/func_integer.hpp \
 		../headers/glm/detail/func_integer.inl \
 		../headers/Light.h \
-		../headers/Material.h \
-		View.h \
-		../headers/ShaderProgram.h \
-		../headers/ShaderLocationsVault.h \
-		../headers/ObjectInstance.h \
-		../headers/PolygonMesh.h \
-		VertexAttrib.h \
-		../headers/IVertexData.h \
-		sgraph/scenegraphinfo.h \
-		sgraph/Scenegraph.h \
-		sgraph/GLScenegraphRenderer.h \
-		../headers/glm/gtc/type_ptr.hpp \
-		../headers/glm/gtc/quaternion.hpp \
-		../headers/glm/gtc/constants.hpp \
-		../headers/glm/gtc/constants.inl \
-		../headers/glm/gtc/quaternion.inl \
-		../headers/glm/gtc/type_ptr.inl \
-		../headers/TextureImage.h \
-		C:/Qt/5.6/mingw49_32/include/QtGui/QImage \
-		C:/Qt/5.6/mingw49_32/include/QtGui/QOpenGLTexture \
-		C:/Qt/5.6/mingw49_32/include/QtGui/qopengltexture.h \
-		../headers/glm/gtc/matrix_transform.hpp \
-		../headers/glm/gtc/matrix_transform.inl
+		../headers/Material.h
 	C:\Qt\5.6\mingw49_32\bin\uic.exe mainwindow.ui -o ui_mainwindow.h
 
 compiler_yacc_decl_make_all:
@@ -4036,29 +4014,7 @@ debug/MyTreeWidget.o: MyTreeWidget.cpp MyTreeWidget.h \
 		../headers/glm/detail/func_integer.hpp \
 		../headers/glm/detail/func_integer.inl \
 		../headers/Light.h \
-		../headers/Material.h \
-		View.h \
-		../headers/ShaderProgram.h \
-		../headers/ShaderLocationsVault.h \
-		../headers/ObjectInstance.h \
-		../headers/PolygonMesh.h \
-		VertexAttrib.h \
-		../headers/IVertexData.h \
-		sgraph/scenegraphinfo.h \
-		sgraph/Scenegraph.h \
-		sgraph/GLScenegraphRenderer.h \
-		../headers/glm/gtc/type_ptr.hpp \
-		../headers/glm/gtc/quaternion.hpp \
-		../headers/glm/gtc/constants.hpp \
-		../headers/glm/gtc/constants.inl \
-		../headers/glm/gtc/quaternion.inl \
-		../headers/glm/gtc/type_ptr.inl \
-		../headers/TextureImage.h \
-		C:/Qt/5.6/mingw49_32/include/QtGui/QImage \
-		C:/Qt/5.6/mingw49_32/include/QtGui/QOpenGLTexture \
-		C:/Qt/5.6/mingw49_32/include/QtGui/qopengltexture.h \
-		../headers/glm/gtc/matrix_transform.hpp \
-		../headers/glm/gtc/matrix_transform.inl
+		../headers/Material.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\MyTreeWidget.o MyTreeWidget.cpp
 
 debug/MyTreeWidgetItem.o: MyTreeWidgetItem.cpp mytreewidgetitem.h \
@@ -4287,29 +4243,7 @@ debug/MyTreeWidgetItem.o: MyTreeWidgetItem.cpp mytreewidgetitem.h \
 		../headers/glm/detail/func_integer.hpp \
 		../headers/glm/detail/func_integer.inl \
 		../headers/Light.h \
-		../headers/Material.h \
-		View.h \
-		../headers/ShaderProgram.h \
-		../headers/ShaderLocationsVault.h \
-		../headers/ObjectInstance.h \
-		../headers/PolygonMesh.h \
-		VertexAttrib.h \
-		../headers/IVertexData.h \
-		sgraph/scenegraphinfo.h \
-		sgraph/Scenegraph.h \
-		sgraph/GLScenegraphRenderer.h \
-		../headers/glm/gtc/type_ptr.hpp \
-		../headers/glm/gtc/quaternion.hpp \
-		../headers/glm/gtc/constants.hpp \
-		../headers/glm/gtc/constants.inl \
-		../headers/glm/gtc/quaternion.inl \
-		../headers/glm/gtc/type_ptr.inl \
-		../headers/TextureImage.h \
-		C:/Qt/5.6/mingw49_32/include/QtGui/QImage \
-		C:/Qt/5.6/mingw49_32/include/QtGui/QOpenGLTexture \
-		C:/Qt/5.6/mingw49_32/include/QtGui/qopengltexture.h \
-		../headers/glm/gtc/matrix_transform.hpp \
-		../headers/glm/gtc/matrix_transform.inl
+		../headers/Material.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\MyTreeWidgetItem.o MyTreeWidgetItem.cpp
 
 debug/qrc_myres.o: debug/qrc_myres.cpp 

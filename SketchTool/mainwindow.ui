@@ -63,6 +63,9 @@
               <property name="columnCount">
                <number>14</number>
               </property>
+              <attribute name="headerVisible">
+               <bool>false</bool>
+              </attribute>
               <column>
                <property name="text">
                 <string notr="true">1</string>
@@ -188,6 +191,7 @@
     <addaction name="actionOpen"/>
     <addaction name="separator"/>
     <addaction name="actionClear"/>
+    <addaction name="actionResetCamera"/>
    </widget>
    <widget class="QMenu" name="menuScenegraph">
     <property name="title">
@@ -208,8 +212,9 @@
    <addaction name="actionSave"/>
    <addaction name="actionSave_As"/>
    <addaction name="actionOpen"/>
-   <addaction name="actionGenerate_Scenegraph"/>
    <addaction name="separator"/>
+   <addaction name="actionGenerate_Scenegraph"/>
+   <addaction name="actionResetCamera"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <widget class="QToolBar" name="toolBar">
@@ -267,6 +272,15 @@
    </property>
    <property name="text">
     <string>Generate Scenegraph</string>
+   </property>
+  </action>
+  <action name="actionResetCamera">
+   <property name="icon">
+    <iconset resource="myres.qrc">
+     <normaloff>:/Images/toolbar_icons/reset_camera.png</normaloff>:/Images/toolbar_icons/reset_camera.png</iconset>
+   </property>
+   <property name="text">
+    <string>ResetCamera</string>
    </property>
   </action>
  </widget>

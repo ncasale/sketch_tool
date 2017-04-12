@@ -12,6 +12,7 @@
 #include <fstream>
 #include <iostream>
 
+using namespace sgraph;
 using namespace std;
 
 namespace sgraph
@@ -365,6 +366,14 @@ namespace sgraph
         else
         {
             return nullptr;
+        }
+    }
+
+    void generateScenegraphTreeView(vector<INode::GeneratedItem>& ret_vec)
+    {
+        if(root != NULL)
+        {
+            root->generateScenegraphTreeView(ret_vec);
         }
     }
 

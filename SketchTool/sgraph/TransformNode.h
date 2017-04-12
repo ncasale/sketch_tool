@@ -485,6 +485,22 @@ enum transformation_type{
     {
         throw runtime_error("Transform Node has no texture to revert.");
     }
+
+    void generateScenegraphTreeView(vector<GeneratedItem>& ret_vec) throw(runtime_error)
+    {
+        //Create Item
+        GeneratedItem item;
+        item.node = this;
+        item.parent = this->parent;
+        item.type = NodeType::TRANSFORM;
+
+        //Add item to list
+        ret_vec.push_back(item);
+
+        //Recurse to child
+        if(child != NULL)
+            child->generateScenegraphTreeView(ret_vec);
+    }
   };
 }
 #endif

@@ -39,6 +39,7 @@ public:
     QAction *actionOpen;
     QAction *actionSave_As;
     QAction *actionGenerate_Scenegraph;
+    QAction *actionResetCamera;
     QWidget *centralWidget;
     QVBoxLayout *verticalLayout;
     QSplitter *splitter;
@@ -88,6 +89,11 @@ public:
         QIcon icon3;
         icon3.addFile(QStringLiteral(":/Images/toolbar_icons/graph.png"), QSize(), QIcon::Normal, QIcon::Off);
         actionGenerate_Scenegraph->setIcon(icon3);
+        actionResetCamera = new QAction(MainWindow);
+        actionResetCamera->setObjectName(QStringLiteral("actionResetCamera"));
+        QIcon icon4;
+        icon4.addFile(QStringLiteral(":/Images/toolbar_icons/reset_camera.png"), QSize(), QIcon::Normal, QIcon::Off);
+        actionResetCamera->setIcon(icon4);
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         verticalLayout = new QVBoxLayout(centralWidget);
@@ -154,6 +160,7 @@ public:
         treeWidget->setHeaderItem(__qtreewidgetitem);
         treeWidget->setObjectName(QStringLiteral("treeWidget"));
         treeWidget->setColumnCount(14);
+        treeWidget->header()->setVisible(false);
 
         horizontalLayout_2->addWidget(treeWidget);
 
@@ -209,12 +216,14 @@ public:
         menuFile->addAction(actionOpen);
         menuFile->addSeparator();
         menuFile->addAction(actionClear);
+        menuFile->addAction(actionResetCamera);
         menuScenegraph->addAction(actionGenerate_Scenegraph);
         mainToolBar->addAction(actionSave);
         mainToolBar->addAction(actionSave_As);
         mainToolBar->addAction(actionOpen);
-        mainToolBar->addAction(actionGenerate_Scenegraph);
         mainToolBar->addSeparator();
+        mainToolBar->addAction(actionGenerate_Scenegraph);
+        mainToolBar->addAction(actionResetCamera);
 
         retranslateUi(MainWindow);
 
@@ -230,6 +239,7 @@ public:
         actionOpen->setText(QApplication::translate("MainWindow", "Open", 0));
         actionSave_As->setText(QApplication::translate("MainWindow", "Save As", 0));
         actionGenerate_Scenegraph->setText(QApplication::translate("MainWindow", "Generate Scenegraph", 0));
+        actionResetCamera->setText(QApplication::translate("MainWindow", "ResetCamera", 0));
         menuFile->setTitle(QApplication::translate("MainWindow", "File", 0));
         menuScenegraph->setTitle(QApplication::translate("MainWindow", "Scenegraph", 0));
         toolBar->setWindowTitle(QApplication::translate("MainWindow", "toolBar", 0));

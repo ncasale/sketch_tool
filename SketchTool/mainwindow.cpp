@@ -39,6 +39,8 @@ void MainWindow::on_actionSave_triggered()
 void MainWindow::on_actionClear_triggered()
 {
     MyGLWidget* gl_widget = this->findChild<MyGLWidget*>(QString("gl_widget"));
+    MyTreeWidget* tree_widget = this->findChild<MyTreeWidget*>(QString("treeWidget"));
+    tree_widget->deleteAllItemsInTree();
     gl_widget->clearScene();
 }
 
@@ -65,6 +67,13 @@ void MainWindow::on_actionSave_As_triggered()
 
 void MainWindow::on_actionGenerate_Scenegraph_triggered()
 {
-   return;
+    MyTreeWidget* tree_widget = this->findChild<MyTreeWidget*>(QString("treeWidget"));
+    tree_widget->deleteAllItemsInTree();
+    tree_widget->generateScenegraphTree();
+}
 
+void MainWindow::on_actionResetCamera_triggered()
+{
+    MyGLWidget* gl_widget = this->findChild<MyGLWidget*>("gl_widget");
+    gl_widget->revertCamera();
 }
