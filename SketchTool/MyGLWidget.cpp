@@ -1296,7 +1296,31 @@ sgraph::Scenegraph* MyGLWidget::getScenegraph()
 void MyGLWidget::adjustCameraToSelectedNode()
 {
     //Find selected node position --  for now, just going to elevate and look at from angle
-    view.setLookAtEye(glm::vec3(-10.0f, 10.0f, -10.0f));
+    if(!node_selected)
+        return;
+
+    //Find the modelview of this particular node
+    sgraph::Scenegraph* scenegraph = view.getScenegraph();
+    sgraph::LeafNode* object = (sgraph::LeafNode*) scenegraph->getNodeByName(this->selected_node_name);
+
+    if(object == nullptr)
+        return;
+    else
+    {
+        //Transform origin by modelview to get position of center of object
+        //in world space
+        glm::vec4 origin = glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
+        glm::mat4 modelview = object->getModelviewForDrawing();
+        glm::vec4 obj_world_pos = modelview * origin;
+
+        //Translate this position slightly away from object
+        obj_world_pos = glm::vec4(obj_world_pos.x - 10.0f, obj_world_pos.y + 10.0f, obj_world_pos.z - 10.0f, 1.0f);
+
+        //Set lookAt eye of view to calculated position
+        view.setLookAtEye(glm::vec3(obj_world_pos.x, obj_world_pos.y, obj_world_pos.z));
+    }
+
+//    view.setLookAtEye(glm::vec3(-10.0f, 10.0f, -10.0f));
 }
 
 void MyGLWidget::setTranslationState()

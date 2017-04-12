@@ -13,7 +13,6 @@
 #include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QButtonGroup>
-#include <QtWidgets/QGraphicsView>
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QMainWindow>
@@ -27,7 +26,7 @@
 #include <QtWidgets/QWidget>
 #include <console_input.h>
 #include <myglwidget.h>
-#include <mygraphicsviewwidget.h>
+#include <mytreewidget.h>
 
 QT_BEGIN_NAMESPACE
 
@@ -47,9 +46,9 @@ public:
     QHBoxLayout *horizontalLayout;
     QSplitter *splitter_2;
     MyGLWidget *gl_widget;
-    MyGraphicsViewWidget *scenegraphWidget;
+    QWidget *scenegraphWidget;
     QHBoxLayout *horizontalLayout_2;
-    QGraphicsView *scenegraphView;
+    MyTreeWidget *treeWidget;
     QPlainTextEdit *console_output;
     ConsoleInput *console_input;
     QMenuBar *menuBar;
@@ -125,7 +124,7 @@ public:
         sizePolicy2.setHeightForWidth(gl_widget->sizePolicy().hasHeightForWidth());
         gl_widget->setSizePolicy(sizePolicy2);
         splitter_2->addWidget(gl_widget);
-        scenegraphWidget = new MyGraphicsViewWidget(splitter_2);
+        scenegraphWidget = new QWidget(splitter_2);
         scenegraphWidget->setObjectName(QStringLiteral("scenegraphWidget"));
         QSizePolicy sizePolicy3(QSizePolicy::Expanding, QSizePolicy::Expanding);
         sizePolicy3.setHorizontalStretch(1);
@@ -136,11 +135,27 @@ public:
         horizontalLayout_2->setSpacing(6);
         horizontalLayout_2->setContentsMargins(11, 11, 11, 11);
         horizontalLayout_2->setObjectName(QStringLiteral("horizontalLayout_2"));
-        scenegraphView = new QGraphicsView(scenegraphWidget);
-        scenegraphView->setObjectName(QStringLiteral("scenegraphView"));
-        scenegraphView->setSizeAdjustPolicy(QAbstractScrollArea::AdjustIgnored);
+        treeWidget = new MyTreeWidget(scenegraphWidget);
+        QTreeWidgetItem *__qtreewidgetitem = new QTreeWidgetItem();
+        __qtreewidgetitem->setText(13, QStringLiteral("14"));
+        __qtreewidgetitem->setText(12, QStringLiteral("13"));
+        __qtreewidgetitem->setText(11, QStringLiteral("12"));
+        __qtreewidgetitem->setText(10, QStringLiteral("11"));
+        __qtreewidgetitem->setText(9, QStringLiteral("10"));
+        __qtreewidgetitem->setText(8, QStringLiteral("9"));
+        __qtreewidgetitem->setText(7, QStringLiteral("8"));
+        __qtreewidgetitem->setText(6, QStringLiteral("7"));
+        __qtreewidgetitem->setText(5, QStringLiteral("6"));
+        __qtreewidgetitem->setText(4, QStringLiteral("5"));
+        __qtreewidgetitem->setText(3, QStringLiteral("4"));
+        __qtreewidgetitem->setText(2, QStringLiteral("3"));
+        __qtreewidgetitem->setText(1, QStringLiteral("2"));
+        __qtreewidgetitem->setText(0, QStringLiteral("1"));
+        treeWidget->setHeaderItem(__qtreewidgetitem);
+        treeWidget->setObjectName(QStringLiteral("treeWidget"));
+        treeWidget->setColumnCount(14);
 
-        horizontalLayout_2->addWidget(scenegraphView);
+        horizontalLayout_2->addWidget(treeWidget);
 
         splitter_2->addWidget(scenegraphWidget);
 

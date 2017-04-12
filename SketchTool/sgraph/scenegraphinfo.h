@@ -7,6 +7,7 @@
 #include <map>
 using namespace std;
 
+
 namespace sgraph
 {
     template<class K>

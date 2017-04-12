@@ -118,6 +118,11 @@ public:
         return material;
     }
 
+    glm::mat4& getModelviewForDrawing()
+    {
+        return modelview_for_drawing;
+    }
+
     /**
      * @brief clone
      * Makes a copy of this leaf node
@@ -149,18 +154,14 @@ public:
     {
         if (objInstanceName.length()>0)
         {
+            //Save modelview for reference
+            modelview_for_drawing = modelView.top();
+
+            //Draw object
             context.drawMesh(objInstanceName,material,textureName,texture_matrix,modelView.top());
         }
     }
 
-    void drawScenegraphPane(vector<SGraphItemInfo> &items) throw(runtime_error)
-    {
-        //Create new item
-        SGraphItemInfo info("leaf", sgraph_pane_x, sgraph_pane_y, name);
-        items.push_back(info);
-
-        return;
-    }
 
     /**
      * @brief clearChildren

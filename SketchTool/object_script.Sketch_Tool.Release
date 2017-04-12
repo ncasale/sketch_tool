@@ -8,8 +8,8 @@ INPUT(
 ./release\shape.o
 ./release\circle.o
 ./release\line.o
-./release\MyGraphicsViewWidget.o
-./release\SGraphItemInfo.o
+./release\MyTreeWidget.o
+./release\MyTreeWidgetItem.o
 ./release\qrc_myres.o
 ./release\moc_mainwindow.o
 ./release\moc_MyGLWidget.o

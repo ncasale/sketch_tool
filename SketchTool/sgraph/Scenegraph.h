@@ -89,12 +89,6 @@ namespace sgraph
         }
     }
 
-    vector<SGraphItemInfo> drawScenegraphPane()
-    {
-        vector<SGraphItemInfo> items;
-        root->drawScenegraphPane(items);
-        return items;
-    }
 
     /**
      * @brief getRendererLights
@@ -359,6 +353,19 @@ namespace sgraph
         }
         else
             return;
+    }
+
+    INode* getNodeByName(const string& name)
+    {
+        //Search map of nodes to get node
+        if(isValidNodeName(name))
+        {
+            return nodes[name];
+        }
+        else
+        {
+            return nullptr;
+        }
     }
 
 

@@ -87,7 +87,6 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         Q_UNUSED(_t)
         switch (_id) {
         case 0: _t->on_actionSave_triggered(); break;
-        //case 1: _t->on_actionSave2_triggered(); break;
         case 2: _t->on_actionClear_triggered(); break;
         case 3: _t->on_actionOpen_triggered(); break;
         case 4: _t->on_actionSave_As_triggered(); break;

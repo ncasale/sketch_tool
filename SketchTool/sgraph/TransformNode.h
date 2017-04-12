@@ -226,27 +226,6 @@ enum transformation_type{
       modelView.pop();
     }
 
-    void drawScenegraphPane(vector<SGraphItemInfo> &items) throw(runtime_error)
-    {
-        //Create new item
-        SGraphItemInfo info("transform", sgraph_pane_x, sgraph_pane_y, name);
-        items.push_back(info);
-
-        //Increment x and y
-        //sgraph_pane_x += sgraph_pane_x_increment;
-        sgraph_pane_y += sgraph_pane_y_increment;
-
-        //Recurse through children
-        if(child != NULL)
-        {
-            child->drawScenegraphPane(items);
-        }
-
-        //Decrement Y before coming back through recursion
-        sgraph_pane_y -= sgraph_pane_y_increment;
-
-        return;
-    }
 
     void saveToXML(fstream& output_file)
     {

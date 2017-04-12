@@ -9,7 +9,6 @@
 #include <vector>
 #include <stack>
 #include <string>
-#include "SGraphItemInfo.h"
 using namespace std;
 
 
@@ -234,8 +233,6 @@ namespace sgraph
     virtual glm::mat4& getTextureMatrix() = 0;
 
     virtual void setTextureMatrix(const glm::mat4&) = 0;
-
-    virtual void drawScenegraphPane(vector<SGraphItemInfo>&) = 0;
 
     virtual void changeNodeTexture(const string& texture_name) throw(runtime_error) = 0;
 

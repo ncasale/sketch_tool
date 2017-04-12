@@ -65,7 +65,6 @@ void MainWindow::on_actionSave_As_triggered()
 
 void MainWindow::on_actionGenerate_Scenegraph_triggered()
 {
-    MyGraphicsViewWidget* sg_widget = this->findChild<MyGraphicsViewWidget*>(QString("scenegraphWidget"));
-    sg_widget->generateScenegraph();
+   return;
 
 }

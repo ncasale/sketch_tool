@@ -268,14 +268,6 @@ namespace sgraph
       return listLights;
     }
 
-    /**
-     * @brief drawScenegraphPane
-     * @param items
-     */
-    void drawScenegraphPane(vector<SGraphItemInfo> &items) throw(runtime_error)
-    {
-        throw runtime_error("Can't draw an abstract node in pane.");
-    }
 
     void changeNodeTexture(const string& texture_name) throw(runtime_error)
     {
