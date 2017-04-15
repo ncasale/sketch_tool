@@ -23,6 +23,7 @@
 #include "shape.h"
 #include "circle.h"
 #include "line.h"
+#include "cluster.h"
 
 /*
  * This is the main OpenGL-based window in our application
@@ -90,9 +91,14 @@ class MyGLWidget : public QOpenGLWidget
         DrawnShape determineShape(float, float);
         Circle detectCircle();
         Line detectLine();
+        bool detectCone();
+        bool detectCube();
+        bool detectCylinder();
+        void addToCluster(Line);
 
         //Draw a line while tracing shape
         void drawLineTo(QPainter *);
+        void drawExistingLine(QPainter *, Line l);
 
         //Camera adjustment
         void adjustCameraToSelectedNode();
@@ -188,6 +194,10 @@ private:
         bool translate_state = false;
         bool rotate_state = false;
         bool scale_state = false;
+
+        //Used for shape detection
+        vector<Line> lines;
+        vector<Cluster> clusters;
 
 
 };

@@ -22,7 +22,8 @@ SOURCES += main.cpp\
     circle.cpp \
     line.cpp \
     MyTreeWidget.cpp \
-    MyTreeWidgetItem.cpp
+    MyTreeWidgetItem.cpp \
+    cluster.cpp
 
 INCLUDEPATH += ../headers
 
@@ -47,7 +48,8 @@ HEADERS  += mainwindow.h \
     circle.h \
     line.h \
     MyTreeWidget.h \
-    MyTreeWidgetItem.h
+    MyTreeWidgetItem.h \
+    cluster.h
 
 FORMS    += mainwindow.ui
 

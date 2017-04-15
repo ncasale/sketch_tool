@@ -10,6 +10,7 @@ INPUT(
 ./debug\line.o
 ./debug\MyTreeWidget.o
 ./debug\MyTreeWidgetItem.o
+./debug\cluster.o
 ./debug\qrc_myres.o
 ./debug\moc_mainwindow.o
 ./debug\moc_MyGLWidget.o

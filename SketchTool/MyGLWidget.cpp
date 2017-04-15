@@ -13,6 +13,9 @@
 #include <QTabletEvent>
 #include "glm/gtc/type_ptr.hpp"
 
+//PI
+#define PI                              3.1415926535
+
 //Key Press Event definitions
 #define KEY_TRANSLATE                   Qt::Key_Shift
 #define KEY_SCALE                       Qt::Key_U
@@ -149,6 +152,12 @@ void MyGLWidget::paintGL()
         drawLineTo(&painter);
 
     }
+
+    //Draw current lines in lines vector
+    for(auto line : lines)
+    {
+        drawExistingLine(&painter, line);
+    }
 }
 
 
@@ -276,6 +285,49 @@ void MyGLWidget::mouseReleaseEvent(QMouseEvent *e)
         else if(shape_to_draw == LINE)
         {
             //TODO: Create/Call line drawing function
+            lines.push_back(line);
+
+            //Add this line to a cluster
+            addToCluster(line);
+
+            //Detect any shapes
+            bool cone_detected = false;
+            bool cube_detected = false;
+            bool cylinder_detected = false;
+
+            //Check for cone
+            if(!cube_detected && !cylinder_detected)
+                cone_detected = detectCone();
+
+            //Check for cube
+            if(!cone_detected && !cylinder_detected)
+                cube_detected = detectCube();
+
+            //Check for cylinder
+            if(!cube_detected && !cone_detected)
+                cylinder_detected = detectCylinder();
+
+            //If any shapes are detected, draw them and clear lines/clusters
+            if(cone_detected)
+            {
+                view.addToScenegraph("cone");
+                lines.clear();
+                clusters.clear();
+            }
+            else if(cube_detected)
+            {
+                view.addToScenegraph("box");
+                lines.clear();
+                clusters.clear();
+            }
+            else if(cylinder_detected)
+            {
+                view.addToScenegraph("cylinder");
+                lines.clear();
+                clusters.clear();
+            }
+
+
         }
     }
 
@@ -692,6 +744,27 @@ void MyGLWidget::tabletEvent(QTabletEvent *e)
         else if(shape_to_draw == LINE)
         {
             //TODO: Create/Call line drawing function
+            //Append line to lines
+            lines.push_back(line);
+
+            //Once we have enough lines, see if we have a shape
+            if(lines.size() >= 2)
+            {
+                //detectCube();
+            }
+
+            if(lines.size() >= 3)
+            {
+                //detectCube();
+                //detectCone();
+            }
+
+            if(lines.size() >= 4)
+            {
+                //detectCube();
+                //detectCone();
+                //detectCylinder();
+            }
         }
 
 
@@ -724,11 +797,9 @@ DrawnShape MyGLWidget::determineShape(float circle_error, float line_error)
         ret_shape = CIRCLE;
         lowest_error = circle_error;
     }
-
-    if(line_error < error_thresh && line_error < lowest_error)
+    else
     {
         ret_shape = LINE;
-        lowest_error = line_error;
     }
 
     //Clear mouse path
@@ -830,39 +901,117 @@ Circle MyGLWidget::detectCircle()
  */
 Line MyGLWidget::detectLine()
 {
-    float sum_x = 0;
-    float sum_y = 0;
-    float sum_x_squared = 0;
-    float sum_y_squared = 0;
-    float sum_xy = 0;
+    float xbar = 0;
+    float ybar = 0;
+    float xmin = 9999999999;
+    float xmax = -999999999;
+    float ymin = 9999999999;
+    float ymax = -999999999;
+    float pos_count = 0;
 
+    //Iterate through all x/y positions and find the minimum/max
     for(auto pos : mouse_path)
     {
-        //Calculate required summations for matrices
-        sum_x += pos.x();
-        sum_y += pos.y();
-        sum_x_squared += pow(pos.x(), 2.0f);
-        sum_y_squared += pow(pos.y(), 2.0f);
-        sum_xy += pos.x() * pos.y();
+        //X values
+        xbar += pos.x();
+        if(pos.x() < xmin)
+            xmin = pos.x();
+        if(pos.x() > xmax)
+            xmax = pos.x();
+
+        //Y values
+        ybar += pos.y();
+        if(pos.y() < ymin)
+            ymin = pos.y();
+        if(pos.y() > ymax)
+            ymax = pos.y();
 
     }
 
-    //Get determinant
-    float det_arr[4] = {sum_x_squared, sum_xy, sum_xy, sum_y_squared};
-    glm::mat2 det_mat = glm::make_mat2(det_arr);
-    float det = glm::determinant(det_mat);
+    //Get averages
+    xbar = xbar/(float)mouse_path.size();
+    ybar = ybar/(float)mouse_path.size();
 
-    //Get Da
-    float det_a_arr[4] = {-sum_x, -sum_y, sum_xy, sum_y_squared};
-    glm::mat2 det_a_mat = glm::make_mat2(det_a_arr);
-    float det_a = glm::determinant(det_a_mat);
+    //Compute sxx, sxy, syy
+    float sxx = 0;
+    float sxy = 0;
+    float syy = 0;
 
-    //Get Db
-    float det_b_arr[4] = {sum_x_squared, sum_xy, -sum_x, -sum_y};
-    glm::mat2 det_b_mat = glm::make_mat2(det_b_arr);
-    float det_b = glm::determinant(det_b_mat);
+    for(auto pos : mouse_path)
+    {
+        sxx += ((pos.x() - xbar) * (pos.x() - xbar));
+        syy += ((pos.y() - ybar) * (pos.y() - ybar));
+        sxy += ((pos.x() - xbar) * (pos.y() - ybar));
+    }
+
+    float q = 2.0f * sxy/(sxx-syy);
+
+    float theta1 = atan(q);
+    float theta2 = PI + theta1;
+    float theta;
+
+    //Find which is min and which is max
+    float f = (syy - sxx)*cos(theta1) - 2.0f*sxy*sin(theta1);
+    if(f < 0)
+    {
+        //Try other one
+        f = (syy-sxx)*cos(theta2) - 2.0f*sxy*sin(theta2);
+        if(f < 0)
+        {
+            //Error
+            Line l;
+            l.set_error(9999999999.0f);
+            return l;
+        }
+        else
+        {
+            theta = (float)(theta2/2.0f);
+        }
+
+    }
+    else
+    {
+        theta = (float)(theta1/2.0f);
+    }
+
+    //Compute line
+    float a;
+    float b;
+    float c;
+
+    a = (float)(cos(theta));
+    b = (float)(sin(theta));
+    c = -a*xbar - b*ybar;
+
+
+    //Choose the bigger range to find line start/end pos
+    float start_x;
+    float start_y;
+    float end_x;
+    float end_y;
+
+    if((xmax-xmin) > (ymax - ymin))
+    {
+        start_x = xmin;
+        end_x = xmax;
+        start_y = (-(c + a * xmin) / b);
+        end_y = (-(c + a * xmax) / b);
+    }
+    else
+    {
+        start_y = ymin;
+        end_y = ymax;
+        start_x = (-(c + b * ymin) / a);
+        end_x  = (-(c + b * ymin) / a);
+    }
+
+    //Create line
+    pair<float,float> start_position(start_x, start_y);
+    pair<float,float> end_position(end_x, end_y);
 
     Line l;
+    l.setStartPoint(start_position);
+    l.setEndPoint(end_position);
 
     return l;
 
@@ -1285,7 +1434,15 @@ void MyGLWidget::drawLineTo(QPainter *painter)
         }
 
     }
+}
 
+void MyGLWidget::drawExistingLine(QPainter *painter, Line l)
+{
+    //Set painter pen
+    painter->setPen(QPen(pen_color, pen_width + 4.0f, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
+    QPointF start_point(l.getStartPoint().first, l.getStartPoint().second);
+    QPointF end_point(l.getEndPoint().first, l.getEndPoint().second);
+    painter->drawLine(start_point, end_point);
 }
 
 sgraph::Scenegraph* MyGLWidget::getScenegraph()
@@ -1393,4 +1550,98 @@ void MyGLWidget::selectNode(string node)
             scenegraph->revertNodeTexture(previously_selected_obj);
     }
 
+}
+
+void MyGLWidget::addToCluster(Line line)
+{
+    //Frist see if line end points fall into existing clusters
+    pair<float,float> start_point = line.getStartPoint();
+    pair<float,float> end_point = line.getEndPoint();
+
+    bool start_in_cluster = false;
+    bool end_in_cluster = false;
+
+    Cluster sc;
+    Cluster ec;
+
+    if(!clusters.empty())
+    {
+        for(auto cluster : clusters)
+        {
+            //Check if start point is in cluster
+            if(cluster.isPointInCluster(start_point))
+            {
+                //If so, set flag
+                start_in_cluster = true;
+
+            }
+
+            //Check if end point is  in cluster
+            if(cluster.isPointInCluster(end_point))
+            {
+                //If so, set flag
+                end_in_cluster = true;
+            }
+        }
+
+        //If start point not in a cluster, create a new cluster around start
+        if(!start_in_cluster)
+        {
+            sc.setOrigin(start_point);
+            clusters.push_back(sc);
+        }
+
+        //If end point not in a cluster, create a new cluster around end
+        if(!end_in_cluster)
+        {
+            ec.setOrigin(end_point);
+            clusters.push_back(ec);
+        }
+    }
+    else
+    {
+        //If no clusters already exist, create new ones for start and end point
+        sc.setOrigin(start_point);
+        ec.setOrigin(end_point);
+
+        clusters.push_back(sc);
+        clusters.push_back(ec);
+    }
+}
+
+bool MyGLWidget::detectCone()
+{
+    //Want to make sure there are exactly 3 lines
+    if(lines.size() != 3)
+        return false;
+
+    //Also want to make sure there are exactly 3 clusters
+    if(clusters.size() != 3)
+        return false;
+
+    //TODO:Check line orientations
+
+    //Otherwise, this is a triangle (cone)
+    return true;
+}
+
+bool MyGLWidget::detectCube()
+{
+    //Want to make sure there are exactly 4 lines
+    if(lines.size() != 4)
+        return false;
+
+    //Also want to make sure there are exactly 4 clusters
+    if(clusters.size() != 4)
+        return false;
+
+    //TODO:Check line orientation
+
+    //Otherwise, this is a square (cube)
+    return true;
+}
+
+bool MyGLWidget::detectCylinder()
+{
+    return false;
 }

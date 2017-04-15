@@ -56,7 +56,7 @@ public:
 
     //Scenegraph Functions
     void initScenegraph(util::OpenGLFunctions& e,const string& in) throw(runtime_error);
-    void addToScenegraph(string shape, vector<float> = {});
+    void addToScenegraph(string shape, vector<float> = {0.0f, 0.0f, 1.0f});
     void clearScenegraph();
     void addTransformNode(const string&, TransfromType, vector<float>&);
 

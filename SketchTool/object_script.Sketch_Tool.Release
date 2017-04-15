@@ -10,6 +10,7 @@ INPUT(
 ./release\line.o
 ./release\MyTreeWidget.o
 ./release\MyTreeWidgetItem.o
+./release\cluster.o
 ./release\qrc_myres.o
 ./release\moc_mainwindow.o
 ./release\moc_MyGLWidget.o
