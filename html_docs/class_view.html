@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Sketch Tool
-   &#160;<span id="projectnumber">V2</span>
+   &#160;<span id="projectnumber">V0.3.0</span>
    </div>
    <div id="projectbrief">A sketch tool to facilitate the teaching of Computer Graphics</div>
   </td>
@@ -87,6 +87,15 @@ Public Member Functions</h2></td></tr>
 &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_view.html#ad0dc854db9aabbea98a334dec89f785c">~View</a> ()</td></tr>
 <tr class="memdesc:ad0dc854db9aabbea98a334dec89f785c"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="class_view.html#ad0dc854db9aabbea98a334dec89f785c" title="View::~View View destructor. Deletes scenegraph when view is destroyed. ">View::~View</a> <a class="el" href="class_view.html">View</a> destructor. Deletes scenegraph when view is destroyed. <br /></td></tr>
 <tr class="separator:ad0dc854db9aabbea98a334dec89f785c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae2fc997ae1f88b8fffdc47099815db09"><td class="memItemLeft" align="right" valign="top"><a id="ae2fc997ae1f88b8fffdc47099815db09"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>setLookAtUp</b> (glm::vec3 v)</td></tr>
+<tr class="separator:ae2fc997ae1f88b8fffdc47099815db09"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac7e8fb128cd23d3947286b09013e1897"><td class="memItemLeft" align="right" valign="top"><a id="ac7e8fb128cd23d3947286b09013e1897"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>setLookAtCenter</b> (glm::vec3 v)</td></tr>
+<tr class="separator:ac7e8fb128cd23d3947286b09013e1897"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a69679de4173ec59eeb36117549a3a04b"><td class="memItemLeft" align="right" valign="top"><a id="a69679de4173ec59eeb36117549a3a04b"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>setLookAtEye</b> (glm::vec3 v)</td></tr>
+<tr class="separator:a69679de4173ec59eeb36117549a3a04b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8cef4ac2c8969ca66c3972e276f69d3b"><td class="memItemLeft" align="right" valign="top"><a id="a8cef4ac2c8969ca66c3972e276f69d3b"></a>
 string&#160;</td><td class="memItemRight" valign="bottom"><b>getSgraphFileLocation</b> ()</td></tr>
 <tr class="separator:a8cef4ac2c8969ca66c3972e276f69d3b"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -117,9 +126,9 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>getLeafNodeCount</b> (
 <tr class="memitem:ae61e2b6e930fd255dc4c761a40cc4765"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_view.html#ae61e2b6e930fd255dc4c761a40cc4765">initScenegraph</a> (util::OpenGLFunctions &amp;e, const string &amp;in)  throw (runtime_error)</td></tr>
 <tr class="memdesc:ae61e2b6e930fd255dc4c761a40cc4765"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="class_view.html#ae61e2b6e930fd255dc4c761a40cc4765" title="View::initScenegraph Initializes the scenegraph used to render scene. ">View::initScenegraph</a> Initializes the scenegraph used to render scene.  <a href="#ae61e2b6e930fd255dc4c761a40cc4765">More...</a><br /></td></tr>
 <tr class="separator:ae61e2b6e930fd255dc4c761a40cc4765"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a677c68ecc2dd95f1b640b9fbe38a7429"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_view.html#a677c68ecc2dd95f1b640b9fbe38a7429">addToScenegraph</a> (string shape, vector&lt; float &gt;={})</td></tr>
-<tr class="memdesc:a677c68ecc2dd95f1b640b9fbe38a7429"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="class_view.html#a677c68ecc2dd95f1b640b9fbe38a7429" title="View::addToScenegraph Adds a new model to the scenegraph. ">View::addToScenegraph</a> Adds a new model to the scenegraph.  <a href="#a677c68ecc2dd95f1b640b9fbe38a7429">More...</a><br /></td></tr>
-<tr class="separator:a677c68ecc2dd95f1b640b9fbe38a7429"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9d16d66b0dabd3099e4724cf4cb7234b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_view.html#a9d16d66b0dabd3099e4724cf4cb7234b">addToScenegraph</a> (string shape, vector&lt; float &gt;={0.0f, 0.0f, 1.0f})</td></tr>
+<tr class="memdesc:a9d16d66b0dabd3099e4724cf4cb7234b"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="class_view.html#a9d16d66b0dabd3099e4724cf4cb7234b" title="View::addToScenegraph Adds a new model to the scenegraph. ">View::addToScenegraph</a> Adds a new model to the scenegraph.  <a href="#a9d16d66b0dabd3099e4724cf4cb7234b">More...</a><br /></td></tr>
+<tr class="separator:a9d16d66b0dabd3099e4724cf4cb7234b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2b9696c447c57f7e3b752ea01d14cea9"><td class="memItemLeft" align="right" valign="top"><a id="a2b9696c447c57f7e3b752ea01d14cea9"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_view.html#a2b9696c447c57f7e3b752ea01d14cea9">clearScenegraph</a> ()</td></tr>
 <tr class="memdesc:a2b9696c447c57f7e3b752ea01d14cea9"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="class_view.html#a2b9696c447c57f7e3b752ea01d14cea9" title="View::clearScenegraph Deletes all children of scenegraph root node - effectively clearing the scenegr...">View::clearScenegraph</a> Deletes all children of scenegraph root node - effectively clearing the scenegraph. <br /></td></tr>
@@ -162,8 +171,8 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>printNodeNames</b> ()
 <tr class="separator:a1d2ab84ddccedc7670bc74ae680c86b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a677c68ecc2dd95f1b640b9fbe38a7429"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a677c68ecc2dd95f1b640b9fbe38a7429">&#9670;&nbsp;</a></span>addToScenegraph()</h2>
+<a id="a9d16d66b0dabd3099e4724cf4cb7234b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9d16d66b0dabd3099e4724cf4cb7234b">&#9670;&nbsp;</a></span>addToScenegraph()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -178,7 +187,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>printNodeNames</b> ()
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">vector&lt; float &gt;&#160;</td>
-          <td class="paramname"><em>shape_params</em> = <code>{}</code>&#160;</td>
+          <td class="paramname"><em>shape_params</em> = <code>{0.0f,&#160;0.0f,&#160;1.0f}</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -188,7 +197,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>printNodeNames</b> ()
       </table>
 </div><div class="memdoc">
 
-<p><a class="el" href="class_view.html#a677c68ecc2dd95f1b640b9fbe38a7429" title="View::addToScenegraph Adds a new model to the scenegraph. ">View::addToScenegraph</a> Adds a new model to the scenegraph. </p>
+<p><a class="el" href="class_view.html#a9d16d66b0dabd3099e4724cf4cb7234b" title="View::addToScenegraph Adds a new model to the scenegraph. ">View::addToScenegraph</a> Adds a new model to the scenegraph. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">shape</td><td>The type of model we want to add to scene. Options are:<ul>

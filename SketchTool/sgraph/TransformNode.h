@@ -174,11 +174,26 @@ enum transformation_type{
       return NULL;
     }
 
+    /**
+     * @brief getTextureMatrix
+     * Returns the texture_matrix of this node (if it exists)
+     *
+     * @return
+     * Throws runtime_error for TransformNode because it has no texture_matrix
+     */
     glm::mat4& getTextureMatrix() throw(runtime_error)
     {
         throw(runtime_error("Not a leaf node -- cannot get texture matrix"));
     }
 
+    /**
+     * @brief setTextureMatrix
+     * Sets the texture matrix of this node (if it exists) - throws runtime
+     * error for TransformNode because texture_matrix does not exist.
+     *
+     * @param mat
+     * The texture_matrix to assign to this node
+     */
     void setTextureMatrix(const glm::mat4 &mat) throw(runtime_error)
     {
         throw(runtime_error("Not a leaf node -- cannot set texture matix"));
@@ -227,6 +242,14 @@ enum transformation_type{
     }
 
 
+    /**
+     * @brief saveToXML
+     * Saves information about transform node to XML file and then recurses
+     * to child (if it exists)
+     *
+     * @param output_file
+     * The XML file to save information to
+     */
     void saveToXML(fstream& output_file)
     {
         //Add transform tag to file
@@ -471,21 +494,51 @@ enum transformation_type{
         transform *= glm::translate(glm::mat4(1.0f), glm::vec3(x_trans, y_trans, z_trans));
     }
 
+    /**
+     * @brief getNodeType
+     * Returns an ennumeration value representing a transform node
+     *
+     * @return
+     * NodeType::TRANSFORM -- an ennumeration representing node type
+     */
     NodeType getNodeType()
     {
         return TRANSFORM;
     }
 
+    /**
+     * @brief changeNodeTexture
+     * Changes the texture of the node (if it exists). Throws runtime error
+     * for TransformNode because it has no texture
+     *
+     * @param texture_name
+     * The name of the texture to assign to this node
+     */
     void changeNodeTexture(const string& texture_name) throw(runtime_error)
     {
         throw runtime_error("Transform Node has no texture to change.");
     }
 
+    /**
+     * @brief revertNodeTexture
+     * Reverts this node's texture to its previously held texture. Throws
+     * runtime error for TransformNode becauxe it has no texture.
+     */
     void revertNodeTexture() throw(runtime_error)
     {
         throw runtime_error("Transform Node has no texture to revert.");
     }
 
+    /**
+     * @brief generateScenegraphTreeView
+     * Creates a GeneratedItem which contains information about this node and
+     * adds it to ret_vec. The information will be used to construct a tree
+     * representation of the scenegraph in the right-side pane of the GUI
+     *
+     * @param ret_vec
+     * A vector containing information about all nodes to be represented in the
+     * tree view of the scenegraph.
+     */
     void generateScenegraphTreeView(vector<GeneratedItem>& ret_vec) throw(runtime_error)
     {
         //Create Item

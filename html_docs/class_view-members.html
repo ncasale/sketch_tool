@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Sketch Tool
-   &#160;<span id="projectnumber">V2</span>
+   &#160;<span id="projectnumber">V0.3.0</span>
    </div>
    <div id="projectbrief">A sketch tool to facilitate the teaching of Computer Graphics</div>
   </td>
@@ -67,7 +67,7 @@ $(function() {
 
 <p>This is the complete list of members for <a class="el" href="class_view.html">View</a>, including all inherited members.</p>
 <table class="directory">
-  <tr class="even"><td class="entry"><a class="el" href="class_view.html#a677c68ecc2dd95f1b640b9fbe38a7429">addToScenegraph</a>(string shape, vector&lt; float &gt;={})</td><td class="entry"><a class="el" href="class_view.html">View</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="class_view.html#a9d16d66b0dabd3099e4724cf4cb7234b">addToScenegraph</a>(string shape, vector&lt; float &gt;={0.0f, 0.0f, 1.0f})</td><td class="entry"><a class="el" href="class_view.html">View</a></td><td class="entry"></td></tr>
   <tr><td class="entry"><a class="el" href="class_view.html#acc96169efc6eedfa2d46e449b5cc3cc6">addTransformNode</a>(const string &amp;, TransfromType, vector&lt; float &gt; &amp;)</td><td class="entry"><a class="el" href="class_view.html">View</a></td><td class="entry"></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="class_view.html#a2b9696c447c57f7e3b752ea01d14cea9">clearScenegraph</a>()</td><td class="entry"><a class="el" href="class_view.html">View</a></td><td class="entry"></td></tr>
   <tr><td class="entry"><a class="el" href="class_view.html#aba6890e2f82113eed23598032920c8c2">decrementTab</a>(string)</td><td class="entry"><a class="el" href="class_view.html">View</a></td><td class="entry"></td></tr>
@@ -93,10 +93,13 @@ $(function() {
   <tr><td class="entry"><a class="el" href="class_view.html#a47749b34e3644c91eed6cce198b20160">saveTextures</a>(fstream &amp;)</td><td class="entry"><a class="el" href="class_view.html">View</a></td><td class="entry"></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="class_view.html#a84674c378c811085dde23afb9085acad">saveXMLFile</a>(string)</td><td class="entry"><a class="el" href="class_view.html">View</a></td><td class="entry"></td></tr>
   <tr bgcolor="#f0f0f0"><td class="entry"><b>SCALE</b> enum value (defined in <a class="el" href="class_view.html">View</a>)</td><td class="entry"><a class="el" href="class_view.html">View</a></td><td class="entry"></td></tr>
-  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>TransfromType</b> enum name (defined in <a class="el" href="class_view.html">View</a>)</td><td class="entry"><a class="el" href="class_view.html">View</a></td><td class="entry"></td></tr>
-  <tr bgcolor="#f0f0f0"><td class="entry"><b>TRANSLATION</b> enum value (defined in <a class="el" href="class_view.html">View</a>)</td><td class="entry"><a class="el" href="class_view.html">View</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="class_view.html#a44ad60a768422d3fa8fbd7576950080a">View</a>()</td><td class="entry"><a class="el" href="class_view.html">View</a></td><td class="entry"></td></tr>
-  <tr><td class="entry"><a class="el" href="class_view.html#ad0dc854db9aabbea98a334dec89f785c">~View</a>()</td><td class="entry"><a class="el" href="class_view.html">View</a></td><td class="entry"></td></tr>
+  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>setLookAtCenter</b>(glm::vec3 v) (defined in <a class="el" href="class_view.html">View</a>)</td><td class="entry"><a class="el" href="class_view.html">View</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr bgcolor="#f0f0f0"><td class="entry"><b>setLookAtEye</b>(glm::vec3 v) (defined in <a class="el" href="class_view.html">View</a>)</td><td class="entry"><a class="el" href="class_view.html">View</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>setLookAtUp</b>(glm::vec3 v) (defined in <a class="el" href="class_view.html">View</a>)</td><td class="entry"><a class="el" href="class_view.html">View</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr bgcolor="#f0f0f0"><td class="entry"><b>TransfromType</b> enum name (defined in <a class="el" href="class_view.html">View</a>)</td><td class="entry"><a class="el" href="class_view.html">View</a></td><td class="entry"></td></tr>
+  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>TRANSLATION</b> enum value (defined in <a class="el" href="class_view.html">View</a>)</td><td class="entry"><a class="el" href="class_view.html">View</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="class_view.html#a44ad60a768422d3fa8fbd7576950080a">View</a>()</td><td class="entry"><a class="el" href="class_view.html">View</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="class_view.html#ad0dc854db9aabbea98a334dec89f785c">~View</a>()</td><td class="entry"><a class="el" href="class_view.html">View</a></td><td class="entry"></td></tr>
 </table></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

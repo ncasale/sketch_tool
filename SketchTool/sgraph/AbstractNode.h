@@ -80,11 +80,26 @@ namespace sgraph
         return GROUP;
     }
 
+    /**
+     * @brief getTextureMatrix
+     * Returns the texture matrix of this node (if it has one)
+     *
+     * @return
+     * The texture matrix (if it exists) of this node
+     */
     glm::mat4& getTextureMatrix() throw(runtime_error)
     {
         throw(runtime_error("Not a leaf node -- cannot get texture matrix"));
     }
 
+    /**
+     * @brief setTextureMatrix
+     * Sets the texture matrix of the node - throws runtime error for
+     * AbstractNode
+     *
+     * @param mat
+     * The texture matrix being assigned to the node
+     */
     void setTextureMatrix(const glm::mat4 &mat) throw(runtime_error)
     {
         throw(runtime_error("Not a leaf node -- cannot set texture matix"));
@@ -263,16 +278,37 @@ namespace sgraph
     }
 
 
+    /**
+     * @brief changeNodeTexture
+     * Changes the texture of this node - throws runtime error for AbstractNode
+     *
+     * @param texture_name
+     * The name of the texture to change to. This must be included in XML file
+     */
     void changeNodeTexture(const string& texture_name) throw(runtime_error)
     {
         throw runtime_error("Abstract node has no texture to change.");
     }
 
+    /**
+     * @brief revertNodeTexture
+     * Changes texture to previous texture. Throws runtime error for
+     * AbstractNode
+     */
     void revertNodeTexture() throw(runtime_error)
     {
         throw runtime_error("Abstract node has no texture to revert.");
     }
 
+    /**
+     * @brief generateScenegraphTreeView
+     * Recurses through scenegraph to get information required to generate the
+     * tree representation of the sgraph in the right-side pane.
+     *
+     * @param ret_vec
+     * A vector containing GeneratedItems - each GeneratedItem contains info
+     * about a particular node that will be represented in the tree view.
+     */
     void generateScenegraphTreeView(vector<GeneratedItem>& ret_vec) throw(runtime_error)
     {
         throw runtime_error("Abstract Nodes do not belong in scenegraph representation.");

@@ -46,6 +46,10 @@ protected:
      */
     glm::mat4 texture_matrix = glm::mat4(1.0f);
 
+    /**
+     * @brief modelview_for_drawing
+     * The modelview of this node at the time of drawing.
+     */
     glm::mat4 modelview_for_drawing = glm::mat4(1.0f);
 
 public:
@@ -118,6 +122,13 @@ public:
         return material;
     }
 
+    /**
+     * @brief getModelviewForDrawing
+     * Gets this node's modelview matrix at the time of drawing
+     *
+     * @return
+     * The modelview matrix for this node at the time of drawing
+     */
     glm::mat4& getModelviewForDrawing()
     {
         return modelview_for_drawing;
@@ -224,17 +235,35 @@ public:
         }
     }
 
+    /**
+     * @brief getNodeType
+     * Gets the type associated with this node - LEAF in this case
+     *
+     * @return
+     * An ennumeration value representing node type
+     */
     NodeType getNodeType()
     {
         return LEAF;
     }
 
+    /**
+     * @brief changeNodeTexture
+     * Changes the texture associated with this node
+     *
+     * @param texture_name
+     * The name of the texture to change to
+     */
     void changeNodeTexture(const string& texture_name) throw(runtime_error)
     {
         previous_tex_name = textureName;
         textureName = texture_name;
     }
 
+    /**
+     * @brief revertNodeTexture
+     * Reverts this node to its previously set texture
+     */
     void revertNodeTexture() throw(runtime_error)
     {
         string temp = previous_tex_name;
@@ -242,6 +271,15 @@ public:
         textureName = temp;
     }
 
+    /**
+     * @brief generateScenegraphTreeView
+     * Recurses through scenegraph to get information required to generate the
+     * tree representation of the sgraph in the right-side pane.
+     *
+     * @param ret_vec
+     * A vector containing GeneratedItems - each GeneratedItem contains info
+     * about a particular node that will be represented in the tree view.
+     */
     void generateScenegraphTreeView(vector<GeneratedItem>& ret_vec) throw(runtime_error)
     {
         //Generate item

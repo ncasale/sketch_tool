@@ -85,11 +85,26 @@ namespace sgraph
       return answer;
     }
 
+    /**
+     * @brief getTextureMatrix
+     * Returns the texture matrix of the node - throws runtime error for
+     * GroupNode
+     *
+     * @return
+     * The texture matrix of the node
+     */
     glm::mat4& getTextureMatrix() throw(runtime_error)
     {
         throw(runtime_error("Not a leaf node -- cannot get texture matrix"));
     }
 
+    /**
+     * @brief setTextureMatrix
+     * Sets the texture matrix of the node - throws runtime error for GroupNode
+     *
+     * @param mat
+     * The texture matrix being assigned to the node
+     */
     void setTextureMatrix(const glm::mat4 &mat) throw(runtime_error)
     {
         throw(runtime_error("Not a leaf node -- cannot set texture matix"));
@@ -248,21 +263,49 @@ namespace sgraph
       return lights;
     }
 
+    /**
+     * @brief getNodeType
+     * Returns the type associated with this node - GROUP in this case
+     *
+     * @return
+     * An ennumeration value representing node type
+     */
     NodeType getNodeType()
     {
         return GROUP;
     }
 
+    /**
+     * @brief changeNodeTexture
+     * Changes the texture of this node - throws runtime error for GroupNode
+     *
+     * @param texture_name
+     * The name of the texture to change to. This must be included in XML file
+     */
     void changeNodeTexture(const string& texture_name) throw(runtime_error)
     {
         throw runtime_error("Group Node has no texture to change.");
     }
 
+    /**
+     * @brief revertNodeTexture
+     * Changes texture to previous texture. Throws runtime error for
+     * GroupNode
+     */
     void revertNodeTexture() throw(runtime_error)
     {
         throw runtime_error("Group Node has no texture to revert.");
     }
 
+    /**
+     * @brief generateScenegraphTreeView
+     * Recurses through scenegraph to get information required to generate the
+     * tree representation of the sgraph in the right-side pane.
+     *
+     * @param ret_vec
+     * A vector containing GeneratedItems - each GeneratedItem contains info
+     * about a particular node that will be represented in the tree view.
+     */
     void generateScenegraphTreeView(vector<GeneratedItem>& ret_vec) throw(runtime_error)
     {
         //Create this item

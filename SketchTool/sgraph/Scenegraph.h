@@ -61,7 +61,10 @@ namespace sgraph
      */
     vector<string> node_names;
 
-    //Object selection texture
+    /**
+     * @brief object_select_tex
+     * The name of the texture to change to when an object is selected
+     */
     string object_select_tex = "selected_object";
 
 
@@ -173,6 +176,13 @@ namespace sgraph
         }
     }
 
+    /**
+     * @brief saveToXML
+     * Starts recursion through scenegraph to save every node to XML file
+     *
+     * @param output_file
+     * The XML file to which we are saving this scenegraph to
+     */
     void saveToXML(fstream& output_file)
     {
         if((root!=NULL) && (renderer!=NULL))
@@ -219,6 +229,16 @@ namespace sgraph
 
     }
 
+    /**
+     * @brief addNode
+     * Adds a node to the nodes map
+     *
+     * @param name
+     * The name of the node to add
+     *
+     * @param node
+     * The node object to add to the map
+     */
     void addNode(const string& name, INode *node) {
       nodes[name]=node;
     }
@@ -325,6 +345,17 @@ namespace sgraph
         return false;
     }
 
+    /**
+     * @brief changeNodeTexture
+     * Change the texture of a particular node within the scenegraph
+     *
+     * @param node_name
+     * The name of the node whose texture is to be changed
+     *
+     * @param texture_name
+     * The name of the texture to change to - must be contained within the
+     * XML file
+     */
     void changeNodeTexture(const string& node_name, const string& texture_name)
     {
         //Find node by name
@@ -340,11 +371,26 @@ namespace sgraph
         }
     }
 
+    /**
+     * @brief selectNode
+     * Changes a particular node to have the 'selected_object' texture
+     *
+     * @param node_name
+     * The name of the node we are selecting
+     */
     void selectNode(const string& node_name)
     {
         changeNodeTexture(node_name, object_select_tex);
     }
 
+    /**
+     * @brief revertNodeTexture
+     * Reverts a particular node to its previously held texture. Used when
+     * an object is unselected to change it back to its original texture
+     *
+     * @param node_name
+     * The name of the node whose texture we want to revert
+     */
     void revertNodeTexture(const string& node_name)
     {
         if(isValidNodeName(node_name))
@@ -356,6 +402,17 @@ namespace sgraph
             return;
     }
 
+    /**
+     * @brief getNodeByName
+     * Returns a particular node whose name matches the parameter
+     *
+     * @param name
+     * The name of the node to return
+     *
+     * @return
+     * The node object with a name matching the name parameter. Returns a
+     * nullptr if node with given name does not exist.
+     */
     INode* getNodeByName(const string& name)
     {
         //Search map of nodes to get node
@@ -369,6 +426,16 @@ namespace sgraph
         }
     }
 
+    /**
+     * @brief generateScenegraphTreeView
+     * Starts recursion through scenegraph nodes to generate tree view of
+     * scenegraph in the right-side pane of the GUI
+     *
+     * @param ret_vec
+     * A vector containing GeneratedItem objects who hold information about
+     * each of the nodes that will be represented in the tree view of the
+     * scenegraph.
+     */
     void generateScenegraphTreeView(vector<INode::GeneratedItem>& ret_vec)
     {
         if(root != NULL)
@@ -376,8 +443,6 @@ namespace sgraph
             root->generateScenegraphTreeView(ret_vec);
         }
     }
-
-
   };
 }
 #endif

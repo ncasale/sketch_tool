@@ -240,12 +240,40 @@ namespace sgraph
      */
     virtual glm::mat4& getTextureMatrix() = 0;
 
+
+    /**
+     * @brief setTextureMatrix
+     * Sets the texture matrix of the node
+     *
+     * @param mat
+     * The texture matrix being assigned to the node
+     */
     virtual void setTextureMatrix(const glm::mat4&) = 0;
 
+    /**
+     * @brief changeNodeTexture
+     * Changes the texture of this node
+     *
+     * @param texture_name
+     * The name of the texture to change to. This must be included in XML file
+     */
     virtual void changeNodeTexture(const string& texture_name) throw(runtime_error) = 0;
 
+    /**
+     * @brief revertNodeTexture
+     * Changes texture to previous texture.
+     */
     virtual void revertNodeTexture() throw(runtime_error) = 0;
 
+    /**
+     * @brief generateScenegraphTreeView
+     * Recurses through scenegraph to get information required to generate the
+     * tree representation of the sgraph in the right-side pane.
+     *
+     * @param ret_vec
+     * A vector containing GeneratedItems - each GeneratedItem contains info
+     * about a particular node that will be represented in the tree view.
+     */
     virtual void generateScenegraphTreeView(vector<GeneratedItem>& ret_vec) throw(runtime_error) = 0;
 
   };

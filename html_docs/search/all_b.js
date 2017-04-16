@@ -1,7 +1,6 @@
 var searchData=
 [
-  ['objects',['objects',['../classsgraph_1_1_scenegraph.html#ac2c4005cdc8bdaf6e0d8e2bca46c367d',1,'sgraph::Scenegraph']]],
-  ['objinstancename',['objInstanceName',['../classsgraph_1_1_leaf_node.html#a0c02bf26b7a478e0b0cbf7c17865552a',1,'sgraph::LeafNode']]],
-  ['openfile',['openFile',['../class_my_g_l_widget.html#a09431920955e8b4e0c6b699ca8991122',1,'MyGLWidget']]],
-  ['openglwindow',['OpenGLWindow',['../class_open_g_l_window.html',1,'']]]
+  ['name',['name',['../classsgraph_1_1_abstract_node.html#a04731e3fbcbadc74b75af6c63998f195',1,'sgraph::AbstractNode']]],
+  ['node_5fnames',['node_names',['../classsgraph_1_1_scenegraph.html#ac00f70e4f45823153b3e3dae56e130d5',1,'sgraph::Scenegraph']]],
+  ['nodes',['nodes',['../classsgraph_1_1_scenegraph.html#a4c949376c6a396234104c2f36b4143fb',1,'sgraph::Scenegraph']]]
 ];

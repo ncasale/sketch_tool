@@ -1034,13 +1034,6 @@ void MyGLWidget::resizeGL(int w,int h)
     view.reshape(*gl,w,h);
 }
 
-
- /*
- * This function helps us to automatically start animating
- * When we call this function with "true", it sets up the window so
- * that it calls update() again and again automatically
- */
-
 /**
  * @brief MyGLWidget::setAnimating
  * This function helps us to automatically start animating. When we call this
@@ -1436,6 +1429,16 @@ void MyGLWidget::drawLineTo(QPainter *painter)
     }
 }
 
+/**
+ * @brief MyGLWidget::drawExistingLine
+ * Draws a line onto the GLWidget
+ *
+ * @param painter
+ * The painter used to draw this line
+ *
+ * @param l
+ * The line to draw upon the widget
+ */
 void MyGLWidget::drawExistingLine(QPainter *painter, Line l)
 {
     //Set painter pen
@@ -1445,11 +1448,24 @@ void MyGLWidget::drawExistingLine(QPainter *painter, Line l)
     painter->drawLine(start_point, end_point);
 }
 
+/**
+ * @brief MyGLWidget::getScenegraph
+ * Gets the scenegraph associated with the view
+ *
+ * @return
+ * The view's scenegraph
+ */
 sgraph::Scenegraph* MyGLWidget::getScenegraph()
 {
     return view.getScenegraph();
 }
 
+/**
+ * @brief MyGLWidget::adjustCameraToSelectedNode
+ * Finds the position of the selected node in the world coordinate system and
+ * then moves the camera to look at this node from an elevated perspective.
+ * Makes applying transformations to the node easier to visualize.
+ */
 void MyGLWidget::adjustCameraToSelectedNode()
 {
     //Find selected node position --  for now, just going to elevate and look at from angle
@@ -1480,6 +1496,12 @@ void MyGLWidget::adjustCameraToSelectedNode()
 //    view.setLookAtEye(glm::vec3(-10.0f, 10.0f, -10.0f));
 }
 
+/**
+ * @brief MyGLWidget::setTranslationState
+ * Sets this node's transformation state to translate. Transformation state is
+ * used to delegate what action pressing KEY_INCREMENT_TRANSFORMATION and
+ * KEY_DECREMENT_TRANSFORMATION will do.
+ */
 void MyGLWidget::setTranslationState()
 {
 
@@ -1489,6 +1511,12 @@ void MyGLWidget::setTranslationState()
 
 }
 
+/**
+ * @brief MyGLWidget::setRotationState
+ * Sets this node's transformation state to rotate. Transformation state is
+ * used to delegate what action pressing KEY_INCREMENT_TRANSFORMATION and
+ * KEY_DECREMENT_TRANSFORMATION will do.
+ */
 void MyGLWidget::setRotationState()
 {
 
@@ -1498,6 +1526,12 @@ void MyGLWidget::setRotationState()
 
 }
 
+/**
+ * @brief MyGLWidget::setScaleState
+ * Sets this node's transformation state to scale. Transformation state is
+ * used to delegate what action pressing KEY_INCREMENT_TRANSFORMATION and
+ * KEY_DECREMENT_TRANSFORMATION will do.
+ */
 void MyGLWidget::setScaleState()
 {
 
@@ -1507,6 +1541,12 @@ void MyGLWidget::setScaleState()
 
 }
 
+/**
+ * @brief MyGLWidget::setNoTransformationState
+ * Sets all transformation states to false. Transformation state is
+ * used to delegate what action pressing KEY_INCREMENT_TRANSFORMATION and
+ * KEY_DECREMENT_TRANSFORMATION will do.
+ */
 void MyGLWidget::setNoTransformationState()
 {
     translate_state = false;
@@ -1514,12 +1554,26 @@ void MyGLWidget::setNoTransformationState()
     scale_state = false;
 }
 
+/**
+ * @brief MyGLWidget::revertCamera
+ * Reverts the camera back to its original position.
+ */
 void MyGLWidget::revertCamera()
 {
     setNoTransformationState();
     view.setLookAtEye(glm::vec3(0.0f, 0.0f, -4.0f));
 }
 
+/**
+ * @brief MyGLWidget::selectNode
+ * Selects a particular node from the scenegraph. The selected node is the only
+ * one who can be transformed. The texture of the selected node changes to
+ * indicate that it is selected. Only one node can (currently) be selected
+ * at a time.
+ *
+ * @param node
+ * The name of the node to select
+ */
 void MyGLWidget::selectNode(string node)
 {
     string previously_selected_obj = selected_node_name;
@@ -1552,6 +1606,14 @@ void MyGLWidget::selectNode(string node)
 
 }
 
+/**
+ * @brief MyGLWidget::addToCluster
+ * Adds a particular line's start/end points to a cluster. If the points don't
+ * fall into any existing cluster, new clusters will be created.
+ *
+ * @param line
+ * The line whose endpoints are being put into clusters
+ */
 void MyGLWidget::addToCluster(Line line)
 {
     //Frist see if line end points fall into existing clusters
@@ -1609,6 +1671,14 @@ void MyGLWidget::addToCluster(Line line)
     }
 }
 
+/**
+ * @brief MyGLWidget::detectCone
+ * Detects whether or not the lines/clusters on screen represent a triangle.
+ * Done by detecting if there are exactly 3 lines drawn and exactly 3 clusters.
+ *
+ * @return
+ * True if triangle detected, false otherwise.
+ */
 bool MyGLWidget::detectCone()
 {
     //Want to make sure there are exactly 3 lines
@@ -1625,6 +1695,14 @@ bool MyGLWidget::detectCone()
     return true;
 }
 
+/**
+ * @brief MyGLWidget::detectCube
+ * Detects whether or not the lines/clusters on screen represent a square.
+ * Done by detecting if there are exactly 4 lines drawn and exactly 4 clusters.
+ *
+ * @return
+ * True if square detected, false otherwise.
+ */
 bool MyGLWidget::detectCube()
 {
     //Want to make sure there are exactly 4 lines
@@ -1641,6 +1719,11 @@ bool MyGLWidget::detectCube()
     return true;
 }
 
+/**
+ * @brief MyGLWidget::detectCylinder
+ * Will be implemented in the future.
+ * @return
+ */
 bool MyGLWidget::detectCylinder()
 {
     return false;

@@ -51,6 +51,10 @@ protected :
      */
     map<string, util::TextureImage *> textures;
 
+    /**
+     * @brief lights
+     * A vector to store all the lights
+     */
     vector<util::Light> lights;
     /**
      * A table of renderers for individual meshes

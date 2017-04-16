@@ -65,6 +65,11 @@ void MainWindow::on_actionSave_As_triggered()
     gl_widget->saveAs();
 }
 
+/**
+ * @brief MainWindow::on_actionGenerate_Scenegraph_triggered
+ * Begins the generation of the scenegraph tree view located in the right-side
+ * pane of the GUI
+ */
 void MainWindow::on_actionGenerate_Scenegraph_triggered()
 {
     MyTreeWidget* tree_widget = this->findChild<MyTreeWidget*>(QString("treeWidget"));
@@ -72,6 +77,10 @@ void MainWindow::on_actionGenerate_Scenegraph_triggered()
     tree_widget->generateScenegraphTree();
 }
 
+/**
+ * @brief MainWindow::on_actionResetCamera_triggered
+ * Resets the camera to its original position
+ */
 void MainWindow::on_actionResetCamera_triggered()
 {
     MyGLWidget* gl_widget = this->findChild<MyGLWidget*>("gl_widget");

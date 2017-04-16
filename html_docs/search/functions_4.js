@@ -1,24 +1,4 @@
 var searchData=
 [
-  ['getallattributes',['getAllAttributes',['../class_vertex_attrib.html#ad3e398f1dd4bece27aa2db44ab764785',1,'VertexAttrib']]],
-  ['getanimationtransform',['getAnimationTransform',['../classsgraph_1_1_transform_node.html#a8fd2ea99105f7b21777414caabccb508',1,'sgraph::TransformNode']]],
-  ['getchildren',['getChildren',['../classsgraph_1_1_group_node.html#a6d6b802dac0f09fe1b2cabf9bfa0e9c9',1,'sgraph::GroupNode']]],
-  ['getdata',['getData',['../class_vertex_attrib.html#a6d66f0c51aaa52ab1d7b46ba14f6abc8',1,'VertexAttrib']]],
-  ['getlights',['getLights',['../classsgraph_1_1_g_l_scenegraph_renderer.html#a90df2c42a25cadc16b2fc4d9eece9a5d',1,'sgraph::GLScenegraphRenderer']]],
-  ['getlightsinview',['getLightsInView',['../classsgraph_1_1_abstract_node.html#af79b922644f1aca7d0b3e8d361c56e81',1,'sgraph::AbstractNode::getLightsInView()'],['../classsgraph_1_1_group_node.html#aaebce2dc92be22663742170b03133777',1,'sgraph::GroupNode::getLightsInView()'],['../classsgraph_1_1_i_node.html#a0a0f609f5ea43cbadffa2ff9ad5064c5',1,'sgraph::INode::getLightsInView()'],['../classsgraph_1_1_transform_node.html#aba062c4ec8c0800dd8ed32d6236c0227',1,'sgraph::TransformNode::getLightsInView()']]],
-  ['getmaterial',['getMaterial',['../classsgraph_1_1_leaf_node.html#aa1615331c24b875e574eba842caa2a79',1,'sgraph::LeafNode']]],
-  ['getmeshes',['getMeshes',['../classsgraph_1_1_my_handler.html#aef52405dcb2defc6911fd6663880a783',1,'sgraph::MyHandler']]],
-  ['getname',['getName',['../classsgraph_1_1_abstract_node.html#a845ac9486be182fd34d45730f0d62ac1',1,'sgraph::AbstractNode::getName()'],['../classsgraph_1_1_i_node.html#a928631f9d02d2e1939f6a3e63d1b6f58',1,'sgraph::INode::getName()']]],
-  ['getnode',['getNode',['../classsgraph_1_1_abstract_node.html#ac08a6ecba6d67fb842983188862b3257',1,'sgraph::AbstractNode::getNode()'],['../classsgraph_1_1_group_node.html#a1356970768d070876332d26d5671cc4d',1,'sgraph::GroupNode::getNode()'],['../classsgraph_1_1_i_node.html#afd2379f62d53a6ae899d63e17e5015df',1,'sgraph::INode::getNode()'],['../classsgraph_1_1_transform_node.html#a6e399a45d4a481dca4bb239dd095da5f',1,'sgraph::TransformNode::getNode()']]],
-  ['getnodes',['getNodes',['../classsgraph_1_1_i_scenegraph.html#a204a6e7abc65b766bcd0ae94acef3016',1,'sgraph::IScenegraph::getNodes()'],['../classsgraph_1_1_scenegraph.html#ae12f7d38a89a2f3ef26079839244558f',1,'sgraph::Scenegraph::getNodes()']]],
-  ['getnodetype',['getNodeType',['../classsgraph_1_1_abstract_node.html#a9d8accef159a36bb7d07dfecd29f5efb',1,'sgraph::AbstractNode::getNodeType()'],['../classsgraph_1_1_group_node.html#a5d8330ca91eafc0f89793a6b22dbe0bd',1,'sgraph::GroupNode::getNodeType()'],['../classsgraph_1_1_leaf_node.html#afa13d0226430a57bac1404f91b7c4c68',1,'sgraph::LeafNode::getNodeType()'],['../classsgraph_1_1_transform_node.html#a44509c309cc9f695b920b1c4c56732b3',1,'sgraph::TransformNode::getNodeType()']]],
-  ['getobjects',['getObjects',['../classsgraph_1_1_scenegraph.html#ac336ffaae56314979a7ef61d63cd0b2d',1,'sgraph::Scenegraph']]],
-  ['getpolygonmeshes',['getPolygonMeshes',['../classsgraph_1_1_i_scenegraph.html#a794adcc28467cd181533114911c63f7a',1,'sgraph::IScenegraph']]],
-  ['getrendererlights',['getRendererLights',['../classsgraph_1_1_scenegraph.html#a91baf4284d74e8827fb493193bf5ca72',1,'sgraph::Scenegraph']]],
-  ['getroot',['getRoot',['../classsgraph_1_1_i_scenegraph.html#ad626109d9476131d239efe593998a9b1',1,'sgraph::IScenegraph::getRoot()'],['../classsgraph_1_1_scenegraph.html#acd2f3f60222bb06b7013f96bba9b7ff9',1,'sgraph::Scenegraph::getRoot()']]],
-  ['getscenegraph',['getScenegraph',['../classsgraph_1_1_my_handler.html#a55abb594c0498fa39837e0a625d99be0',1,'sgraph::MyHandler']]],
-  ['getshaderlocation',['getShaderLocation',['../classsgraph_1_1_g_l_scenegraph_renderer.html#a91a2c3d9fa03d19f90ef1c989dcbb30b',1,'sgraph::GLScenegraphRenderer']]],
-  ['gettexturematrix',['getTextureMatrix',['../classsgraph_1_1_leaf_node.html#acd4dc0b5aa7ff8a62d72523fad497d3c',1,'sgraph::LeafNode']]],
-  ['gettextures',['getTextures',['../classsgraph_1_1_scenegraph.html#aed0492d8a43806e882219fb5d78d64ac',1,'sgraph::Scenegraph']]],
-  ['gettransform',['getTransform',['../classsgraph_1_1_transform_node.html#aa219ccace522a7c18f8efdb43870d65f',1,'sgraph::TransformNode']]]
+  ['finditemintree',['findItemInTree',['../class_my_tree_widget.html#ab5be6e1b999014e6df2be49a490d5a19',1,'MyTreeWidget']]]
 ];

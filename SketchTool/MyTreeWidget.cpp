@@ -8,28 +8,14 @@ MyTreeWidget::MyTreeWidget(QWidget *parent)
     connect(this, &QTreeWidget::itemDoubleClicked, this, &MyTreeWidget::itemDoubleClicked);
 }
 
-void MyTreeWidget::addRoot(QString name, QString type)
-{
-    //Make a new item
-    MyTreeWidgetItem *item  = new MyTreeWidgetItem(this);
-    item->setText(0, name);
-    item->setText(1,type);
-    this->addTopLevelItem(item);
-
-    //Add some sample children
-    addChild(item, "One", "Group");
-    addChild(item, "Two", "Transform");
-}
-
-void MyTreeWidget::addChild(MyTreeWidgetItem *parent, QString name, QString type)
-{
-    //Make a child
-    MyTreeWidgetItem *child = new MyTreeWidgetItem();
-    child->setText(0,name);
-    child->setText(1,type);
-    parent->addChild(child);
-}
-
+/**
+ * @brief MyTreeWidget::generateScenegraphTree
+ * Grabs the scenegraph from the gl_widget's view and recurses through it to
+ * generate information about each of the nodes. The information for each node
+ * is contained within a GeneratedItem object. A vector of these objects is
+ * returned by the recursion and is then used to draw a tree representation
+ * of the scenegraph in the right-side pane of the GUI
+ */
 void MyTreeWidget::generateScenegraphTree()
 {
     //Get the scenegraph by accessing GL_Widget's view. Gl_widget is sibling
@@ -95,6 +81,16 @@ void MyTreeWidget::generateScenegraphTree()
     return;
 }
 
+/**
+ * @brief MyTreeWidget::findItemInTree
+ * Will find a particular MyTreeWidgetItem contained within the tree
+ *
+ * @param name
+ * The name of the item to find
+ *
+ * @return
+ * The MyTreeWidgetItem if it exists, NULL otherwise.
+ */
 MyTreeWidgetItem* MyTreeWidget::findItemInTree(QString name)
 {
     //Search tree for item with matching name
@@ -111,11 +107,26 @@ MyTreeWidgetItem* MyTreeWidget::findItemInTree(QString name)
     }
 }
 
+/**
+ * @brief MyTreeWidget::deleteAllItemsInTree
+ * Clears all items in the tree, leaving an empty tree.
+ */
 void MyTreeWidget::deleteAllItemsInTree()
 {
     this->clear();
 }
 
+/**
+ * @brief MyTreeWidget::itemDoubleClicked
+ * A Qt Slotted function that is called whenever an item within th tree is
+ * double clicked.
+ *
+ * @param item
+ * The item that was double clicked
+ *
+ * @param column
+ * The column of that item that was double clicked -- not used for our purposes
+ */
 void MyTreeWidget::itemDoubleClicked(QTreeWidgetItem* item, int column)
 {
     MyTreeWidgetItem* clicked_item = (MyTreeWidgetItem*) item;

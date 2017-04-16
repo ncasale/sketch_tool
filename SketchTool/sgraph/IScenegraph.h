@@ -159,8 +159,6 @@ namespace sgraph
          * Called whenever the scenegraph is destroyed
          */
         virtual void dispose()=0;
-
-        virtual vector<SGraphItemInfo>& drawScenegraphPane() = 0;
     };
 }
 

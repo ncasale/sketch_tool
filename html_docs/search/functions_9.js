@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['openfile',['openFile',['../class_my_g_l_widget.html#a09431920955e8b4e0c6b699ca8991122',1,'MyGLWidget']]]
+  ['line',['Line',['../class_line.html#acc11b8a429d8cdd63ba6803dff5602b3',1,'Line::Line()'],['../class_line.html#a02f3d2059dcdac8b31d2bac134b7f6b7',1,'Line::Line(float, pair&lt; float, float &gt;, pair&lt; float, float &gt;, float)']]]
 ];

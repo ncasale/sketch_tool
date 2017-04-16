@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Sketch Tool
-   &#160;<span id="projectnumber">V2</span>
+   &#160;<span id="projectnumber">V0.3.0</span>
    </div>
    <div id="projectbrief">A sketch tool to facilitate the teaching of Computer Graphics</div>
   </td>
@@ -96,15 +96,18 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:adc830d09de43167034ba31083d28908d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsgraph_1_1_leaf_node.html#adc830d09de43167034ba31083d28908d">setTextureName</a> (const string &amp;<a class="el" href="classsgraph_1_1_abstract_node.html#a04731e3fbcbadc74b75af6c63998f195">name</a>)  throw (runtime_error)</td></tr>
 <tr class="memdesc:adc830d09de43167034ba31083d28908d"><td class="mdescLeft">&#160;</td><td class="mdescRight">setTextureName Set the texture ID of the texture to be used for this leaf  <a href="#adc830d09de43167034ba31083d28908d">More...</a><br /></td></tr>
 <tr class="separator:adc830d09de43167034ba31083d28908d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a166807fca68913f18eab4a39a70bec79"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsgraph_1_1_leaf_node.html#a166807fca68913f18eab4a39a70bec79">setTextureMatrix</a> (const glm::mat4 mat)  throw (runtime_error)</td></tr>
-<tr class="memdesc:a166807fca68913f18eab4a39a70bec79"><td class="mdescLeft">&#160;</td><td class="mdescRight">setTextureMatrix Sets the texture matrix of this leaf node  <a href="#a166807fca68913f18eab4a39a70bec79">More...</a><br /></td></tr>
-<tr class="separator:a166807fca68913f18eab4a39a70bec79"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acd4dc0b5aa7ff8a62d72523fad497d3c"><td class="memItemLeft" align="right" valign="top">glm::mat4&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsgraph_1_1_leaf_node.html#acd4dc0b5aa7ff8a62d72523fad497d3c">getTextureMatrix</a> ()</td></tr>
-<tr class="memdesc:acd4dc0b5aa7ff8a62d72523fad497d3c"><td class="mdescLeft">&#160;</td><td class="mdescRight">getTextureMatrix Gets this leaf's texture matrix  <a href="#acd4dc0b5aa7ff8a62d72523fad497d3c">More...</a><br /></td></tr>
-<tr class="separator:acd4dc0b5aa7ff8a62d72523fad497d3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adee46403f00d004f76374b152e7e88e9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsgraph_1_1_leaf_node.html#adee46403f00d004f76374b152e7e88e9">setTextureMatrix</a> (const glm::mat4 &amp;mat)  throw (runtime_error)</td></tr>
+<tr class="memdesc:adee46403f00d004f76374b152e7e88e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">setTextureMatrix Sets the texture matrix of this leaf node  <a href="#adee46403f00d004f76374b152e7e88e9">More...</a><br /></td></tr>
+<tr class="separator:adee46403f00d004f76374b152e7e88e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac1581706bb0b991336884dd3bb9b6c14"><td class="memItemLeft" align="right" valign="top">glm::mat4 &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsgraph_1_1_leaf_node.html#ac1581706bb0b991336884dd3bb9b6c14">getTextureMatrix</a> ()  throw (runtime_error)</td></tr>
+<tr class="memdesc:ac1581706bb0b991336884dd3bb9b6c14"><td class="mdescLeft">&#160;</td><td class="mdescRight">getTextureMatrix Gets this leaf's texture matrix  <a href="#ac1581706bb0b991336884dd3bb9b6c14">More...</a><br /></td></tr>
+<tr class="separator:ac1581706bb0b991336884dd3bb9b6c14"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa1615331c24b875e574eba842caa2a79"><td class="memItemLeft" align="right" valign="top">util::Material&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsgraph_1_1_leaf_node.html#aa1615331c24b875e574eba842caa2a79">getMaterial</a> ()</td></tr>
 <tr class="memdesc:aa1615331c24b875e574eba842caa2a79"><td class="mdescLeft">&#160;</td><td class="mdescRight">getMaterial Get the material associated with the object instance at this leaf  <a href="#aa1615331c24b875e574eba842caa2a79">More...</a><br /></td></tr>
 <tr class="separator:aa1615331c24b875e574eba842caa2a79"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a116d8fbd656c0756cc6e7e3b2ce15188"><td class="memItemLeft" align="right" valign="top">glm::mat4 &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsgraph_1_1_leaf_node.html#a116d8fbd656c0756cc6e7e3b2ce15188">getModelviewForDrawing</a> ()</td></tr>
+<tr class="memdesc:a116d8fbd656c0756cc6e7e3b2ce15188"><td class="mdescLeft">&#160;</td><td class="mdescRight">getModelviewForDrawing Gets this node's modelview matrix at the time of drawing  <a href="#a116d8fbd656c0756cc6e7e3b2ce15188">More...</a><br /></td></tr>
+<tr class="separator:a116d8fbd656c0756cc6e7e3b2ce15188"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a24a6b93ce8bb629ee2cfeb8b2860fea8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classsgraph_1_1_i_node.html">INode</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsgraph_1_1_leaf_node.html#a24a6b93ce8bb629ee2cfeb8b2860fea8">clone</a> ()</td></tr>
 <tr class="memdesc:a24a6b93ce8bb629ee2cfeb8b2860fea8"><td class="mdescLeft">&#160;</td><td class="mdescRight">clone Makes a copy of this leaf node  <a href="#a24a6b93ce8bb629ee2cfeb8b2860fea8">More...</a><br /></td></tr>
 <tr class="separator:a24a6b93ce8bb629ee2cfeb8b2860fea8"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -119,8 +122,18 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="memdesc:a44dbd310203f49d8fd96d12801b94ba3"><td class="mdescLeft">&#160;</td><td class="mdescRight">saveToXML Saves an XML snippet for the object at this leaf node into the specified output file.  <a href="#a44dbd310203f49d8fd96d12801b94ba3">More...</a><br /></td></tr>
 <tr class="separator:a44dbd310203f49d8fd96d12801b94ba3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afa13d0226430a57bac1404f91b7c4c68"><td class="memItemLeft" align="right" valign="top">NodeType&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsgraph_1_1_leaf_node.html#afa13d0226430a57bac1404f91b7c4c68">getNodeType</a> ()</td></tr>
-<tr class="memdesc:afa13d0226430a57bac1404f91b7c4c68"><td class="mdescLeft">&#160;</td><td class="mdescRight">getNodeType Function to get the NodeType of the node  <a href="#afa13d0226430a57bac1404f91b7c4c68">More...</a><br /></td></tr>
+<tr class="memdesc:afa13d0226430a57bac1404f91b7c4c68"><td class="mdescLeft">&#160;</td><td class="mdescRight">getNodeType Gets the type associated with this node - LEAF in this case  <a href="#afa13d0226430a57bac1404f91b7c4c68">More...</a><br /></td></tr>
 <tr class="separator:afa13d0226430a57bac1404f91b7c4c68"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae8abd7c7b25e178c845c1d855e67bb4e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsgraph_1_1_leaf_node.html#ae8abd7c7b25e178c845c1d855e67bb4e">changeNodeTexture</a> (const string &amp;texture_name)  throw (runtime_error)</td></tr>
+<tr class="memdesc:ae8abd7c7b25e178c845c1d855e67bb4e"><td class="mdescLeft">&#160;</td><td class="mdescRight">changeNodeTexture Changes the texture associated with this node  <a href="#ae8abd7c7b25e178c845c1d855e67bb4e">More...</a><br /></td></tr>
+<tr class="separator:ae8abd7c7b25e178c845c1d855e67bb4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a50a3957e05c9c66a6ef1446a79e499e8"><td class="memItemLeft" align="right" valign="top"><a id="a50a3957e05c9c66a6ef1446a79e499e8"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsgraph_1_1_leaf_node.html#a50a3957e05c9c66a6ef1446a79e499e8">revertNodeTexture</a> ()  throw (runtime_error)</td></tr>
+<tr class="memdesc:a50a3957e05c9c66a6ef1446a79e499e8"><td class="mdescLeft">&#160;</td><td class="mdescRight">revertNodeTexture Reverts this node to its previously set texture <br /></td></tr>
+<tr class="separator:a50a3957e05c9c66a6ef1446a79e499e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8e53688456a1d05c8acb6a350b7dd727"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsgraph_1_1_leaf_node.html#a8e53688456a1d05c8acb6a350b7dd727">generateScenegraphTreeView</a> (vector&lt; <a class="el" href="structsgraph_1_1_i_node_1_1_generated_item.html">GeneratedItem</a> &gt; &amp;ret_vec)  throw (runtime_error)</td></tr>
+<tr class="memdesc:a8e53688456a1d05c8acb6a350b7dd727"><td class="mdescLeft">&#160;</td><td class="mdescRight">generateScenegraphTreeView Recurses through scenegraph to get information required to generate the tree representation of the sgraph in the right-side pane.  <a href="#a8e53688456a1d05c8acb6a350b7dd727">More...</a><br /></td></tr>
+<tr class="separator:a8e53688456a1d05c8acb6a350b7dd727"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
@@ -130,10 +143,17 @@ Protected Attributes</h2></td></tr>
 <tr class="separator:a51cf3ff005d509dafcac522d45ecc9af"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abb66a4b1c03208c36d68000044f3903b"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsgraph_1_1_leaf_node.html#abb66a4b1c03208c36d68000044f3903b">textureName</a></td></tr>
 <tr class="separator:abb66a4b1c03208c36d68000044f3903b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8a99e08af2c477193449045a1194a4d3"><td class="memItemLeft" align="right" valign="top"><a id="a8a99e08af2c477193449045a1194a4d3"></a>
+string&#160;</td><td class="memItemRight" valign="bottom"><b>previous_tex_name</b></td></tr>
+<tr class="separator:a8a99e08af2c477193449045a1194a4d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9884eebf463d7061771fa6d5478479b8"><td class="memItemLeft" align="right" valign="top"><a id="a9884eebf463d7061771fa6d5478479b8"></a>
 glm::mat4&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsgraph_1_1_leaf_node.html#a9884eebf463d7061771fa6d5478479b8">texture_matrix</a> = glm::mat4(1.0f)</td></tr>
 <tr class="memdesc:a9884eebf463d7061771fa6d5478479b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">texture_matrix The texture matrix associated with this leaf node &ndash; scale for large objects. <br /></td></tr>
 <tr class="separator:a9884eebf463d7061771fa6d5478479b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aacbc9fcc061a4c915f3cdf3f5dea593e"><td class="memItemLeft" align="right" valign="top"><a id="aacbc9fcc061a4c915f3cdf3f5dea593e"></a>
+glm::mat4&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsgraph_1_1_leaf_node.html#aacbc9fcc061a4c915f3cdf3f5dea593e">modelview_for_drawing</a> = glm::mat4(1.0f)</td></tr>
+<tr class="memdesc:aacbc9fcc061a4c915f3cdf3f5dea593e"><td class="mdescLeft">&#160;</td><td class="mdescRight">modelview_for_drawing The modelview of this node at the time of drawing. <br /></td></tr>
+<tr class="separator:aacbc9fcc061a4c915f3cdf3f5dea593e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_attribs_classsgraph_1_1_abstract_node"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_classsgraph_1_1_abstract_node')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="classsgraph_1_1_abstract_node.html">sgraph::AbstractNode</a></td></tr>
 <tr class="memitem:a04731e3fbcbadc74b75af6c63998f195 inherit pro_attribs_classsgraph_1_1_abstract_node"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsgraph_1_1_abstract_node.html#a04731e3fbcbadc74b75af6c63998f195">name</a></td></tr>
 <tr class="separator:a04731e3fbcbadc74b75af6c63998f195 inherit pro_attribs_classsgraph_1_1_abstract_node"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -187,6 +207,48 @@ Additional Inherited Members</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>This node represents the leaf of a scene graph. It is the only type of node that has actual geometry to render. </p><dl class="section author"><dt>Author</dt><dd>Amit Shesh </dd></dl>
 </div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="ae8abd7c7b25e178c845c1d855e67bb4e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae8abd7c7b25e178c845c1d855e67bb4e">&#9670;&nbsp;</a></span>changeNodeTexture()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void sgraph::LeafNode::changeNodeTexture </td>
+          <td>(</td>
+          <td class="paramtype">const string &amp;&#160;</td>
+          <td class="paramname"><em>texture_name</em></td><td>)</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td align="right">throw </td><td>(</td><td colspan="2">runtime_error</td>
+        </tr>
+        <tr>
+          <td align="right"></td><td>)</td><td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>changeNodeTexture Changes the texture associated with this node </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">texture_name</td><td>The name of the texture to change to </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Reimplemented from <a class="el" href="classsgraph_1_1_abstract_node.html#afd81cb3052d084d21ada6c1b30482953">sgraph::AbstractNode</a>.</p>
+
+</div>
+</div>
 <a id="a24a6b93ce8bb629ee2cfeb8b2860fea8"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a24a6b93ce8bb629ee2cfeb8b2860fea8">&#9670;&nbsp;</a></span>clone()</h2>
 
@@ -274,6 +336,48 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
+<a id="a8e53688456a1d05c8acb6a350b7dd727"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8e53688456a1d05c8acb6a350b7dd727">&#9670;&nbsp;</a></span>generateScenegraphTreeView()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void sgraph::LeafNode::generateScenegraphTreeView </td>
+          <td>(</td>
+          <td class="paramtype">vector&lt; <a class="el" href="structsgraph_1_1_i_node_1_1_generated_item.html">GeneratedItem</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>ret_vec</em></td><td>)</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td align="right">throw </td><td>(</td><td colspan="2">runtime_error</td>
+        </tr>
+        <tr>
+          <td align="right"></td><td>)</td><td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>generateScenegraphTreeView Recurses through scenegraph to get information required to generate the tree representation of the sgraph in the right-side pane. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">ret_vec</td><td>A vector containing GeneratedItems - each GeneratedItem contains info about a particular node that will be represented in the tree view. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Reimplemented from <a class="el" href="classsgraph_1_1_abstract_node.html#add1b27c32c0fd2679d191584bd976782">sgraph::AbstractNode</a>.</p>
+
+</div>
+</div>
 <a id="aa1615331c24b875e574eba842caa2a79"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aa1615331c24b875e574eba842caa2a79">&#9670;&nbsp;</a></span>getMaterial()</h2>
 
@@ -302,6 +406,34 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
+<a id="a116d8fbd656c0756cc6e7e3b2ce15188"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a116d8fbd656c0756cc6e7e3b2ce15188">&#9670;&nbsp;</a></span>getModelviewForDrawing()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">glm::mat4&amp; sgraph::LeafNode::getModelviewForDrawing </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>getModelviewForDrawing Gets this node's modelview matrix at the time of drawing </p>
+<dl class="section return"><dt>Returns</dt><dd>The modelview matrix for this node at the time of drawing </dd></dl>
+
+</div>
+</div>
 <a id="afa13d0226430a57bac1404f91b7c4c68"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#afa13d0226430a57bac1404f91b7c4c68">&#9670;&nbsp;</a></span>getNodeType()</h2>
 
@@ -325,15 +457,15 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>getNodeType Function to get the NodeType of the node </p>
-<dl class="section return"><dt>Returns</dt><dd>This node's NodeType </dd></dl>
+<p>getNodeType Gets the type associated with this node - LEAF in this case </p>
+<dl class="section return"><dt>Returns</dt><dd>An ennumeration value representing node type </dd></dl>
 
 <p>Reimplemented from <a class="el" href="classsgraph_1_1_abstract_node.html#a9d8accef159a36bb7d07dfecd29f5efb">sgraph::AbstractNode</a>.</p>
 
 </div>
 </div>
-<a id="acd4dc0b5aa7ff8a62d72523fad497d3c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acd4dc0b5aa7ff8a62d72523fad497d3c">&#9670;&nbsp;</a></span>getTextureMatrix()</h2>
+<a id="ac1581706bb0b991336884dd3bb9b6c14"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac1581706bb0b991336884dd3bb9b6c14">&#9670;&nbsp;</a></span>getTextureMatrix()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -342,21 +474,29 @@ Additional Inherited Members</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">glm::mat4 sgraph::LeafNode::getTextureMatrix </td>
+          <td class="memname">glm::mat4&amp; sgraph::LeafNode::getTextureMatrix </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
+        <tr>
+          <td align="right">throw </td><td>(</td><td colspan="2">runtime_error</td>
+        </tr>
+        <tr>
+          <td align="right"></td><td>)</td><td></td><td></td>
+        </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
 <p>getTextureMatrix Gets this leaf's texture matrix </p>
 <dl class="section return"><dt>Returns</dt><dd>The texture_matrix member of this leaf node. </dd></dl>
+
+<p>Reimplemented from <a class="el" href="classsgraph_1_1_abstract_node.html#a075696cf1cb6164f228f3a6dab6d4aaf">sgraph::AbstractNode</a>.</p>
 
 </div>
 </div>
@@ -392,7 +532,7 @@ Additional Inherited Members</h2></td></tr>
   </dd>
 </dl>
 
-<p>Implements <a class="el" href="classsgraph_1_1_i_node.html">sgraph::INode</a>.</p>
+<p>Implements <a class="el" href="classsgraph_1_1_i_node.html#ad776d51bca10bab8d08ea07d260ca946">sgraph::INode</a>.</p>
 
 </div>
 </div>
@@ -438,8 +578,8 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
-<a id="a166807fca68913f18eab4a39a70bec79"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a166807fca68913f18eab4a39a70bec79">&#9670;&nbsp;</a></span>setTextureMatrix()</h2>
+<a id="adee46403f00d004f76374b152e7e88e9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adee46403f00d004f76374b152e7e88e9">&#9670;&nbsp;</a></span>setTextureMatrix()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -450,7 +590,7 @@ Additional Inherited Members</h2></td></tr>
         <tr>
           <td class="memname">void sgraph::LeafNode::setTextureMatrix </td>
           <td>(</td>
-          <td class="paramtype">const glm::mat4&#160;</td>
+          <td class="paramtype">const glm::mat4 &amp;&#160;</td>
           <td class="paramname"><em>mat</em></td><td>)</td>
           <td></td>
         </tr>
@@ -463,7 +603,7 @@ Additional Inherited Members</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -475,6 +615,8 @@ Additional Inherited Members</h2></td></tr>
   </table>
   </dd>
 </dl>
+
+<p>Reimplemented from <a class="el" href="classsgraph_1_1_abstract_node.html#aa52a496037a9fecc3693cd1f2cd0b015">sgraph::AbstractNode</a>.</p>
 
 </div>
 </div>

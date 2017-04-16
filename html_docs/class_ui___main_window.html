@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Sketch Tool
-   &#160;<span id="projectnumber">V2</span>
+   &#160;<span id="projectnumber">V0.3.0</span>
    </div>
    <div id="projectbrief">A sketch tool to facilitate the teaching of Computer Graphics</div>
   </td>
@@ -104,6 +104,12 @@ QAction *&#160;</td><td class="memItemRight" valign="bottom"><b>actionOpen</b></
 <tr class="memitem:a1e11ac34a44aeff9d0f198e5f2537dab"><td class="memItemLeft" align="right" valign="top"><a id="a1e11ac34a44aeff9d0f198e5f2537dab"></a>
 QAction *&#160;</td><td class="memItemRight" valign="bottom"><b>actionSave_As</b></td></tr>
 <tr class="separator:a1e11ac34a44aeff9d0f198e5f2537dab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab725ba325924bc4d2e7d3fb0dd2b2f23"><td class="memItemLeft" align="right" valign="top"><a id="ab725ba325924bc4d2e7d3fb0dd2b2f23"></a>
+QAction *&#160;</td><td class="memItemRight" valign="bottom"><b>actionGenerate_Scenegraph</b></td></tr>
+<tr class="separator:ab725ba325924bc4d2e7d3fb0dd2b2f23"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8d6cccb5b04ba61919d1de2823ccb103"><td class="memItemLeft" align="right" valign="top"><a id="a8d6cccb5b04ba61919d1de2823ccb103"></a>
+QAction *&#160;</td><td class="memItemRight" valign="bottom"><b>actionResetCamera</b></td></tr>
+<tr class="separator:a8d6cccb5b04ba61919d1de2823ccb103"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a30075506c2116c3ed4ff25e07ae75f81"><td class="memItemLeft" align="right" valign="top"><a id="a30075506c2116c3ed4ff25e07ae75f81"></a>
 QWidget *&#160;</td><td class="memItemRight" valign="bottom"><b>centralWidget</b></td></tr>
 <tr class="separator:a30075506c2116c3ed4ff25e07ae75f81"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -125,9 +131,15 @@ QSplitter *&#160;</td><td class="memItemRight" valign="bottom"><b>splitter_2</b>
 <tr class="memitem:ae6458c592668f8af5fccbba1d9e1d5c6"><td class="memItemLeft" align="right" valign="top"><a id="ae6458c592668f8af5fccbba1d9e1d5c6"></a>
 <a class="el" href="class_my_g_l_widget.html">MyGLWidget</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>gl_widget</b></td></tr>
 <tr class="separator:ae6458c592668f8af5fccbba1d9e1d5c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a957884fde622d29aac60d6f9297457ee"><td class="memItemLeft" align="right" valign="top"><a id="a957884fde622d29aac60d6f9297457ee"></a>
-QWidget *&#160;</td><td class="memItemRight" valign="bottom"><b>widget_3</b></td></tr>
-<tr class="separator:a957884fde622d29aac60d6f9297457ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad3fa2881c8d8365cc7bf81336dccc1ed"><td class="memItemLeft" align="right" valign="top"><a id="ad3fa2881c8d8365cc7bf81336dccc1ed"></a>
+QWidget *&#160;</td><td class="memItemRight" valign="bottom"><b>scenegraphWidget</b></td></tr>
+<tr class="separator:ad3fa2881c8d8365cc7bf81336dccc1ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a80867018070156432923d0266cc9fe25"><td class="memItemLeft" align="right" valign="top"><a id="a80867018070156432923d0266cc9fe25"></a>
+QHBoxLayout *&#160;</td><td class="memItemRight" valign="bottom"><b>horizontalLayout_2</b></td></tr>
+<tr class="separator:a80867018070156432923d0266cc9fe25"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae6c6f77f5b6e3e8dcb05b81c57497c2c"><td class="memItemLeft" align="right" valign="top"><a id="ae6c6f77f5b6e3e8dcb05b81c57497c2c"></a>
+<a class="el" href="class_my_tree_widget.html">MyTreeWidget</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>treeWidget</b></td></tr>
+<tr class="separator:ae6c6f77f5b6e3e8dcb05b81c57497c2c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4b58b7a22e1824be85f9a5b284c2581a"><td class="memItemLeft" align="right" valign="top"><a id="a4b58b7a22e1824be85f9a5b284c2581a"></a>
 QPlainTextEdit *&#160;</td><td class="memItemRight" valign="bottom"><b>console_output</b></td></tr>
 <tr class="separator:a4b58b7a22e1824be85f9a5b284c2581a"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -140,6 +152,9 @@ QMenuBar *&#160;</td><td class="memItemRight" valign="bottom"><b>menuBar</b></td
 <tr class="memitem:a7ba84cb4cdd6a12dc83bf4e100bd8d80"><td class="memItemLeft" align="right" valign="top"><a id="a7ba84cb4cdd6a12dc83bf4e100bd8d80"></a>
 QMenu *&#160;</td><td class="memItemRight" valign="bottom"><b>menuFile</b></td></tr>
 <tr class="separator:a7ba84cb4cdd6a12dc83bf4e100bd8d80"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aadf9d998ead9dc871e337cfe996389e2"><td class="memItemLeft" align="right" valign="top"><a id="aadf9d998ead9dc871e337cfe996389e2"></a>
+QMenu *&#160;</td><td class="memItemRight" valign="bottom"><b>menuScenegraph</b></td></tr>
+<tr class="separator:aadf9d998ead9dc871e337cfe996389e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5172877001c8c7b4e0f6de50421867d1"><td class="memItemLeft" align="right" valign="top"><a id="a5172877001c8c7b4e0f6de50421867d1"></a>
 QToolBar *&#160;</td><td class="memItemRight" valign="bottom"><b>mainToolBar</b></td></tr>
 <tr class="separator:a5172877001c8c7b4e0f6de50421867d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -149,9 +164,6 @@ QStatusBar *&#160;</td><td class="memItemRight" valign="bottom"><b>statusBar</b>
 <tr class="memitem:ab84dc49349f514d7b7d3fe8e78de069b"><td class="memItemLeft" align="right" valign="top"><a id="ab84dc49349f514d7b7d3fe8e78de069b"></a>
 QToolBar *&#160;</td><td class="memItemRight" valign="bottom"><b>toolBar</b></td></tr>
 <tr class="separator:ab84dc49349f514d7b7d3fe8e78de069b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5fc53408d466b2c64213d2edd23bb86e"><td class="memItemLeft" align="right" valign="top"><a id="a5fc53408d466b2c64213d2edd23bb86e"></a>
-QToolBar *&#160;</td><td class="memItemRight" valign="bottom"><b>toolBar_2</b></td></tr>
-<tr class="separator:a5fc53408d466b2c64213d2edd23bb86e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/>The documentation for this class was generated from the following file:<ul>
 <li>C:/Users/Nate/Desktop/Sketch Tool/sketch_tool/SketchTool/<a class="el" href="ui__mainwindow_8h_source.html">ui_mainwindow.h</a></li>

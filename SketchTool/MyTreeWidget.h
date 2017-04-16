@@ -10,8 +10,6 @@ public:
     explicit MyTreeWidget(QWidget *parent = Q_NULLPTR);
 
     //Tree building functions
-    void addRoot(QString, QString);
-    void addChild(MyTreeWidgetItem* , QString, QString);
     void generateScenegraphTree();
     MyTreeWidgetItem* findItemInTree(QString name);
 
