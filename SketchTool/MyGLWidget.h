@@ -34,7 +34,8 @@ enum SelectedAxis{
     NONE,
     X_AXIS,
     Y_AXIS,
-    Z_AXIS
+    Z_AXIS,
+    ALL
 };
 
 enum DrawnShape{
@@ -55,8 +56,29 @@ class MyGLWidget : public QOpenGLWidget
 
         //Setters
         void setAnimating(bool enabled);
+        /**
+         * @brief setSelectedAxis
+         * Sets which axis is currently selected -- used during transformations
+         *
+         * @param val
+         * The currently selected axis
+         */
         void setSelectedAxis(SelectedAxis val) {selected_axis = val;}
+
+        /**
+         * @brief setSelectedNodeName
+         * Sets the name of the currently selected node
+         *
+         * @param name
+         * The name of the currently selected node
+         */
         void setSelectedNodeName(string name) {selected_node_name = name;}
+
+        /**
+         * @brief toggleAllAxesSelected
+         * Toggles whether or not all axes are currently selected -- useful in
+         * scales when all axes may need to be selected.
+         */
         void toggleAllAxesSelected() {all_axes_selected = !all_axes_selected;}
         void setMousePath(vector<QPointF> p) {mouse_path = p;}
 
@@ -70,11 +92,13 @@ class MyGLWidget : public QOpenGLWidget
         void saveAs();
         void clearScene();
         void openFile();
+        void eraseLines();
 
         //Axis commands
         void set_x_axis();
         void set_y_axis();
         void set_z_axis();
+        void setAllAxes();
 
         //Object selection
         void selectNode(string node);
@@ -94,7 +118,8 @@ class MyGLWidget : public QOpenGLWidget
         bool detectCone();
         bool detectCube();
         bool detectCylinder();
-        void addToCluster(Line);
+        void addLineToCluster(Line);
+        void addPointToCluster(pair<float,float>);
 
         //Draw a line while tracing shape
         void drawLineTo(QPainter *);

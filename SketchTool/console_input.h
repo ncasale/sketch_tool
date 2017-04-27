@@ -14,6 +14,7 @@ public:
     using QLineEdit::QLineEdit;
     void keyPressEvent(QKeyEvent *);
     string process_command(QString&);
+
 private:
 
 };

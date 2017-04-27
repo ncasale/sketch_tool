@@ -27,11 +27,10 @@ Line::Line()
  * @param l
  * The length of the line
  */
-Line::Line(float e, pair<float,float> sp, pair<float,float> ep, float l)
+Line::Line(float e, pair<float,float> sp, pair<float,float> ep)
 {
     this->set_error(e);
     this->setStartPoint(sp);
     this->setEndPoint(ep);
-    this->setLength(l);
 
 }

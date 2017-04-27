@@ -9,31 +9,59 @@ class Line : public Shape
 {
 public:
     Line();
-    Line(float, pair<float,float>, pair<float,float>, float);
+    Line(float, pair<float,float>, pair<float,float>);
 
     //Setters
+    /**
+     * @brief setStartPoint
+     * Sets the start point of this line
+     *
+     * @param val
+     * The desired start point
+     */
     void setStartPoint(pair<float,float> val) {start_point = val;}
+
+    /**
+     * @brief setEndPoint
+     * Sets the end point of this line
+     *
+     * @param val
+     * The desired end point
+     */
     void setEndPoint(pair<float,float> val) {end_point = val;}
-    void setLength(float val) {length = val;}
-    void setA(float val) {a = val;}
-    void setB(float val) {b = val;}
-    void setC(float val) {c = val;}
+
 
     //Getters
+    /**
+     * @brief getStartPoint
+     * Gets the start point of the line
+     *
+     * @return
+     * The start point of the line
+     */
     pair<float,float> getStartPoint() {return start_point;}
+
+    /**
+     * @brief getEndPoint
+     * Gets the end point of the line
+     *
+     * @return
+     * The end point of the line
+     */
     pair<float,float> getEndPoint() {return end_point;}
-    float getLength() {return length;}
-    float getA() {return a;}
-    float getB() {return b;}
-    float getC() {return c;}
 
 private:
+    /**
+     * @brief start_point
+     * The starting x,y coordinate of the line
+     */
     pair<float,float> start_point;
+
+    /**
+     * @brief end_point
+     * The ending x,y coordinate of the line
+     */
     pair<float,float> end_point;
-    float a;
-    float b;
-    float c;
-    float length;
 
 
 };

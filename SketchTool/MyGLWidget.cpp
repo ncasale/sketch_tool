@@ -27,6 +27,7 @@
 #define KEY_TABULATE_FILE               Qt::Key_T
 #define KEY_SAVE_FILE                   Qt::Key_S
 #define KEY_CLEAR                       Qt::Key_C
+#define KEY_ERASE_LINES                 Qt::Key_E
 #define KEY_ADD_CUBE                    Qt::Key_1
 #define KEY_ADD_SPHERE                  Qt::Key_2
 #define KEY_ADD_CYLINDER                Qt::Key_3
@@ -259,6 +260,16 @@ void MyGLWidget::mouseReleaseEvent(QMouseEvent *e)
         //the shape and the center for drawing
         if(shape_to_draw == CIRCLE)
         {
+            //First check if it fits the bill for a cylinder, if so, draw a cylinder
+            bool cylinder_detected = detectCylinder();
+            if(cylinder_detected)
+            {
+                view.addToScenegraph("cylinder");
+                lines.clear();
+                clusters.clear();
+                return;
+            }
+
 
             //TODO: Create/Call circle draw function
             //Call function to draw a circle of the correct radius starting
@@ -288,24 +299,11 @@ void MyGLWidget::mouseReleaseEvent(QMouseEvent *e)
             lines.push_back(line);
 
             //Add this line to a cluster
-            addToCluster(line);
+            addLineToCluster(line);
 
             //Detect any shapes
-            bool cone_detected = false;
-            bool cube_detected = false;
-            bool cylinder_detected = false;
-
-            //Check for cone
-            if(!cube_detected && !cylinder_detected)
-                cone_detected = detectCone();
-
-            //Check for cube
-            if(!cone_detected && !cylinder_detected)
-                cube_detected = detectCube();
-
-            //Check for cylinder
-            if(!cube_detected && !cone_detected)
-                cylinder_detected = detectCylinder();
+            bool cone_detected = detectCone();
+            bool cube_detected = detectCube();
 
             //If any shapes are detected, draw them and clear lines/clusters
             if(cone_detected)
@@ -320,12 +318,9 @@ void MyGLWidget::mouseReleaseEvent(QMouseEvent *e)
                 lines.clear();
                 clusters.clear();
             }
-            else if(cylinder_detected)
-            {
-                view.addToScenegraph("cylinder");
-                lines.clear();
-                clusters.clear();
-            }
+
+            //Cylinder detection done in above if statement -- happens after
+            //a circle is drawn, not a line.
 
 
         }
@@ -366,6 +361,10 @@ void MyGLWidget::keyPressEvent(QKeyEvent *e)
     case KEY_CLEAR:
         //Clear the scenegraph -- ask user if they would like to.
         clearScene();
+        break;
+    case KEY_ERASE_LINES:
+        //Erase any lines drawn
+        eraseLines();
         break;
     case KEY_TABULATE_FILE:
         //Format XML file
@@ -491,6 +490,9 @@ void MyGLWidget::keyPressEvent(QKeyEvent *e)
                 case Z_AXIS:
                     parametrizedScale(1.0f, 1.0f, 1.25f);
                     break;
+                case ALL:
+                    parametrizedScale(1.25f, 1.25f, 1.25f);
+                    break;
                 }
 
                 break;
@@ -560,6 +562,9 @@ void MyGLWidget::keyPressEvent(QKeyEvent *e)
                     break;
                 case Z_AXIS:
                     parametrizedScale(1.0f, 1.0f, 0.8f);
+                    break;
+                case ALL:
+                    parametrizedScale(0.8f, 0.8f, 0.8f);
                     break;
                 }
 
@@ -796,6 +801,7 @@ DrawnShape MyGLWidget::determineShape(float circle_error, float line_error)
     {
         ret_shape = CIRCLE;
         lowest_error = circle_error;
+
     }
     else
     {
@@ -887,7 +893,47 @@ Circle MyGLWidget::detectCircle()
 
     //Let's now return our error, the proposed center and the calculated radius of the circle
     Circle ret_circle(cumulative_error, center_x, center_y, radius);
-    return ret_circle;
+
+//    //Check to make sure that we have drawn enough of an arc to determine
+//    //circle -- at least 200 degrees
+//    pair<float,float> start_point(mouse_path[0].x(), mouse_path[0].y());
+//    pair<float,float> end_point(mouse_path[mouse_path.size()-1].x(),
+//            mouse_path[mouse_path.size()-1].y());
+
+//   //Perform the following calculation:
+//   //1. Find vector from center to start point and vector from center to end
+//   //   point
+//   //2. Find dot product between two vectors
+//   //3. Find magnitude of each vector and multiply together to get product, p
+//   //4. Divide dot product by p to get cos(angle)
+//   //5. Take arccos(dot/p) to get angle
+//   glm::vec2 start_vec = glm::vec2(start_point.first-center_x, start_point.second-center_y);
+//   glm::vec2 end_vec = glm::vec2(end_point.first-center_x, end_point.second-center_y);
+
+//   float angle =
+//   angle *= 180.0f/PI;
+
+
+//   if(angle >= 200.0f)
+//       return ret_circle;
+//   else
+//   {
+//       ret_circle.set_error(9999999999.0f);
+//       return ret_circle;
+//   }
+
+    //Do span from first point to middle of path and then middle to end of path
+    //add together and that should produce the desired absolute angle
+
+    //Let's add the start/end points of the circle to clusters
+    pair<float,float> start_point(mouse_path[0].x(), mouse_path[0].y());
+    pair<float,float> end_point(mouse_path[mouse_path.size()-1].x(),
+                                mouse_path[mouse_path.size()-1].y());
+
+    addPointToCluster(start_point);
+    addPointToCluster(end_point);
+
+   return ret_circle;
 }
 
 
@@ -1180,6 +1226,15 @@ void MyGLWidget::set_z_axis()
     axis_selected = true;
     all_axes_selected = false;
     curr_axis_str = "Z-Axis";
+}
+
+
+void MyGLWidget::setAllAxes()
+{
+    setSelectedAxis(SelectedAxis::ALL);
+    axis_selected = true;
+    all_axes_selected = true;
+    curr_axis_str = "All Axes";
 }
 
 /**
@@ -1614,7 +1669,7 @@ void MyGLWidget::selectNode(string node)
  * @param line
  * The line whose endpoints are being put into clusters
  */
-void MyGLWidget::addToCluster(Line line)
+void MyGLWidget::addLineToCluster(Line line)
 {
     //Frist see if line end points fall into existing clusters
     pair<float,float> start_point = line.getStartPoint();
@@ -1672,6 +1727,42 @@ void MyGLWidget::addToCluster(Line line)
 }
 
 /**
+ * @brief MyGLWidget::addPointToCluster
+ * Add a passed point to a cluster. If point does not fall into existing
+ * clusters, create a new cluster centered at the point.
+ *
+ * @param point
+ * The point which we are going to add to a cluster.
+ */
+void MyGLWidget::addPointToCluster(pair<float,float> point)
+{
+    bool in_cluster = false;
+
+    Cluster c;
+
+    if(!clusters.empty())
+    {
+        for(auto cluster : clusters)
+        {
+            if(cluster.isPointInCluster(point))
+                in_cluster = true;
+        }
+
+        if(!in_cluster)
+        {
+            c.setOrigin(point);
+            clusters.push_back(c);
+        }
+    }
+    else
+    {
+        //If no clusters already exists, create new one
+        c.setOrigin(point);
+        clusters.push_back(c);
+    }
+}
+
+/**
  * @brief MyGLWidget::detectCone
  * Detects whether or not the lines/clusters on screen represent a triangle.
  * Done by detecting if there are exactly 3 lines drawn and exactly 3 clusters.
@@ -1722,9 +1813,29 @@ bool MyGLWidget::detectCube()
 /**
  * @brief MyGLWidget::detectCylinder
  * Will be implemented in the future.
+ *
  * @return
  */
 bool MyGLWidget::detectCylinder()
 {
-    return false;
+    //Detect that there is exactly 1 line drawn and 1 circle
+    if(lines.size()!=1)
+        return false;
+
+    //Will need two clusters
+    if(clusters.size() != 2)
+        return false;
+
+
+    return true;
+}
+
+/**
+ * @brief MyGLWidget::eraseLines
+ * Used to erase any lines drawn on the screen while sketching
+ */
+void MyGLWidget::eraseLines()
+{
+    //Clear lines vector
+    lines.clear();
 }

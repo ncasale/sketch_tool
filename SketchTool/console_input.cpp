@@ -241,6 +241,13 @@ string ConsoleInput::process_command(QString& command_qstring)
             gl_widget->setScaleState();
 
         }
+        else if(first_param == "all")
+        {
+            //Adjust camera - select all axes
+            gl_widget->adjustCameraToSelectedNode();
+            gl_widget->setAllAxes();
+            gl_widget->setScaleState();
+        }
         else
         {
 
@@ -293,10 +300,12 @@ string ConsoleInput::process_command(QString& command_qstring)
     }
     else if(command == "revert_camera")
     {
+        //Reverts camera to original position
         gl_widget->revertCamera();
     }
     else if(command == "select")
     {
+        //Selects a particular node from the scenegraph if it exists
         string params = command_string.substr(command_string.find_first_of(' ') + 1, command_string.npos);
 
         string first_param = params.substr(0, params.find_first_of(' '));
